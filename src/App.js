@@ -2,6 +2,7 @@ import React from 'react'
 import { BrowserRouter,Switch,Route} from 'react-router-dom'
 import Navbar from './Layou/navbar'
 import SignIn from './Auth/SignIn'
+import {Home} from './Dashboard/dashboard'
 
 function App() {
   return (
@@ -9,7 +10,7 @@ function App() {
       <div className="App">
          <Navbar/>
          <Switch>
-           <Route exact path='/' component={SignIn}>
+           <Route exact path='/' component={Home}>
            </Route>
          </Switch>
 

@@ -1,0 +1,122 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+  #home_signIn{
+    color:blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  #home_signIn:hover{
+    color: blue;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  #home_register{
+    color:blue;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  #home_register:hover{
+    color: blue;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+
+  #home_dailydeals{
+    color:black;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  #home_dailydeals:hover{
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  #home_helpconatct{
+    color:black;
+    background-color: transparent;
+    text-decoration: none;
+    font-size: 14px;
+  }
+
+  #home_helpconatct:hover{
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  #home_ship{
+    color:black;
+    background-color: transparent;
+    text-decoration: none;
+    margin-left: 650px;
+    font-size: 14px;
+  }
+
+  
+  #home_ship:hover{
+    color: black;
+    background-color: transparent;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+
+  #border1{
+  border-color: rgb(255, 255, 255);
+  border-width: 0.2;
+  border-bottom: thin;
+  
+
+  }
+  #home_search{
+    margin-left: 16%;
+  }
+
+  #home_search1{
+    width: 700px;
+    border-style: groove;
+    border-color: rgb(73, 73, 73);
+    border-width: 1.8px;
+    font-family: 'Montserrat', sans-serif;
+   padding-top: 1px;
+   padding-bottom: 1px;
+
+  }
+
+  #home_search1:focus{
+    outline: none !important;
+    border-style: groove !important;
+    border-color: rgb(73, 73, 73) !important;
+    border-width: 1.8px !important;
+  }
+
+#home_search1::placeholder{
+   color: rgb(73, 73, 73);
+}
+
+#icon_search{
+ padding-bottom: 50%;
+
+}
+
+#home_Search_button{
+ margin-left: 10px;
+ margin-bottom: 9px;
+ height: 50px;
+ width: 150px;
+ background-color: blue;
+ opacity: 0.65;
+}
