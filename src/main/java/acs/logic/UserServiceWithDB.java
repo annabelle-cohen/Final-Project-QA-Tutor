@@ -155,8 +155,8 @@ public class UserServiceWithDB implements EnhanceUserService {
 				throw new UserNotFoundException("User is not an Admin, Could not export all users for " + email);	
 			}
 		
-		return this.usersDao.findAll(PageRequest.of(page, size, Direction.ASC, "email")).getContent()
-				.stream().map(this.entityConverter::convertFromEntity).collect(Collectors.toList());
+		return new ArrayList<UserBoundary>(); // this.usersDao.findAll(PageRequest.of(page, size, Direction.ASC, "email")).getContent()
+				//.stream().map(this.entityConverter::convertFromEntity).collect(Collectors.toList());
 		}
 			else {
 				throw new UserNotFoundException("Could not export all users for " + email);

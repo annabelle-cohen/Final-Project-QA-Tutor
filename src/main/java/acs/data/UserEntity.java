@@ -1,19 +1,12 @@
 package acs.data;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
-import javax.persistence.Lob;
-import javax.persistence.Table;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
 
 
+
+import java.io.Serializable;
 @Entity
-@Table(name = "USERS")
-public class UserEntity {
+public class UserEntity implements Serializable {
 	@Id
 	private String email;
 	private UserName username;
@@ -24,7 +17,7 @@ public class UserEntity {
 		super();
 	}
 
-	@Id
+	@javax.persistence.Id
 	public String getEmail() {
 		return email;
 	}

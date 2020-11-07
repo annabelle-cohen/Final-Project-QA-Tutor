@@ -1,4 +1,4 @@
-package acs.logic;
+/*package acs.logic;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,4 +53,4 @@ public class LastIdValueDaoImpl implements LastValueDao {
 
 	}
 
-}
+}*/
