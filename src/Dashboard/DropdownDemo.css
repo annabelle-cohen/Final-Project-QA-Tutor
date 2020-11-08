@@ -1,0 +1,27 @@
+
+.dropdown-demo .p-dropdown {
+    width: 14rem;
+}
+
+#selecet_category{
+    height: 39px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+   position: absolute;
+   margin-left: 647px;
+   border-color: transparent;
+   border-left-color: lightslategray;
+   max-width: 185px !important;
+   font-size: small;
+   
+}
+
+#selecet_category:focus{
+    border-color: transparent;
+    max-width: 185px !important;
+}
+
+
+
+
+                

@@ -5,28 +5,32 @@
     color:blue;
     background-color: transparent;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
+  }
+
+  #first-row{
+    margin-left:100px;
   }
   
   #home_signIn:hover{
     color: blue;
     background-color: transparent;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_register{
     color:blue;
     background-color: transparent;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_register:hover{
     color: blue;
     background-color: transparent;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 13px;
   }
 
 
@@ -34,36 +38,36 @@
     color:black;
     background-color: transparent;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_dailydeals:hover{
     color: black;
     background-color: transparent;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_helpconatct{
     color:black;
     background-color: transparent;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_helpconatct:hover{
     color: black;
     background-color: transparent;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #home_ship{
     color:black;
     background-color: transparent;
     text-decoration: none;
-    margin-left: 650px;
-    font-size: 14px;
+    margin-left: 550px;
+    font-size: 13px;
   }
 
   
@@ -71,7 +75,7 @@
     color: black;
     background-color: transparent;
     text-decoration: underline;
-    font-size: 14px;
+    font-size: 13px;
   }
 
   #border1{
@@ -81,18 +85,27 @@
   
 
   }
+
+  #border2{
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+    margin-left: 150px;
+    margin-right: 150px;
+  }
   #home_search{
     margin-left: 16%;
   }
 
   #home_search1{
-    width: 700px;
+    width: 800px;
     border-style: groove;
     border-color: rgb(73, 73, 73);
     border-width: 1.8px;
     font-family: 'Montserrat', sans-serif;
    padding-top: 1px;
    padding-bottom: 1px;
+   position: absolute;
 
   }
 
@@ -113,10 +126,241 @@
 }
 
 #home_Search_button{
- margin-left: 10px;
+ margin-left: 840px;
  margin-bottom: 9px;
  height: 50px;
  width: 150px;
  background-color: blue;
  opacity: 0.65;
 }
+
+.p-text-secondary{
+  background-color: white;
+}
+
+#tab-menu{
+  color: rgb(43, 42, 42);
+  font-size: 14px;
+  margin-left: 250px;
+  margin-right: 439px;
+ 
+
+}
+
+#tab-menu:hover{
+  color: black;
+}
+
+#tab-menu:focus{
+  color: black;
+}
+
+#second-title{
+  margin-left: 170px;
+  margin-top: 50px;
+  font-weight: bold;
+}
+
+.img1{
+border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  z-index: 0;
+}
+
+.overlay1{
+  border-radius: 50%;
+  width: 180px;
+  height: 180px;
+  display: inline-block;
+}
+
+#p_img1{
+  padding-left: 45px;
+  font-size: 20px;
+  margin-bottom: 100px;
+  z-index: 1;
+}
+.overlay1:hover {
+  opacity:0.7;
+  text-decoration: underline;
+}
+
+
+.img2{
+  border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    z-index: 0;
+  }
+  
+  .overlay2{
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    display: inline-block;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+  
+  #p_img2{
+    padding-left: 45px;
+    font-size: 20px;
+    margin-bottom: 100px;
+    z-index: 1;
+  }
+  .overlay2:hover {
+    opacity:0.7;
+    text-decoration: underline;
+  }
+
+  .img3{
+    border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      z-index: 0;
+    }
+    
+    .overlay3{
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      display: inline-block;
+      padding-left: 60px;
+      padding-right: 30px;
+    }
+    
+    #p_img3{
+      padding-left: 45px;
+      font-size: 20px;
+      margin-bottom: 100px;
+      z-index: 1;
+    }
+    .overlay3:hover {
+      opacity:0.7;
+      text-decoration: underline;
+    }
+
+    .img4{
+      border-radius: 50%;
+        width: 180px;
+        height: 180px;
+        z-index: 0;
+      }
+      
+      .overlay4{
+        border-radius: 50%;
+        width: 180px;
+        height: 180px;
+        display: inline-block;
+        padding-left: 90px;
+        padding-right: 30px;
+      }
+      
+      #p_img4{
+        padding-left: 45px;
+        font-size: 20px;
+        margin-bottom: 100px;
+        z-index: 1;
+      }
+      .overlay4:hover {
+        opacity:0.7;
+        text-decoration: underline;
+      }
+
+      .img5{
+        border-radius: 50%;
+          width: 180px;
+          height: 180px;
+          z-index: 0;
+        }
+        
+        .overlay5{
+          border-radius: 50%;
+          width: 180px;
+          height: 180px;
+          display: inline-block;
+          padding-left: 120px;
+          padding-right: 30px;
+        }
+        
+        #p_img5{
+          padding-left: 45px;
+          font-size: 20px;
+          margin-bottom: 100px;
+          z-index: 1;
+        }
+        .overlay5:hover {
+          opacity:0.7;
+          text-decoration: underline;
+        }
+
+        .img6{
+          border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            z-index: 0;
+          }
+          
+          .overlay6{
+            border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            display: inline-block;
+            padding-left: 150px;
+            padding-right: 30px;
+          }
+          
+          #p_img6{
+            padding-left: 45px;
+            font-size: 20px;
+            margin-bottom: 100px;
+            z-index: 1;
+          }
+          .overlay6:hover {
+            opacity:0.7;
+            text-decoration: underline;
+          }
+
+      #daily_deals{
+        color: black;
+        font-size: 28px;
+        font-weight: bold;
+        display: inline-block;
+        margin-left: 150px;
+        margin-top: 40px;
+        z-index: 0;
+     }
+
+     #daily_deals:hover{
+       text-decoration: underline;
+     }
+
+     #div-see-all{
+       display: inline-block;
+       margin-left: 10px;
+       font-size: 22px;
+       color: lightgrey;
+       padding-bottom: 20px;
+
+     }
+
+     #see_all{
+       display: inline-block;
+       margin-left: 10px;
+       color: black;
+       z-index: 0;
+      
+     }
+
+     #see_all:hover{
+      text-decoration: underline;
+     }
+
+     #arrow{
+       display: inline-block;
+       margin-left: 15px;
+       color: black;
+       font-weight: bold;
+       z-index: 0;
+     }
