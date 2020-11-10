@@ -70,8 +70,8 @@ export class Home extends Component {
 
 
     onCategoryChange =(e) =>{
-        this.setState({ selectedCategories: e.value });
-        console.log(this.state);
+        this.setState({ selectedCategories: e.value.name });
+        console.log(e.value.name);
     }
 
     handleSearch = (e) => {
