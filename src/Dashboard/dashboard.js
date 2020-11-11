@@ -9,6 +9,7 @@ import { TabMenu } from 'primereact/tabmenu';
 import './CarouselDemo.css';
 import { Carousel } from 'primereact/carousel';
 import clothes2 from './img/clothes2.jpg'
+import Sony from './img/sony.jpg'
 
 
 export class Home extends Component {
@@ -188,8 +189,112 @@ export class Home extends Component {
                     <Carousel  id="carousel-item"   value={this.state.images} numVisible={3} numScroll={3} responsiveOptions={this.responsiveOptions}
                         itemTemplate={this.productTemplate} header={""} />
                    </div>
+              </div>
+
+              <div id="fourth-title">
+                    <h5>Explore Popular Categories</h5>
+                    <br></br><br></br>
+                    <div  className="overlay7" onClick={e => console.log("Clicked 7")}>
+                    <img className="img7" alt="Card" src={Sony}/>
+                    <div id="p_img7">Sony</div></div>
+
+                    <div  className="overlay8" onClick={e => console.log("Clicked 8")}>
+                    <img className="img8" alt="Card" src={Sony}/>
+                    <div id="p_img8">Sony</div></div>
+
+                    <div  className="overlay9" onClick={e => console.log("Clicked 9")}>
+                    <img className="img9" alt="Card" src={Sony}/>
+                    <div id="p_img9">Sony</div></div>
+
+                    <div  className="overlay10" onClick={e => console.log("Clicked 10")}>
+                    <img className="img10" alt="Card" src={Sony}/>
+                    <div id="p_img10">Sony</div></div>
+
+                    <div  className="overlay11" onClick={e => console.log("Clicked 11")}>
+                    <img className="img11" alt="Card" src={Sony}/>
+                    <div id="p_img11">Sony</div></div>
+
+                    <div  className="overlay12" onClick={e => console.log("Clicked 12")}>
+                    <img className="img12" alt="Card" src={Sony}/>
+                    <div id="p_img12">Sony</div></div>
                 </div>
-           
+
+                <div>
+                    <hr id="border3" align="right" />
+                </div>
+
+                <div className="about_bottom">
+                    <div id="buy">
+                        <h7 id="title-buy">Buy</h7>
+                        <div> <Button id="regis_bottom" label="Registration" className="p-button-link" /></div>
+                        <div> <Button id="money_back_bottom" label="Money Back Guarantee" className="p-button-link" /></div>
+                        <div> <Button id="help_bottom" label="Bidding & buying help" className="p-button-link" /></div>
+                        <div> <Button id="stores_bottom" label="Stores" className="p-button-link" /></div>
+                       <div> <Button id="guides_bottom" label="Guides" className="p-button-link" /></div>
+                    </div>
+                     <div id="sell">
+                        <h7 id="title-sell">Sell</h7>
+                        <div> <Button id="start_selling_bottom" label="Start selling" className="p-button-link" /></div>
+                        <div> <Button id="learn_to_sell_bottom" label="Learn to sell" className="p-button-link" /></div>
+                        <div> <Button id="business_seller_bottom" label="Business sellers" className="p-button-link" /></div>
+                        <div> <Button id="affiliates_bottom" label="Affiliates" className="p-button-link" /></div>
+                        <br></br><br></br>
+                        <h7 id="Tools_apps-title">Tools & apps</h7>
+                        <div> <Button id="developers_bottom" label="Developers" className="p-button-link" /></div>
+                        <div> <Button id="security_center_bottom" label="Security center" className="p-button-link" /></div>
+                        <div> <Button id="official_time_bottom" label="Official time" className="p-button-link" /></div>
+                        <div> <Button id="site_map_bottom" label="Site map" className="p-button-link" /></div>
+                     </div>
+
+                     <div id="companies">
+                        <h7 id="companies-title">Companies</h7>
+                        <div> <Button id="classifieds_bottom" label="Classifieds" className="p-button-link" /></div>
+                        <div> <Button id="close5_bottom" label="Close5" className="p-button-link" /></div>
+                        <div> <Button id="See_all_companies_bottom" label="See all companies" className="p-button-link" /></div>
+                        <br></br><br></br><br></br>
+                        <h7 id="See_all_companies-title">Stay connected</h7>
+                        <div> <Button id="Blogs_bottom" label="Blogs" className="p-button-link" /></div>
+                        <div> <Button id="Facebook_bottom" label="Facebook" icon="pi pi-facebook" iconPos="left" className="p-button-link" /></div>
+                        <div> <Button id="Twitter_bottom" label="Twitter" icon="pi pi-twitter" iconPos="left"  className="p-button-link" /></div>
+                       
+                     </div>
+
+                     <div id="about_aap">
+                         <h7 id="about_aaP-title">About AAP</h7>
+                         <div> <Button id="company_info_bottom" label="Company info" className="p-button-link" /></div>
+                        <div> <Button id="news_bottom" label="News" className="p-button-link" /></div>
+                        <div> <Button id="investors_bottom" label="Investors" className="p-button-link" /></div>
+                        <div> <Button id="careers_bottom" label="Careers" className="p-button-link" /></div>
+                        <div> <Button id="government_relations_bottom" label="Government relations" className="p-button-link" /></div>
+                        <div> <Button id="advertise_with_us_bottom" label="Advertise with us" className="p-button-link" /></div>
+                        <div> <Button id="policies_bottom" label="Policies" className="p-button-link" /></div>
+                        <div> <Button id="verified_rights_bottom" label="Verified Rights Owner (VeRO) Program" className="p-button-link" /></div>
+                     </div>
+
+                     <div id="help_contact_communtiy">
+                        <h7 id="Help_Contact-title">Help & Contact</h7>
+                        <div> <Button id="resolution_center_bottom" label="Resolution Center" className="p-button-link" /></div>
+                        <div> <Button id="seller_information_bottom" label="Seller Information Center" className="p-button-link" /></div>
+                        <div> <Button id="contact_us_bottom" label="Contact us" className="p-button-link" /></div>
+                        <br></br><br></br><br></br>
+                        <h7 id="community-title">Community</h7>
+                        <div> <Button id="announcements_bottom" label="Announcements" className="p-button-link" /></div>
+                        <div> <Button id="answer_center_bottom" label="Answer center" className="p-button-link" /></div>
+                        <div> <Button id="discussion_boards_bottom" label="Discussion boards" className="p-button-link" /></div>
+                        <div> <Button id="giving_works_bottom" label="Giving Works" className="p-button-link" /></div>
+                        <div> <Button id="groups_bottom" label="Groups" className="p-button-link" /></div>
+                        <div> <Button id="top_shared_bottom" label="Top Shared" className="p-button-link" /></div>
+                     
+                     </div>
+                  </div>
+                <div id="copy-right">
+                Copyright © 2020-2021 AAP Inc. All Rights Reserved. <a id="User_Agreement" href="url" color="black">User Agreement</a>, 
+                <a id="Privacy" href="url" color="black">Privacy</a>,
+                <a id="Cookies" href="url" color="black">Cookies</a> ,
+                <a id="personal_information" href="url" color="black">Do not sell my personal information</a> and <a id="AdChoice" href="url" color="black">AdChoice</a> 
+                  <i id="info_circle" className="pi pi-info-circle"></i>
+                </div>
+              
         </div>
 
         )

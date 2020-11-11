@@ -74,5 +74,38 @@
     color: black; 
 }
 
+#regis_bottom{
+    margin-left: 155px;
+    color: gray;
+    
+}
 
+#money_back_bottom{
+    margin-left: 155px;
+    color: gray;
+}
+
+#help_bottom{
+    margin-left: 155px;
+    color: gray; 
+}
+
+#stores_bottom{
+    margin-left: 155px;
+    color: gray;  
+}
+
+#guides_bottom{
+    margin-left: 155px;
+    color: gray;  
+}
+
+#start_selling_bottom,#learn_to_sell_bottom,#business_seller_bottom,#affiliates_bottom,#developers_bottom,#security_center_bottom,
+#official_time_bottom,#site_map_bottom,#classifieds_bottom,#close5_bottom,#See_all_companies_bottom,#Blogs_bottom,#Facebook_bottom,
+#Twitter_bottom,#company_info_bottom,#news_bottom,#investors_bottom,#careers_bottom,#government_relations_bottom,
+#advertise_with_us_bottom,#policies_bottom,#verified_rights_bottom,#resolution_center_bottom,#seller_information_bottom,#contact_us_bottom,
+#announcements_bottom,#answer_center_bottom,#discussion_boards_bottom,#giving_works_bottom,#groups_bottom,#top_shared_bottom{
+    margin-left: 45px;
+    color: gray;  
+}
               
