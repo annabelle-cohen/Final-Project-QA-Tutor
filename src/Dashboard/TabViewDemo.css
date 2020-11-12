@@ -1,0 +1,159 @@
+#tab-view-0{
+    margin-left: 230px;
+    margin-right: 461px;
+    font-size: 14px;
+    position: static;
+    z-index: 0;
+}
+
+#category-1,#category-2,#category-3{
+    display: inline-block;
+    border-color: rgb(255, 255, 255);
+    background-color: white;
+    border-width: 0.2;
+    position: absolute;
+    top: 220px;
+   border-style: ridge;
+   z-index: 1;
+   height: 300px;
+   width: 1000px;
+}
+
+
+#sign-in-msg2{
+    color: rgb(42, 53, 211);
+    text-decoration: none;
+    font-weight: normal;
+}
+
+#border-categories-div{
+    border-color:white;
+    width: 200px;
+    margin-left: 12px;
+    border-width: 0.2;
+    border-bottom: thin;
+    
+}
+
+#Cell-Phones-link,#Smart-Watches-link,#Video-Games-link,#Computers-Tablets-link,#Digital-Cameras-link,#Camera-Drones-link,
+#Deals-link,#iPhone-link,#Samsung-link,#Portable-Audio-link,#TV-Video-link,#Vehicle-Electronics-link,#Smart-Home-link,#Womens-Clothing-link,
+#Womens-Shoes-link,#Mens-Clothing-link,#Men-Shoes-link,#Watches-Parts-Accessories-link,#Deals-link2,#Fine-Jewelry-link,
+#Fashion-Jewelry-link,#Mens-Accessories-link,#Womens-Handbags-Bags-link,#Kids-Clothing-Shoes-Accs-link,#Smart-Home-link,
+#Makeup-link,#Health-Care-link,#Fragrances-link,#Nail-Care-Manicure-Pedicure-link,#Hair-Care-Styling-link,#Deals-link3,#Skin-Care-link
+,#Vitamins-Dietary-Supplements-link,#Shaving-Hair-Removal-link,#Vision-Care-link,#Bath-Body-link,#Oral-Care-link,#Cycling-link,
+#Outdoor-Sports-link,#Hunting-link,#Fishing-link,#Fitness-Running-Yoga-link,#Deals-link4,#Tennis-link,#Swimming-link,#Water-Sports-link,
+#Winter-Sports-link,#Team-Sports-link,#Fitness-Technology-link{
+    color: gray;  
+    font-size: 12px;
+}
+
+
+#Tool-Workshop-Equipment-link,#Yard-Garden-Outdoor-Living-link,#Home-Improvement-link,#Baby-link,#Kitchen-Dining-Bar-link,
+#Lamps-Lighting-Ceiling-Fans-link,#Deals-link5,#Home-Decor-link,#Home-Organization-Supplies-link,#Art-Craft-Supplies-link,
+#Beads-Jewelry-Making-Supplies-link,#Art-Supplies-link,#Scrapbooking-Paper-Crafts-link,#Pets-Supplies-link,#Cellphone-Deals-link,
+#Camera-Deals-link,#Watches-Deals-link,#Jewelry-Deals-link,#Tech-Free-shipping-link,#Fashion-Free-shipping-link,#Hot-week-link,
+#Daily-Deals-link,#Tech-Deals-link,#Fashion-Deals-link,#Health-Beauty-Deals-link,#Home-Garden-Deals-link,#Sporting-Goods-Deals-link{
+    color: gray;  
+    font-size: 12px;
+}
+
+.top-categories{
+    margin-left: 12px;
+    font-weight: bold;
+}
+
+.other-categories{
+    margin-left: 12px;
+    font-weight: bold;
+    padding-top: 10px;
+}
+
+.wrapper-div,.wrapper-div2{
+    padding-top: 22px;
+   vertical-align: top;
+    display: inline-block;
+    padding-right: 20px;
+    position: static;
+   
+}
+
+#wrapper-div3{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/electronics.jpg");
+    background-repeat: no-repeat;
+    width: 530px;
+    height: 296px;
+
+}
+
+#wrapper-div4{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/women_fashion.jpg");
+    background-repeat: no-repeat;
+    width: 531px;
+    height: 296px; 
+}
+
+#wrapper-div5{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/healthe_care.jpg");
+    background-repeat: no-repeat;
+    width: 531px;
+    height: 296px; 
+}
+
+
+#wrapper-div6{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/sport-background.jpg");
+    background-repeat: no-repeat;
+    width: 531px;
+    height: 296px; 
+}
+
+
+#wrapper-div7{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/home_garden.jpg");
+    background-repeat: no-repeat;
+    width: 531px;
+    height: 296px; 
+}
+
+#wrapper-div8{
+    padding-top: 22px;
+    vertical-align: top;
+    display: inline-block;
+    position: static;
+    background-image: url("./img/deals.jpg");
+    background-repeat: no-repeat;
+    width: 531px;
+    height: 296px; 
+}
+
+
+
+
+.TabView:hover{
+    font-size: 20px;
+}
+
+
+
+
+

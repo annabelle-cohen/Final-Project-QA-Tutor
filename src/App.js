@@ -8,6 +8,7 @@ import React from 'react'
 import { BrowserRouter,Switch,Route} from 'react-router-dom'
 import Navbar from './Layou/navbar'
 import SignIn from './Auth/SignIn'
+import About from './Auth/About'
 import {Home} from './Dashboard/dashboard'
 
 

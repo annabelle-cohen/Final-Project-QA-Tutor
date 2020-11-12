@@ -21,6 +21,111 @@
     max-width: 185px !important;
 }
 
+.dropDown1{
+    display: inline-block;
+    position: relative;
+}
+
+.dropDown2{
+    display: inline-block;
+    position: relative; 
+}
+
+.dropDown3{
+    display: inline-block;
+    position: relative;
+}
+
+.dropDown1:hover .dropDown-menu{
+    display: block;
+
+}
+
+.dropDown2:hover .dropdown_aap{
+    display: block;
+}
+
+.dropDown3:hover .dropdown_notofication{
+    display: block;  
+}
+
+.dropdown_aap{
+    position: absolute;
+    background-color: white;
+    display: none;
+    color: black;
+    font-size: 14px;
+    z-index: 1;
+    margin-left:auto; margin-right:0;
+    border-style: ridge;
+    border-color:lightgray;
+    border-width: thin;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width: 180px;
+}
+
+.dropdown_aap_content{
+    display: block;
+    color: black;
+    padding-left: 10px;
+    padding-top: 5px;
+  
+}
+
+.dropdown_aap_content:hover{
+    text-decoration: underline;
+}
+
+
+.dropDown-menu{
+    position: absolute;
+    background-color: white;
+    display: none;
+    color: black;
+    font-size: 14px;
+    z-index: 1;
+    margin-left:auto; margin-right:0;
+    border-style: ridge;
+    border-color:lightgray;
+    border-width: thin;
+}
+
+.dropdown_notofication{
+    position: absolute;
+    background-color: white;
+    display: none;
+    color: gray;
+    font-size: 20px;
+    z-index: 1;
+    border-style: ridge;
+    border-color:lightgray;
+    border-width: thin;
+    padding-top: 70px;
+    text-align: center;
+    width: 300px;
+    height: 200px;
+}
+
+.msg_watchlist{
+    color: gray;
+    font-size: 20px;
+    padding-top: 40px;
+    margin-right:30px;
+    padding-left: 20px;
+    width: 460px;
+    height: 110px;
+    font-weight: bold;
+}
+
+#sign-in-msg{
+    color: black;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
 
 
 

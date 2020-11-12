@@ -5,11 +5,13 @@ import { Dropdown } from 'primereact/dropdown';
 import './DropdownDemo.css';
 import { Button } from 'primereact/button';
 import './ButtonDemo.css';
-import { TabMenu } from 'primereact/tabmenu';
 import './CarouselDemo.css';
+import { TabView, TabPanel } from 'primereact/tabview';
+import './TabViewDemo.css';
 import { Carousel } from 'primereact/carousel';
 import clothes2 from './img/clothes2.jpg'
 import Sony from './img/sony.jpg'
+
 
 
 export class Home extends Component {
@@ -81,9 +83,7 @@ export class Home extends Component {
         })
         console.log(this.state);
       }
-
-
-
+      
 
     productTemplate(product) {
         return (
@@ -123,14 +123,41 @@ export class Home extends Component {
 
 
         return (
-            <div>
+            <div className="container-home">
                 <div id="first-row"> &nbsp;
           &nbsp; Hi! <a id="home_signIn" href="url">Sign in</a> or  <a id="home_register" href="url">register</a>  &nbsp;
           <a id="home_dailydeals" href="url" color="black">Daily Deals</a>  &nbsp; <a id="home_helpconatct" href="url" color="black">Help&Contact</a>
                     <a id="home_ship" href="url" color="black">Ship to</a>
+                    <div className="dropDown1">
                     <Button id="watchlist" label="Watchlist" icon="pi pi-angle-down" iconPos="right" className="p-button-secondary p-button-text" />
+                        <div className="dropDown-menu">
+                            <div className="msg_watchlist">
+                                Please&nbsp;<a id="sign-in-msg" href="url">Sign In</a>&nbsp;to view items you are watching.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="dropDown2">
                     <Button id="My_AAP" label="My AAP" icon="pi pi-angle-down" iconPos="right" className="p-button-secondary p-button-text" />
-                    <Button id="notification"  icon="pi pi-bell"  className="p-button-secondary p-button-text" />
+                        <div id="myDropdown" class="dropdown_aap">
+                            <a className="dropdown_aap_content" href="url">Summary</a>
+                            <a className="dropdown_aap_content" href="url">Recently Viewed</a>
+                            <a className="dropdown_aap_content"  href="url">Bids/offers</a>
+                            <a className="dropdown_aap_content" href="url">Watchlist</a>
+                            <a className="dropdown_aap_content"  href="url">Purchase History</a>
+                            <a className="dropdown_aap_content"  href="url">Buy again</a>
+                            <a className="dropdown_aap_content"  href="url">Selling</a>
+                            <a className="dropdown_aap_content"  href="url">Saved Searches</a>
+                            <a className="dropdown_aap_content"  href="url">Save  sellers</a>
+                            <a className="dropdown_aap_content"  href="url">Messages</a>
+                         </div>
+                    </div>
+                    <div className="dropDown3">
+                        <Button id="notification"  icon="pi pi-bell"  className="p-button-secondary p-button-text" />
+                             <div id="msg_notifications" class="dropdown_notofication">
+                             Please&nbsp;<a id="sign-in-msg2" href="url">Sign In</a>&nbsp;to view<br></br> notification.
+                             </div>
+                    </div>
                 </div>
                 <div>
                     <hr id="border1" align="right" />
@@ -144,9 +171,210 @@ export class Home extends Component {
                 </span>
 
                 <hr id="border2" align="right" />
-                <TabMenu id="tab-menu" model={this.items} />
+                
+                <TabView id="tab-view-0">
+                     <TabPanel header="Home">
 
-                <div id="div_carousel-item" className="card">
+                    </TabPanel>
+
+                    <TabPanel header='&nbsp;Saved'  leftIcon="pi pi-heart">
+                    </TabPanel>
+
+                    <TabPanel id="electronic-class" header='Electronics'>
+                    <div id="category-1">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Cell-Phones-link" label="Cell Phones & Accessories" className="p-button-link" /> </div>
+                            <div><Button id="Smart-Watches-link" label="Smart Watches" className="p-button-link" /> </div>
+                            <div><Button id="Video-Games-link" label="Video Games & Accessories" className="p-button-link" /> </div>
+                            <div><Button id="Computers-Tablets-link" label="Computers & Tablets" className="p-button-link" /> </div>
+                            <div><Button id="Digital-Cameras-link" label="Digital Cameras & Photo" className="p-button-link" /> </div>
+                            <div><Button id="Camera-Drones-link" label="Camera Drones" className="p-button-link" /> </div>
+                            <div><Button id="Deals-link" label="Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="iPhone-link" label="iPhone" className="p-button-link" /> </div>
+                            <div><Button id="Samsung-link" label="Samsung" className="p-button-link" /> </div>
+                            <div><Button id="Portable-Audio-link" label="Portable Audio & Headphones" className="p-button-link" /> </div>
+                            <div><Button id="TV-Video-link" label="TV, Video & Home Audio" className="p-button-link" /> </div>
+                            <div><Button id="Vehicle-Electronics-link" label="Vehicle Electronics & GPS" className="p-button-link" /> </div>
+                            <div><Button id="Smart-Home-link" label="Smart Home" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div3">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+
+                    <TabPanel id="fashion-class" header='Fashion'>
+
+                    <div id="category-2">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Womens-Clothing-link" label="Women's Clothing" className="p-button-link" /> </div>
+                            <div><Button id="Womens-Shoes-link" label="Women's Shoes" className="p-button-link" /> </div>
+                            <div><Button id="Mens-Clothing-link" label="Men's Clothing" className="p-button-link" /> </div>
+                            <div><Button id="Men-Shoes-link" label="Men's Shoes" className="p-button-link" /> </div>
+                            <div><Button id="Watches-Parts-Accessories-link" label="Watches, Parts & Accessories" className="p-button-link" /> </div>
+                            <div><Button id="Deals-link2" label="Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Fine-Jewelry-link" label="Fine Jewelry" className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Jewelry-link" label="Fashion Jewelry" className="p-button-link" /> </div>
+                            <div><Button id="Mens-Accessories-link" label="Men's Accessories" className="p-button-link" /> </div>
+                            <div><Button id="Womens-Handbags-Bags-link" label="Women's Handbags & Bags" className="p-button-link" /> </div>
+                            <div><Button id="Kids-Clothing-Shoes-Accs-link" label="Kids' Clothing, Shoes & Accs" className="p-button-link" /> </div>
+                            <div><Button id="Smart-Home-link" label="Smart Home" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div4">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+
+                    
+                    <TabPanel header='Health & Beauty'>
+
+                    <div id="category-3">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Makeup-link" label="Makeup" className="p-button-link" /> </div>
+                            <div><Button id="Health-Care-link" label="Health Care" className="p-button-link" /> </div>
+                            <div><Button id="Fragrances-link" label="Fragrances" className="p-button-link" /> </div>
+                            <div><Button id="Nail-Care-Manicure-Pedicure-link" label="Nail Care, Manicure & Pedicure" className="p-button-link" /> </div>
+                            <div><Button id="Hair-Care-Styling-link" label="Hair Care & Styling" className="p-button-link" /> </div>
+                            <div><Button id="Deals-link3" label="Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Skin-Care-link" label="Skin Care" className="p-button-link" /> </div>
+                            <div><Button id="Vitamins-Dietary-Supplements-link" label="Vitamins & Dietary Supplements" className="p-button-link" /> </div>
+                            <div><Button id="Shaving-Hair-Removal-link" label="Shaving & Hair Removal" className="p-button-link" /> </div>
+                            <div><Button id="Vision-Care-link" label="Vision Care" className="p-button-link" /> </div>
+                            <div><Button id="Bath-Body-link" label="Bath & Body" className="p-button-link" /> </div>
+                            <div><Button id="Oral-Care-link" label="Oral Care" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div5">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+
+                    <TabPanel header='Sports'>
+
+                    <div id="category-3">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Cycling-link" label="Cycling" className="p-button-link" /> </div>
+                            <div><Button id="Outdoor-Sports-link" label="Outdoor Sports" className="p-button-link" /> </div>
+                            <div><Button id="Hunting-link" label="Hunting" className="p-button-link" /> </div>
+                            <div><Button id="Fishing-link" label="Fishing" className="p-button-link" /> </div>
+                            <div><Button id="Fitness-Running-Yoga-link" label="Fitness, Running & Yoga" className="p-button-link" /> </div>
+                            <div><Button id="Deals-link4" label="Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Tennis-link" label="Tennis" className="p-button-link" /> </div>
+                            <div><Button id="Swimming-link" label="Swimming" className="p-button-link" /> </div>
+                            <div><Button id="Water-Sports-link" label="Water Sports" className="p-button-link" /> </div>
+                            <div><Button id="Winter-Sports-link" label="Winter Sports" className="p-button-link" /> </div>
+                            <div><Button id="Team-Sports-link" label="Team Sports" className="p-button-link" /> </div>
+                            <div><Button id="Fitness-Technology-link" label="Fitness Technology" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div6">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+
+                    <TabPanel header='Home & Garden'>
+
+                    <div id="category-3">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Tool-Workshop-Equipment-link" label="Tools & Workshop Equipment" className="p-button-link" /> </div>
+                            <div><Button id="Yard-Garden-Outdoor-Living-link" label="Yard, Garden & Outdoor Living" className="p-button-link" /> </div>
+                            <div><Button id="Home-Improvement-link" label="Home Improvement" className="p-button-link" /> </div>
+                            <div><Button id="Baby-link" label="Baby" className="p-button-link" /> </div>
+                            <div><Button id="Kitchen-Dining-Bar-link" label="Kitchen, Dining & Bar" className="p-button-link" /> </div>
+                            <div><Button id="Lamps-Lighting-Ceiling-Fans-link" label="Lamps, Lighting & Ceiling Fans" className="p-button-link" /> </div>
+                            <div><Button id="Deals-link5" label="Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Home-Decor-link" label="Home Décor" className="p-button-link" /> </div>
+                            <div><Button id="Home-Organization-Supplies-link" label="Home Organization Supplies" className="p-button-link" /> </div>
+                            <div><Button id="Art-Craft-Supplies-link" label="Art & Craft Supplies" className="p-button-link" /> </div>
+                            <div><Button id="Beads-Jewelry-Making-Supplies-link" label="Beads & Jewelry Making Supplies" className="p-button-link" /> </div>
+                            <div><Button id="Art-Supplies-link" label="Art Supplies" className="p-button-link" /> </div>
+                            <div><Button id="Scrapbooking-Paper-Crafts-link" label="Scrapbooking & Paper Crafts" className="p-button-link" /> </div>
+                            <div><Button id="Pets-Supplies-link" label="Pets Supplies" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div7">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+
+                    <TabPanel header='Deals'>
+
+                    <div id="category-3">
+                        <div className="wrapper-div">
+                            <h8 className="top-categories">Top Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Daily-Deals-link" label="Daily Deals" className="p-button-link" /> </div>
+                            <div><Button id="Tech-Deals-link" label="Tech Deals" className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Deals-link" label="Fashion Deals" className="p-button-link" /> </div>
+                            <div><Button id="Health-Beauty-Deals-link" label="Health and Beauty Deals" className="p-button-link" /> </div>
+                            <div><Button id="Home-Garden-Deals-link" label="Home and Garden Deals" className="p-button-link" /> </div>
+                            <div><Button id="Sporting-Goods-Deals-link" label="Sporting Goods Deals" className="p-button-link" /> </div>
+                        </div>
+
+                        <div className="wrapper-div2">
+                            <h8 className="other-categories">Other Categories</h8>
+                            <div> <hr id="border-categories-div" align="left" /></div>
+                            <div><Button id="Cellphone-Deals-link" label="Cellphone Deals" className="p-button-link" /> </div>
+                            <div><Button id="Camera-Deals-link" label="Camera Deals" className="p-button-link" /> </div>
+                            <div><Button id="Watches-Deals-link" label="Watches Deals" className="p-button-link" /> </div>
+                            <div><Button id="Jewelry-Deals-link" label="Jewelry Deals" className="p-button-link" /> </div>
+                            <div><Button id="Tech-Free-shipping-link" label="Tech with Free shipping" className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Free-shipping-link" label="Fashion with Free shipping" className="p-button-link" /> </div>
+                            <div><Button id="Hot-week-link" label="Hot trends of the week" className="p-button-link" /> </div>
+                        </div>
+
+                        <div id="wrapper-div8">
+                        </div>
+                     </div>
+
+                    </TabPanel>
+                    <TabPanel header='Under $10'>
+
+                    </TabPanel>                
+                </TabView>
+
+              <div id="div_carousel-item" className="card">
                     <Carousel id="carousel-item"  value={this.state.images} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions} className="custom-carousel" circular
                         autoplayInterval={3000} itemTemplate={this.productTemplate} header={""} />
                 </div>
@@ -287,6 +515,8 @@ export class Home extends Component {
                      
                      </div>
                   </div>
+                  
+
                 <div id="copy-right">
                 Copyright © 2020-2021 AAP Inc. All Rights Reserved. <a id="User_Agreement" href="url" color="black">User Agreement</a>, 
                 <a id="Privacy" href="url" color="black">Privacy</a>,
@@ -294,6 +524,7 @@ export class Home extends Component {
                 <a id="personal_information" href="url" color="black">Do not sell my personal information</a> and <a id="AdChoice" href="url" color="black">AdChoice</a> 
                   <i id="info_circle" className="pi pi-info-circle"></i>
                 </div>
+
               
         </div>
 
