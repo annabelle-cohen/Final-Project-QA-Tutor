@@ -2,6 +2,7 @@ package acs.logic;
 
 import java.util.List;
 
+import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
 
 	public UserBoundary createUser(UserBoundary input);
 
-	public UserBoundary updateUserDetails(String email, UserBoundary input);
+	public PersonalInfoBoundary updateUserDetails(String email, PersonalInfoBoundary input);
 
 	public List<UserBoundary> exportAllUsers(String email);
 

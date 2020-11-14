@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
 import acs.logic.UserService;
 
@@ -46,7 +47,7 @@ public class UserController {
 	@RequestMapping(path = "/acs/users/{userEmail}",
 			method = RequestMethod.PUT, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateUserDetails(@PathVariable("userEmail") String email, @RequestBody UserBoundary input) {
+	public void updateUserDetails(@PathVariable("userEmail") String email, @RequestBody PersonalInfoBoundary input) {
 
 		this.userService.updateUserDetails(email,input);
 

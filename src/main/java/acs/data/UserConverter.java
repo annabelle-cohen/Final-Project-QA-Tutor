@@ -17,21 +17,22 @@ public class UserConverter {
 
 	public UserBoundary convertFromEntity(UserEntity entity) {
 		UserBoundary userBound = new UserBoundary();
-		userBound.setAvatar(entity.getAvatar());
-		userBound.setEmail(entity.getEmail());
-		userBound.setRoleEnum(entity.getRoleEnum());
-		if (entity.getUsername() != null) {
-			userBound.setUserName(entity.getUsername().getFirstName() + " " + entity.getUsername().getLastName());
-		} else {
-			userBound.setUserName(null);
-		}
+	//	userBound.setAvatar(entity.getAvatar());
+		//userBound.setEmail(entity.getEmail());
+		//userBound.setRoleEnum(entity.getRoleEnum());
+		//if (entity.getUsername() != null) {
+		//	userBound.setUserName(entity.getUsername().getFirstName() + " " + entity.getUsername().getLastName());
+		//} else {
+		//	userBound.setUserName(null);
+		//}
 
 		return userBound;
 	}
 
 	public UserEntity convertToEntity(UserBoundary boundary) {
 		UserEntity userEntity = new UserEntity();
-		userEntity.setAvatar(boundary.getAvatar());
+		
+	/*	userEntity.setAvatar(boundary.getAvatar());
 		if (boundary.getEmail() != null) {
 			userEntity.setEmail(boundary.getEmail());
 		} else {
@@ -65,6 +66,7 @@ public class UserConverter {
 		} else {
 
 		}
+		*/
 		return userEntity;
 	}
 }

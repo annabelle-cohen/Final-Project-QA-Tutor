@@ -1,61 +1,64 @@
 package acs.boundaries;
 
-import acs.data.UserRole;
-
 public class UserBoundary {
 	private String email;
-	private String username;
-	private String avatar;
-	private UserRole roleEnum;
+	private String firstName;
+	private String lastName;
+	private String password;
 
-
-
-	public UserBoundary(String email, String username, String avatar, UserRole roleEnum) {
+	public UserBoundary(String email, String firstName, String lastName , String password) {
 		super();
 		this.email = email;
-		this.username = username;
-		this.avatar = avatar;
-		this.roleEnum = roleEnum;
+		this.firstName = firstName;
+		this.lastName= lastName;
+		this.password= password;
 	}
 
 
 	public UserBoundary() { 
 	  }
-	 
-	
+
+
 	public String getEmail() {
 		return email;
 	}
 
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public UserRole getRoleEnum() {
-		return roleEnum;
-	}
-
-	public void setRoleEnum(UserRole roleEnum) {
-		this.roleEnum = roleEnum;
-	}
 
 	public void setEmail(String email) {
 		this.email = email;
 	}
 
-	public void setUserName(String username) {
-		this.username = username;
-	}
-	
-	
-	  public String getUsername() {
-		return username;
+
+	public String getFirstName() {
+		return firstName;
 	}
 
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	 
+	
 	
 
 }

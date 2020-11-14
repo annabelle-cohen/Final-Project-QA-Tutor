@@ -6,51 +6,38 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 @Entity
+@Table(name = "user")
 public class UserEntity implements Serializable {
 	@Id
-	private String email;
-	private UserName username;
-	private String avatar;
-	private UserRole roleEnum;
-
+	@Column(name = "email")
+	private String email; 
+	private String password;
+	
+	@OneToOne(mappedBy = "user")
+	private PersonalInfoEntity personalInfo; 
 	public UserEntity() {
 		super();
 	}
 
-	@javax.persistence.Id
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	@Embedded
-	public UserName getUsername() {
-		return username;
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	public PersonalInfoEntity getPersonalInfo() {
+		return personalInfo;
+	}
+	public void setPersonalInfo(PersonalInfoEntity personalInfo) {
+		this.personalInfo = personalInfo;
 	}
 
-	public void setUsername(UserName username) {
-		this.username = username;
-	}
-	
-	@Lob
-	public String getAvatar() {
-		return avatar;
-	}
 
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
-
-	@Enumerated(EnumType.STRING)
-	public UserRole getRoleEnum() {
-		return roleEnum;
-	}
-
-	public void setRoleEnum(UserRole roleEnum) {
-		this.roleEnum = roleEnum;
-	}
 
 }

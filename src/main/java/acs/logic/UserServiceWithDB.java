@@ -10,8 +10,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
+import acs.dal.AdminDao;
+import acs.dal.PersonalInfoDao;
 import acs.dal.UserDao;
+import acs.data.AdminEntity;
+import acs.data.PersonalInfoConverter;
+import acs.data.PersonalInfoEntity;
 import acs.data.UserConverter;
 import acs.data.UserEntity;
 import acs.data.UserRole;
@@ -19,8 +26,10 @@ import acs.data.UserRole;
 @Service
 public class UserServiceWithDB implements EnhanceUserService {
 	private UserDao usersDao;
+	private PersonalInfoDao personalInfoDao;
+	private AdminDao adminDao;
 	private UserConverter entityConverter;
-
+	private PersonalInfoConverter infoConverter ;
 	public UserServiceWithDB(UserDao userDao) {
 		this.usersDao = userDao;
 	}
@@ -29,6 +38,12 @@ public class UserServiceWithDB implements EnhanceUserService {
 	public void setEntityConverter(UserConverter entityConverter) {
 		this.entityConverter = entityConverter;
 	}
+	
+	@Autowired
+	public void setInfoConverter(PersonalInfoConverter infoConverter) {
+		this.infoConverter = infoConverter;
+	}
+
 
 	@Override
 	@Transactional(readOnly = true)
@@ -51,11 +66,8 @@ public class UserServiceWithDB implements EnhanceUserService {
 				throw new IllegalArgumentException("invalid email address " + newUser.getEmail());
 			}
 
-			if (!isValidAvatar(newUser.getAvatar())) {
-				throw new IllegalArgumentException("invalid user avatar " + newUser.getAvatar());
-			}
 			
-			if (newUser.getUsername() == null) {
+			if (newUser.getFirstName() == null || newUser.getLastName()==null) {
 				throw new UserNotFoundException("Could not create user for null user name!");
 			}
 
@@ -70,26 +82,47 @@ public class UserServiceWithDB implements EnhanceUserService {
 
 	@Override
 	@Transactional
-	public UserBoundary updateUserDetails(String email, UserBoundary update) {
-		Optional<UserEntity> entity = this.usersDao.findById(email);
+	public PersonalInfoBoundary updateUserDetails(String email,PersonalInfoBoundary update) {
+		
+		Optional<UserEntity> user = this.usersDao.findById(email);
+		
+	
+		if (user.isPresent()) {
+			
+				PersonalInfoBoundary existing = this.infoConverter.convertFromEntity(user.get().getPersonalInfo());
+				
+				if (update.getFirstName()!= null ) {
+					existing.setFirstName(update.getFirstName());
+				}
 
-		if (entity.isPresent()) {
-			UserBoundary existing = this.entityConverter.convertFromEntity(entity.get());
+				if (update.getLastName()!= null) {
+					existing.setLastName(update.getLastName());
+				}
+				
+				if (update.getAddress() != null) {
+					existing.setAddress(update.getAddress());
+				}
+				
+				if (update.getAvatar()!= null) {
+					existing.setAvatar(update.getAvatar());
+				}
+				
+				if (update.getCity()!=null) {
+					existing.setCity(update.getCity());
+				}
+				if (update.getCountry()!=null) {
+					existing.setCountry(update.getCountry());
+				}
+				if (update.getPhone()!= null ) {
+					existing.setPhone(update.getPhone());
+				}
 
-			if (update.getUsername() != null) {
-				existing.setUserName(update.getUsername());
-			}
+				this.personalInfoDao.save(this.infoConverter.convertToEntity(existing));
 
-			if (isValidAvatar(update.getAvatar())) {
-				existing.setAvatar(update.getAvatar());
-
-			}
-
-			this.usersDao.save(this.entityConverter.convertToEntity(existing));
-
-			return existing;
+				return existing;	
+			
 		} else {
-			throw new UserNotFoundException("could not update message for email: " + email);
+			throw new UserNotFoundException("user not found for email: " + email);
 		}
 
 	}
@@ -97,19 +130,15 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserBoundary> exportAllUsers(String adminEmail) {
-		Optional<UserEntity> entityAdmin = this.usersDao.findById(adminEmail);
+		Optional<AdminEntity> entityAdmin = this.adminDao.findById(adminEmail);
 		if (entityAdmin.isPresent()) {
-			if (entityAdmin.get().getRoleEnum().equals(UserRole.ADMIN)) {
 				List<UserBoundary> rv = new ArrayList<>();
 				Iterable<UserEntity> allUsers = this.usersDao.findAll();
 				for (UserEntity user : allUsers) {
 					rv.add(this.entityConverter.convertFromEntity(user));
 				}
 				return rv;
-			} else {
-				throw new IllegalArgumentException(
-						"Could not export all users for " + entityAdmin.get().getRoleEnum() + " role");
-			}
+			
 		} else {
 			throw new UserNotFoundException("Could not export all users for " + adminEmail);
 		}
@@ -119,14 +148,11 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Override
 	@Transactional
 	public void deleteAllUseres(String adminEmail) {
-		Optional<UserEntity> entityAdmin = this.usersDao.findById(adminEmail);
+		Optional<AdminEntity> entityAdmin = this.adminDao.findById(adminEmail);
 		if (entityAdmin.isPresent()) {
-			if (entityAdmin.get().getRoleEnum().equals(UserRole.ADMIN)) {
+			
 				this.usersDao.deleteAll();
-			} else {
-
-				throw new IllegalArgumentException("Could not delete for " + entityAdmin.get().getRoleEnum() + " role");
-			}
+			
 		} else {
 			throw new UserNotFoundException("Could not delete all users for " + adminEmail);
 		}
@@ -147,13 +173,9 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<UserBoundary> exportAllUsers(String email, int size, int page) {
-		Optional<UserEntity> entityAdmin = this.usersDao.findById(email);
+		Optional<AdminEntity> entityAdmin = this.adminDao.findById(email);
 		
 		if (entityAdmin.isPresent()) {
-		
-			if (!entityAdmin.get().getRoleEnum().equals(UserRole.ADMIN)) {
-				throw new UserNotFoundException("User is not an Admin, Could not export all users for " + email);	
-			}
 		
 		return new ArrayList<UserBoundary>(); // this.usersDao.findAll(PageRequest.of(page, size, Direction.ASC, "email")).getContent()
 				//.stream().map(this.entityConverter::convertFromEntity).collect(Collectors.toList());
