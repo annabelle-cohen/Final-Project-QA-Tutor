@@ -74,10 +74,18 @@ public class UserServiceWithDB implements EnhanceUserService {
 			}
 
 			
-			if (newUser.getFirstName() == null || newUser.getLastName()==null) {
-				throw new UserNotFoundException("Could not create user for null user name!");
+			if (newUser.getFirstName() == null) {
+				throw new UserNotFoundException("fist name can't be null!");
 			}
 
+			if (newUser.getLastName() == null) {
+				throw new UserNotFoundException("last name can't be null");
+			}
+			
+			if (newUser.getPassword()==null) {
+				throw new UserNotFoundException("password can't be null");
+			}
+			
 			UserEntity entity = this.entityConverter.convertToEntity(newUser);
 			
 			PersonalInfoEntity info = new PersonalInfoEntity();
