@@ -68,7 +68,7 @@ export class Home extends Component {
         ];
 
         this.productTemplate = this.productTemplate.bind(this);
-        console.log(this.state);
+        //console.log(this.state);
     }
 
 
@@ -123,11 +123,14 @@ export class Home extends Component {
 
 
         return (
+            /*first row - unclude sign in / registered / sign out/ watch list.. */
             <div className="container-home">
                 <div id="first-row"> &nbsp;
           &nbsp; Hi! <a id="home_signIn" href="url">Sign in</a> or  <a id="home_register" href="url">register</a>  &nbsp;
           <a id="home_dailydeals" href="url" color="black">Daily Deals</a>  &nbsp; <a id="home_helpconatct" href="url" color="black">Help&Contact</a>
                     <a id="home_ship" href="url" color="black">Ship to</a>
+
+                    {/*watchlist drop down*/}
                     <div className="dropDown1">
                     <Button id="watchlist" label="Watchlist" icon="pi pi-angle-down" iconPos="right" className="p-button-secondary p-button-text" />
                         <div className="dropDown-menu">
@@ -137,6 +140,7 @@ export class Home extends Component {
                         </div>
                     </div>
 
+                     {/*myAAP drop down*/}
                     <div className="dropDown2">
                     <Button id="My_AAP" label="My AAP" icon="pi pi-angle-down" iconPos="right" className="p-button-secondary p-button-text" />
                         <div id="myDropdown" class="dropdown_aap">
@@ -152,6 +156,8 @@ export class Home extends Component {
                             <a className="dropdown_aap_content"  href="url">Messages</a>
                          </div>
                     </div>
+
+                    {/*notification drop down*/}
                     <div className="dropDown3">
                         <Button id="notification"  icon="pi pi-bell"  className="p-button-secondary p-button-text" />
                              <div id="msg_notifications" class="dropdown_notofication">
@@ -162,6 +168,8 @@ export class Home extends Component {
                 <div>
                     <hr id="border1" align="right" />
                 </div>
+
+                {/*Home search input*/}
                 <span id="home_search" className="p-input-icon-left">
                     <i id="icon_search" className="pi pi-search" style={{ 'fontSize': '1.5em' }} />
                     <InputText id="home_search1" onChange = {this.handleSearch} placeholder="Search for anything" >
@@ -172,6 +180,7 @@ export class Home extends Component {
 
                 <hr id="border2" align="right" />
                 
+                {/*drop down menu for tabView menu*/}
                 <TabView id="tab-view-0">
                      <TabPanel header="Home">
 
@@ -185,24 +194,24 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Cell-Phones-link" label="Cell Phones & Accessories" className="p-button-link" /> </div>
-                            <div><Button id="Smart-Watches-link" label="Smart Watches" className="p-button-link" /> </div>
-                            <div><Button id="Video-Games-link" label="Video Games & Accessories" className="p-button-link" /> </div>
-                            <div><Button id="Computers-Tablets-link" label="Computers & Tablets" className="p-button-link" /> </div>
-                            <div><Button id="Digital-Cameras-link" label="Digital Cameras & Photo" className="p-button-link" /> </div>
-                            <div><Button id="Camera-Drones-link" label="Camera Drones" className="p-button-link" /> </div>
-                            <div><Button id="Deals-link" label="Deals" className="p-button-link" /> </div>
+                            <div><Button id="Cell-Phones-link" label="Cell Phones & Accessories"  onClick={e => console.log("top categories - cell phone")} className="p-button-link" /> </div>
+                            <div><Button id="Smart-Watches-link" label="Smart Watches" onClick={e => console.log("top categories - Smart-Watches")}  className="p-button-link" /> </div>
+                            <div><Button id="Video-Games-link" label="Video Games & Accessories" onClick={e => console.log("top categories - Video-Games")}  className="p-button-link" /> </div>
+                            <div><Button id="Computers-Tablets-link" label="Computers & Tablets" onClick={e => console.log("top categories - Computers-Tablets")}  className="p-button-link" /> </div>
+                            <div><Button id="Digital-Cameras-link" label="Digital Cameras & Photo" onClick={e => console.log("top categories - Digital-Cameras")}  className="p-button-link" /> </div>
+                            <div><Button id="Camera-Drones-link" label="Camera Drones" onClick={e => console.log("top categories - Camera-Drones")}   className="p-button-link" /> </div>
+                            <div><Button id="Deals-link" label="Deals" onClick={e => console.log("top categories - Deals")}   className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="iPhone-link" label="iPhone" className="p-button-link" /> </div>
-                            <div><Button id="Samsung-link" label="Samsung" className="p-button-link" /> </div>
-                            <div><Button id="Portable-Audio-link" label="Portable Audio & Headphones" className="p-button-link" /> </div>
-                            <div><Button id="TV-Video-link" label="TV, Video & Home Audio" className="p-button-link" /> </div>
-                            <div><Button id="Vehicle-Electronics-link" label="Vehicle Electronics & GPS" className="p-button-link" /> </div>
-                            <div><Button id="Smart-Home-link" label="Smart Home" className="p-button-link" /> </div>
+                            <div><Button id="iPhone-link" label="iPhone" onClick={e => console.log("top categories - iPhone")}  className="p-button-link" /> </div>
+                            <div><Button id="Samsung-link" label="Samsung"  onClick={e => console.log("top categories - Samsung")}  className="p-button-link" /> </div>
+                            <div><Button id="Portable-Audio-link" label="Portable Audio & Headphones"  onClick={e => console.log("top categories - Portable-Audio")}  className="p-button-link" /> </div>
+                            <div><Button id="TV-Video-link" label="TV, Video & Home Audio"  onClick={e => console.log("top categories - TV-Video")}  className="p-button-link" /> </div>
+                            <div><Button id="Vehicle-Electronics-link" label="Vehicle Electronics & GPS" onClick={e => console.log("top categories - Vehicle-Electronics")}  className="p-button-link" /> </div>
+                            <div><Button id="Smart-Home-link" label="Smart Home"  onClick={e => console.log("top categories - Smart-Home")}  className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div3">
@@ -217,23 +226,23 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Womens-Clothing-link" label="Women's Clothing" className="p-button-link" /> </div>
-                            <div><Button id="Womens-Shoes-link" label="Women's Shoes" className="p-button-link" /> </div>
-                            <div><Button id="Mens-Clothing-link" label="Men's Clothing" className="p-button-link" /> </div>
-                            <div><Button id="Men-Shoes-link" label="Men's Shoes" className="p-button-link" /> </div>
-                            <div><Button id="Watches-Parts-Accessories-link" label="Watches, Parts & Accessories" className="p-button-link" /> </div>
-                            <div><Button id="Deals-link2" label="Deals" className="p-button-link" /> </div>
+                            <div><Button id="Womens-Clothing-link" label="Women's Clothing" onClick={e => console.log("top categories - Womens-Clothing")}   className="p-button-link" /> </div>
+                            <div><Button id="Womens-Shoes-link" label="Women's Shoes" onClick={e => console.log("top categories - Womens-Shoes")}   className="p-button-link" /> </div>
+                            <div><Button id="Mens-Clothing-link" label="Men's Clothing" onClick={e => console.log("top categories - Mens-Clothing")}    className="p-button-link" /> </div>
+                            <div><Button id="Men-Shoes-link" label="Men's Shoes" onClick={e => console.log("top categories - Men-Shoes")}  className="p-button-link" /> </div>
+                            <div><Button id="Watches-Parts-Accessories-link" label="Watches, Parts & Accessories" onClick={e => console.log("top categories - Watches-Parts-Accessories")}   className="p-button-link" /> </div>
+                            <div><Button id="Deals-link2" label="Deals" onClick={e => console.log("top categories - Deals2")}  className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Fine-Jewelry-link" label="Fine Jewelry" className="p-button-link" /> </div>
-                            <div><Button id="Fashion-Jewelry-link" label="Fashion Jewelry" className="p-button-link" /> </div>
-                            <div><Button id="Mens-Accessories-link" label="Men's Accessories" className="p-button-link" /> </div>
-                            <div><Button id="Womens-Handbags-Bags-link" label="Women's Handbags & Bags" className="p-button-link" /> </div>
-                            <div><Button id="Kids-Clothing-Shoes-Accs-link" label="Kids' Clothing, Shoes & Accs" className="p-button-link" /> </div>
-                            <div><Button id="Smart-Home-link" label="Smart Home" className="p-button-link" /> </div>
+                            <div><Button id="Fine-Jewelry-link" label="Fine Jewelry" onClick={e => console.log("top categories - Fine-Jewelry")}  className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Jewelry-link" label="Fashion Jewelry" onClick={e => console.log("top categories - Fashion-Jewelry")}   className="p-button-link" /> </div>
+                            <div><Button id="Mens-Accessories-link" label="Men's Accessories" onClick={e => console.log("top categories - Mens-Accessories")}  className="p-button-link" /> </div>
+                            <div><Button id="Womens-Handbags-Bags-link" label="Women's Handbags & Bags" onClick={e => console.log("top categories - Womens-Handbags-Bags")}  className="p-button-link" /> </div>
+                            <div><Button id="Kids-Clothing-Shoes-Accs-link" label="Kids' Clothing, Shoes & Accs" onClick={e => console.log("top categories - Kids-Clothing-Shoes-Accs")}  className="p-button-link" /> </div>
+                            <div><Button id="Smart-Home-link" label="Smart Home" onClick={e => console.log("top categories - Smart-Home")}   className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div4">
@@ -249,23 +258,23 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Makeup-link" label="Makeup" className="p-button-link" /> </div>
-                            <div><Button id="Health-Care-link" label="Health Care" className="p-button-link" /> </div>
-                            <div><Button id="Fragrances-link" label="Fragrances" className="p-button-link" /> </div>
-                            <div><Button id="Nail-Care-Manicure-Pedicure-link" label="Nail Care, Manicure & Pedicure" className="p-button-link" /> </div>
-                            <div><Button id="Hair-Care-Styling-link" label="Hair Care & Styling" className="p-button-link" /> </div>
-                            <div><Button id="Deals-link3" label="Deals" className="p-button-link" /> </div>
+                            <div><Button id="Makeup-link" label="Makeup" onClick={e => console.log("top categories - Makeup")}  className="p-button-link" /> </div>
+                            <div><Button id="Health-Care-link" label="Health Care" onClick={e => console.log("top categories - Health-Care")}  className="p-button-link" /> </div>
+                            <div><Button id="Fragrances-link" label="Fragrances" onClick={e => console.log("top categories - Fragrances")}  className="p-button-link" /> </div>
+                            <div><Button id="Nail-Care-Manicure-Pedicure-link" label="Nail Care, Manicure & Pedicure" onClick={e => console.log("top categories - Nail-Care-Manicure-Pedicure")}   className="p-button-link" /> </div>
+                            <div><Button id="Hair-Care-Styling-link" label="Hair Care & Styling" onClick={e => console.log("top categories - Hair-Care-Styling")}  className="p-button-link" /> </div>
+                            <div><Button id="Deals-link3" label="Deals" onClick={e => console.log("top categories - Deals")}  className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Skin-Care-link" label="Skin Care" className="p-button-link" /> </div>
-                            <div><Button id="Vitamins-Dietary-Supplements-link" label="Vitamins & Dietary Supplements" className="p-button-link" /> </div>
-                            <div><Button id="Shaving-Hair-Removal-link" label="Shaving & Hair Removal" className="p-button-link" /> </div>
-                            <div><Button id="Vision-Care-link" label="Vision Care" className="p-button-link" /> </div>
-                            <div><Button id="Bath-Body-link" label="Bath & Body" className="p-button-link" /> </div>
-                            <div><Button id="Oral-Care-link" label="Oral Care" className="p-button-link" /> </div>
+                            <div><Button id="Skin-Care-link" label="Skin Care" onClick={e => console.log("top categories - Skin-Care")}  className="p-button-link" /> </div>
+                            <div><Button id="Vitamins-Dietary-Supplements-link" label="Vitamins & Dietary Supplements" onClick={e => console.log("top categories - Vitamins-Dietary-Supplements")}  className="p-button-link" /> </div>
+                            <div><Button id="Shaving-Hair-Removal-link" label="Shaving & Hair Removal" onClick={e => console.log("top categories - Shaving-Hair-Removal")}  className="p-button-link" /> </div>
+                            <div><Button id="Vision-Care-link" label="Vision Care" onClick={e => console.log("top categories - Vision-Care")}  className="p-button-link" /> </div>
+                            <div><Button id="Bath-Body-link" label="Bath & Body" onClick={e => console.log("top categories - Bath-Body")}  className="p-button-link" /> </div>
+                            <div><Button id="Oral-Care-link" label="Oral Care" onClick={e => console.log("top categories - Oral-Care")}  className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div5">
@@ -280,23 +289,23 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Cycling-link" label="Cycling" className="p-button-link" /> </div>
-                            <div><Button id="Outdoor-Sports-link" label="Outdoor Sports" className="p-button-link" /> </div>
-                            <div><Button id="Hunting-link" label="Hunting" className="p-button-link" /> </div>
-                            <div><Button id="Fishing-link" label="Fishing" className="p-button-link" /> </div>
-                            <div><Button id="Fitness-Running-Yoga-link" label="Fitness, Running & Yoga" className="p-button-link" /> </div>
-                            <div><Button id="Deals-link4" label="Deals" className="p-button-link" /> </div>
+                            <div><Button id="Cycling-link" label="Cycling" onClick={e => console.log("top categories - Cycling")}  className="p-button-link" /> </div>
+                            <div><Button id="Outdoor-Sports-link" label="Outdoor Sports" onClick={e => console.log("top categories - Outdoor-Sports")}  className="p-button-link" /> </div>
+                            <div><Button id="Hunting-link" label="Hunting" onClick={e => console.log("top categories - Hunting")}  className="p-button-link" /> </div>
+                            <div><Button id="Fishing-link" label="Fishing" onClick={e => console.log("top categories - Fishing")}  className="p-button-link" /> </div>
+                            <div><Button id="Fitness-Running-Yoga-link" label="Fitness, Running & Yoga" onClick={e => console.log("top categories - Fitness-Running-Yoga")}  className="p-button-link" /> </div>
+                            <div><Button id="Deals-link4" label="Deals" onClick={e => console.log("top categories - Deals")}  className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Tennis-link" label="Tennis" className="p-button-link" /> </div>
-                            <div><Button id="Swimming-link" label="Swimming" className="p-button-link" /> </div>
-                            <div><Button id="Water-Sports-link" label="Water Sports" className="p-button-link" /> </div>
-                            <div><Button id="Winter-Sports-link" label="Winter Sports" className="p-button-link" /> </div>
-                            <div><Button id="Team-Sports-link" label="Team Sports" className="p-button-link" /> </div>
-                            <div><Button id="Fitness-Technology-link" label="Fitness Technology" className="p-button-link" /> </div>
+                            <div><Button id="Tennis-link" label="Tennis" onClick={e => console.log("top categories - Tennis")}  className="p-button-link" /> </div>
+                            <div><Button id="Swimming-link" label="Swimming" onClick={e => console.log("top categories - Swimming")}  className="p-button-link" /> </div>
+                            <div><Button id="Water-Sports-link" label="Water Sports" onClick={e => console.log("top categories - Water-Sports")} className="p-button-link" /> </div>
+                            <div><Button id="Winter-Sports-link" label="Winter Sports" onClick={e => console.log("top categories - Winter-Sports")}  className="p-button-link" /> </div>
+                            <div><Button id="Team-Sports-link" label="Team Sports" onClick={e => console.log("top categories - Team-Sports")} className="p-button-link" /> </div>
+                            <div><Button id="Fitness-Technology-link" label="Fitness Technology" onClick={e => console.log("top categories - Fitness-Technology")}  className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div6">
@@ -311,25 +320,25 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Tool-Workshop-Equipment-link" label="Tools & Workshop Equipment" className="p-button-link" /> </div>
-                            <div><Button id="Yard-Garden-Outdoor-Living-link" label="Yard, Garden & Outdoor Living" className="p-button-link" /> </div>
-                            <div><Button id="Home-Improvement-link" label="Home Improvement" className="p-button-link" /> </div>
-                            <div><Button id="Baby-link" label="Baby" className="p-button-link" /> </div>
-                            <div><Button id="Kitchen-Dining-Bar-link" label="Kitchen, Dining & Bar" className="p-button-link" /> </div>
-                            <div><Button id="Lamps-Lighting-Ceiling-Fans-link" label="Lamps, Lighting & Ceiling Fans" className="p-button-link" /> </div>
-                            <div><Button id="Deals-link5" label="Deals" className="p-button-link" /> </div>
+                            <div><Button id="Tool-Workshop-Equipment-link" label="Tools & Workshop Equipment" onClick={e => console.log("top categories - Tool-Workshop-Equipment")}  className="p-button-link" /> </div>
+                            <div><Button id="Yard-Garden-Outdoor-Living-link" label="Yard, Garden & Outdoor Living" onClick={e => console.log("top categories - Yard-Garden-Outdoor-Living")}  className="p-button-link" /> </div>
+                            <div><Button id="Home-Improvement-link" label="Home Improvement" onClick={e => console.log("top categories - Home-Improvement")} className="p-button-link" /> </div>
+                            <div><Button id="Baby-link" label="Baby" onClick={e => console.log("top categories - Baby")} className="p-button-link" /> </div>
+                            <div><Button id="Kitchen-Dining-Bar-link" label="Kitchen, Dining & Bar" onClick={e => console.log("top categories - Kitchen-Dining-Bar")}  className="p-button-link" /> </div>
+                            <div><Button id="Lamps-Lighting-Ceiling-Fans-link" label="Lamps, Lighting & Ceiling Fans" onClick={e => console.log("top categories - Lamps-Lighting-Ceiling-Fans")}  className="p-button-link" /> </div>
+                            <div><Button id="Deals-link5" label="Deals" onClick={e => console.log("top categories - Deals")}  className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Home-Decor-link" label="Home Décor" className="p-button-link" /> </div>
-                            <div><Button id="Home-Organization-Supplies-link" label="Home Organization Supplies" className="p-button-link" /> </div>
-                            <div><Button id="Art-Craft-Supplies-link" label="Art & Craft Supplies" className="p-button-link" /> </div>
-                            <div><Button id="Beads-Jewelry-Making-Supplies-link" label="Beads & Jewelry Making Supplies" className="p-button-link" /> </div>
-                            <div><Button id="Art-Supplies-link" label="Art Supplies" className="p-button-link" /> </div>
-                            <div><Button id="Scrapbooking-Paper-Crafts-link" label="Scrapbooking & Paper Crafts" className="p-button-link" /> </div>
-                            <div><Button id="Pets-Supplies-link" label="Pets Supplies" className="p-button-link" /> </div>
+                            <div><Button id="Home-Decor-link" label="Home Décor" onClick={e => console.log("top categories - Home Décor")} className="p-button-link" /> </div>
+                            <div><Button id="Home-Organization-Supplies-link" label="Home Organization Supplies" onClick={e => console.log("top categories - Home-Organization-Supplies")} className="p-button-link" /> </div>
+                            <div><Button id="Art-Craft-Supplies-link" label="Art & Craft Supplies" onClick={e => console.log("top categories - Art-Craft-Supplies")}  className="p-button-link" /> </div>
+                            <div><Button id="Beads-Jewelry-Making-Supplies-link" label="Beads & Jewelry Making Supplies" onClick={e => console.log("top categories - Beads-Jewelry-Making-Supplies")} className="p-button-link" /> </div>
+                            <div><Button id="Art-Supplies-link" label="Art Supplies" onClick={e => console.log("top categories - Art-Supplies")}  className="p-button-link" /> </div>
+                            <div><Button id="Scrapbooking-Paper-Crafts-link" label="Scrapbooking & Paper Crafts" onClick={e => console.log("top categories - Scrapbooking-Paper")}   className="p-button-link" /> </div>
+                            <div><Button id="Pets-Supplies-link" label="Pets Supplies" onClick={e => console.log("top categories - Pets-Supplies")}  className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div7">
@@ -344,24 +353,24 @@ export class Home extends Component {
                         <div className="wrapper-div">
                             <h8 className="top-categories">Top Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Daily-Deals-link" label="Daily Deals" className="p-button-link" /> </div>
-                            <div><Button id="Tech-Deals-link" label="Tech Deals" className="p-button-link" /> </div>
-                            <div><Button id="Fashion-Deals-link" label="Fashion Deals" className="p-button-link" /> </div>
-                            <div><Button id="Health-Beauty-Deals-link" label="Health and Beauty Deals" className="p-button-link" /> </div>
-                            <div><Button id="Home-Garden-Deals-link" label="Home and Garden Deals" className="p-button-link" /> </div>
-                            <div><Button id="Sporting-Goods-Deals-link" label="Sporting Goods Deals" className="p-button-link" /> </div>
+                            <div><Button id="Daily-Deals-link" label="Daily Deals" onClick={e => console.log("top categories - Daily-Deals")} className="p-button-link" /> </div>
+                            <div><Button id="Tech-Deals-link" label="Tech Deals" onClick={e => console.log("top categories - Tech-Deals")}  className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Deals-link" label="Fashion Deals" onClick={e => console.log("top categories - Fashion-Deals")}  className="p-button-link" /> </div>
+                            <div><Button id="Health-Beauty-Deals-link" label="Health and Beauty Deals" onClick={e => console.log("top categories - Health-Beauty-Deals")}   className="p-button-link" /> </div>
+                            <div><Button id="Home-Garden-Deals-link" label="Home and Garden Deals" onClick={e => console.log("top categories - Home-Garden-Deals")}  className="p-button-link" /> </div>
+                            <div><Button id="Sporting-Goods-Deals-link" label="Sporting Goods Deals" onClick={e => console.log("top categories - Sporting-Goods-Deals")}  className="p-button-link" /> </div>
                         </div>
 
                         <div className="wrapper-div2">
                             <h8 className="other-categories">Other Categories</h8>
                             <div> <hr id="border-categories-div" align="left" /></div>
-                            <div><Button id="Cellphone-Deals-link" label="Cellphone Deals" className="p-button-link" /> </div>
-                            <div><Button id="Camera-Deals-link" label="Camera Deals" className="p-button-link" /> </div>
-                            <div><Button id="Watches-Deals-link" label="Watches Deals" className="p-button-link" /> </div>
-                            <div><Button id="Jewelry-Deals-link" label="Jewelry Deals" className="p-button-link" /> </div>
-                            <div><Button id="Tech-Free-shipping-link" label="Tech with Free shipping" className="p-button-link" /> </div>
-                            <div><Button id="Fashion-Free-shipping-link" label="Fashion with Free shipping" className="p-button-link" /> </div>
-                            <div><Button id="Hot-week-link" label="Hot trends of the week" className="p-button-link" /> </div>
+                            <div><Button id="Cellphone-Deals-link" label="Cellphone Deals" onClick={e => console.log("top categories - Cellphone-Deals")} className="p-button-link" /> </div>
+                            <div><Button id="Camera-Deals-link" label="Camera Deals" onClick={e => console.log("top categories - Camera-Deals")} className="p-button-link" /> </div>
+                            <div><Button id="Watches-Deals-link" label="Watches Deals" onClick={e => console.log("top categories - Watches-Deals")} className="p-button-link" /> </div>
+                            <div><Button id="Jewelry-Deals-link" label="Jewelry Deals" onClick={e => console.log("top categories - Jewelry-Deals")}  className="p-button-link" /> </div>
+                            <div><Button id="Tech-Free-shipping-link" label="Tech with Free shipping" onClick={e => console.log("top categories - Tech-Free-shipping")}  className="p-button-link" /> </div>
+                            <div><Button id="Fashion-Free-shipping-link" label="Fashion with Free shipping" onClick={e => console.log("top categories - Fashion-Free-shipping")} className="p-button-link" /> </div>
+                            <div><Button id="Hot-week-link" label="Hot trends of the week" onClick={e => console.log("top categories - Hot-week")}  className="p-button-link" /> </div>
                         </div>
 
                         <div id="wrapper-div8">
@@ -373,12 +382,14 @@ export class Home extends Component {
 
                     </TabPanel>                
                 </TabView>
-
+                
+               {/*first carousel for images soon will be read from server right now static*/}
               <div id="div_carousel-item" className="card">
                     <Carousel id="carousel-item"  value={this.state.images} numVisible={3} numScroll={1} responsiveOptions={this.responsiveOptions} className="custom-carousel" circular
                         autoplayInterval={3000} itemTemplate={this.productTemplate} header={""} />
                 </div>
 
+                {/*explore popular categories - right now static soon from server and another categories*/}
                 <div id="second-title">
                     <h5>Explore Popular Categories</h5>
                     <br></br><br></br>
@@ -407,6 +418,7 @@ export class Home extends Component {
                     <div id="p_img6">Clothes</div></div>
                 </div>
 
+                {/*Daily deals - soon from server*/}
                 <div id="third-title">
                     <div id="daily_deals" onClick={e => console.log("Clicked 7")}>Daily Deals</div>
                     <div id="div-see-all" onClick={e => console.log("Clicked 8")}>|
@@ -418,7 +430,9 @@ export class Home extends Component {
                         itemTemplate={this.productTemplate} header={""} />
                    </div>
               </div>
+               
 
+                {/*explore popular categories - right now static soon from server and another categories*/}
               <div id="fourth-title">
                     <h5>Explore Popular Categories</h5>
                     <br></br><br></br>
@@ -451,6 +465,8 @@ export class Home extends Component {
                     <hr id="border3" align="right" />
                 </div>
 
+
+                {/*bottom - info - Buy,sell,Tools & apps,Companies,About AAP,Stay connected...*/}
                 <div className="about_bottom">
                     <div id="buy">
                         <h7 id="title-buy">Buy</h7>
@@ -517,6 +533,7 @@ export class Home extends Component {
                   </div>
                   
 
+                {/*copy-right*/}
                 <div id="copy-right">
                 Copyright © 2020-2021 AAP Inc. All Rights Reserved. <a id="User_Agreement" href="url" color="black">User Agreement</a>, 
                 <a id="Privacy" href="url" color="black">Privacy</a>,

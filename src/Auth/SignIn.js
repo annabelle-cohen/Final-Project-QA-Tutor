@@ -1,23 +1,82 @@
 import React, {Component} from 'react'
 import './signInStyle.css'
 import Code from './video/code5.mp4'
+import {saveUser} from '../Actions/authActions'
+import {Redirect} from 'react-router-dom';
+import { connect } from 'react-redux'
+
 
 class SignIn extends Component{
 
-    state = {
-        email: '',
-        password: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+          email: null,
+          password: null,
+          isLoggedIn: false,
+          succeded: false,
+          submitted: false
+        }
+        this.props.saveUser({ user:{} , isLoggedIn:false})
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+     
       }
+    
+
+
       handleChange = (e) => {
         this.setState({
           [e.target.id]: e.target.value
         })
       }
-      handleSubmit = (e) => {
+
+
+      handleSubmit=(e)=>{
         e.preventDefault();
-        console.log(this.state);
+      
+        fetch('http://localhost:8092//acs/users/login/'+this.state.email)
+        .then(response => {
+          if (response.status===200){
+            this.setState({succeded:true})
+            response.json().then((d)=>{
+            const user = d;
+    
+             //this.displayNotifaction(true, "login succeeded!")
+             this.props.saveUser({ user , isLoggedIn:true});
+
+        this.setState({isLoggedIn:true})
+            })
+          }else {
+            console.log('Error:', response);
+            response.json().then((d)=>{
+              this.displayNotifaction(false, d.message)
+              console.log("Errordata", d)
+             })
+          }
+          this.setState({submitted:true})
+        })
+        .catch((error) => {
+          console.error('Error:', error.data);
+        });
+        
+        
       }
 
+
+      loggedIn() {
+        const isLoggedIn = this.state.isLoggedIn
+        const userRole = this.props.auth.user.roleEnum
+        if (isLoggedIn) {
+          if(userRole ==="ADMIN"){
+          return <Redirect  to="/admin" />
+          }else {
+          return <Redirect  to="/dashboard" />
+         } 
+        }
+      
+      }
+    
 render(){
     return(
         <header class ="v-header container">
@@ -44,6 +103,7 @@ render(){
                                      <button id="signIn-button" className="btn grey darken-3 z-depth-3">Login</button>
 
                                  </div>
+                                    {this.loggedIn()}
                                  </form>
                              </div>
         
@@ -70,6 +130,23 @@ render(){
 }
 
 
+function mapDispatchToProps(dispatch) {
+    return {
+      saveUser: user => dispatch(saveUser(user))
+    };
+  }
+  
+  
+  const mapStateToProps = state => {
+    return { auth: state.auth };
+  };
+  
+  const Login = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignIn);
 
-export default SignIn
+
+
+export default Login
 

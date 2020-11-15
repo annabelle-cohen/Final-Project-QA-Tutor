@@ -1,1 +1,65 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+
+
+h4{
+    padding-top: 40px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+    position: static;
+    z-index: 3;
+}
+
+#about-div2{
+    background: rgb(255, 255, 255,.2);  
+    width: 700px;
+    height: 500px;
+    position: static;
+    text-align: center;
+    z-index: 3;
+    font-size: 18px;
+    color: white;
+  
+}
+p{
+    padding: 30px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#sec-div2{
+    padding-top: 20px;
+}
+
+.container-about{
+    margin: auto;
+    width: 50%;
+    position: relative;
+    z-index: 3;
+}
+
+.wrapper_about{
+    background-image: url("./img/code_background.jpg");
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin-top: 64px;
+        height: 100vh;
+        width: 100vw;
+        position: absolute;
+        top:0;
+        left: 0;
+        z-index: 1;
+}
+
+#background{
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top:0;
+    left: 0;
+    background: #255470;
+    z-index: 2;
+    opacity: 0.65;
+}
