@@ -1,0 +1,83 @@
+{
+	"info": {
+		"_postman_id": "1cecae9b-fd9a-404c-a505-25b5b067e40d",
+		"name": "backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ali@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"lastName\": \"milhim\",\r\n    \"password\": \"ali123\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8091/acs/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"acs",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8091/acs/users/login/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"acs",
+						"users",
+						"login",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8091/acs/users/detail/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8091",
+					"path": [
+						"acs",
+						"users",
+						"detail",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

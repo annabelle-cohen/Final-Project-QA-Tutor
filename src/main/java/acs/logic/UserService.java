@@ -17,4 +17,6 @@ public interface UserService {
 
 	public void deleteAllUseres(String adminEmail);
 
+	public PersonalInfoBoundary getUserDetails(String email);
+
 }

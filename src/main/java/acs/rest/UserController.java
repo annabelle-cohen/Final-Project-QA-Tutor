@@ -52,4 +52,14 @@ public class UserController {
 		this.userService.updateUserDetails(email,input);
 
 	}
+
+	@RequestMapping(path = "/acs/users/detail/{userEmail}",
+			method = RequestMethod.GET, 
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	public PersonalInfoBoundary getUserDetails(@PathVariable("userEmail") String email) {
+
+		return this.userService.getUserDetails(email);
+
+	}
+	
 }

@@ -35,6 +35,11 @@ public class UserServiceWithDB implements EnhanceUserService {
 	}
 
 	@Autowired
+	public void setPersonalInfoDao( PersonalInfoDao personalInfoDao) {
+		this.personalInfoDao = personalInfoDao;
+	}
+	
+	@Autowired
 	public void setEntityConverter(UserConverter entityConverter) {
 		this.entityConverter = entityConverter;
 	}
@@ -43,6 +48,8 @@ public class UserServiceWithDB implements EnhanceUserService {
 	public void setInfoConverter(PersonalInfoConverter infoConverter) {
 		this.infoConverter = infoConverter;
 	}
+	
+	
 
 
 	@Override
@@ -72,14 +79,38 @@ public class UserServiceWithDB implements EnhanceUserService {
 			}
 
 			UserEntity entity = this.entityConverter.convertToEntity(newUser);
+			
+			PersonalInfoEntity info = new PersonalInfoEntity();
+			info.setLastName(newUser.getFirstName());
+			info.setFirstName(newUser.getFirstName());
+			info.setUser(entity);
+			
+			entity.setPersonalInfo(info);
+			
+			//save them to database
+			info = this.personalInfoDao.save(info);
 			entity = this.usersDao.save(entity);
-
+			//
+			
 			return this.entityConverter.convertFromEntity(entity);
 		} else {
 			throw new UserNotFoundException("this e-mail adress is already exist in the system!");
 		}
 	}
 
+	
+	@Override
+	@Transactional
+	public PersonalInfoBoundary getUserDetails(String email) {
+		Optional<UserEntity> userEntity = this.usersDao.findById(email);
+		if (userEntity.isPresent()) {
+			return this.infoConverter.convertFromEntity(userEntity.get().getPersonalInfo());
+		} else {
+			throw new UserNotFoundException("Could not find user message for " + email);
+		}
+	}
+	
+	
 	@Override
 	@Transactional
 	public PersonalInfoBoundary updateUserDetails(String email,PersonalInfoBoundary update) {

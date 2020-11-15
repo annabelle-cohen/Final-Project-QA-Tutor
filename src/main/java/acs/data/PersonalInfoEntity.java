@@ -4,8 +4,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 @Entity
 public class PersonalInfoEntity implements Serializable {
-	@Id @GeneratedValue(strategy=GenerationType.AUTO)
-	private String personalID; 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(unique = true, nullable = false)
+	private Long  personalID; 
 	private String Address ;
 	private String country ; 
 	private String city ; 
@@ -19,11 +21,11 @@ public class PersonalInfoEntity implements Serializable {
 	@JoinColumn(name = "user_email", referencedColumnName = "email", foreignKey=@ForeignKey(name = "fk_personalInfo_email"))
     private UserEntity user;
 	
-	public String getPersonalID() {
+	public Long  getPersonalID() {
 		return personalID;
 	}
 
-	public void setPersonalID(String personalID) {
+	public void setPersonalID(Long  personalID) {
 		this.personalID = personalID;
 	}
 
