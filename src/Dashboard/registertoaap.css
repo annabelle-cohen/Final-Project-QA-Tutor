@@ -1,0 +1,72 @@
+.already-exist{
+    margin-left:1300px ;
+    margin-top: 40px; 
+    margin-bottom: 20px;
+}
+
+
+#signIn-link{
+    color: rgb(35, 35, 224);
+    text-decoration: underline;
+}
+
+#business-link{
+    color: rgb(35, 35, 224);
+    text-decoration: underline;  
+}
+
+.Create-Account{
+    text-align: center;
+    margin-top: 5px;
+}
+
+.first-row-name{
+    position: absolute;
+}
+
+.second-row-email{
+    position: relative;
+    float: initial;
+}
+
+#create-account-title{
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+  
+}
+
+#first-name-field{
+    margin-left: 400px;
+    display: inline-block;
+}
+
+#email-field{
+    margin-left: 400px;
+    margin-top: 20px;
+}
+
+#password-field{
+    margin-left: 400px; 
+    margin-top: 20px;
+}
+
+
+#last-name-field{
+    margin-left: 30px;
+    display: inline-block;
+}
+
+#firstName{
+   
+    width: 150px;
+}
+
+#lastName{
+    width: 150px;
+}
+
+
+
+
+

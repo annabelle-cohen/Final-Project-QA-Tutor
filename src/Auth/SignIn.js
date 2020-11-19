@@ -1,9 +1,9 @@
-import React, {Component} from 'react'
-import './signInStyle.css'
-import Code from './video/code5.mp4'
+import React, {Component} from 'react';
+import './signInStyle.css';
+import Code from './video/code5.mp4';
 import {saveUser} from '../Actions/authActions'
 import {Redirect} from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
 
 
 class SignIn extends Component{
@@ -17,8 +17,9 @@ class SignIn extends Component{
           succeded: false,
           submitted: false
         }
-        this.props.saveUser({ user:{} , isLoggedIn:false})
 
+        this.props.saveUser({ user:{} ,isLoggedIn:false});
+       
         this.handleSubmit = this.handleSubmit.bind(this);
      
       }
@@ -50,7 +51,7 @@ class SignIn extends Component{
           }else {
             console.log('Error:', response);
             response.json().then((d)=>{
-              this.displayNotifaction(false, d.message)
+              this.displayNotifaction(false, d.message);
               console.log("Errordata", d)
              })
           }

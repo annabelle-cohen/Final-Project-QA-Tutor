@@ -109,5 +109,90 @@
     color: gray;  
 }
 
+#continue-button{
+    width: 437px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    font-weight: bold;
+    background-color: rgb(56, 56, 231);
+}
 
-              
+#continue-button:hover{
+    background-color: rgb(84, 84, 209);
+}
+
+#login-with-facebook{
+    width: 437px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: rgb(56, 56, 231);
+}
+
+
+#login-with-facebook:hover{
+    background-color: rgb(84, 84, 209);
+}
+
+#login-with-google{
+    width: 437px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    background-color: white;
+    font-weight: bold;
+    font-size: 14px;
+    color: gray;
+    border-color: darkgray;
+}
+
+#login-with-google:hover{
+    background-color: rgb(224, 224, 238);
+}
+
+#chekbox{
+    margin-left: 700px;
+    margin-top: 10px;
+}
+
+#checkbox-button{
+    border-radius: 0;
+    size: 5px;
+}
+
+#button-read-more{
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /*optional*/
+    font-family: arial, sans-serif;
+    /*input has OS specific font-family*/
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+
+}
+
+#button-read-more:focus{
+    box-shadow:none !important;
+}
+
+
+#submit-form{
+    border-radius: 0;
+    margin-top: 250px;
+    margin-left: 400px;
+    width: 330px;
+    height: 50px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-color: gray;
+    background-color: gray;
+}

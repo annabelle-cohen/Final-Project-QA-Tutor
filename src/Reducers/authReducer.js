@@ -1,7 +1,7 @@
 import { SAVE_USER } from "../Constant/action-types";
 
 const iniState ={
-    isLoggedIn: false,
+    isLoggedIn: true,
     user:{
     avatar: "asdasd",
     email: "a1@a.com",

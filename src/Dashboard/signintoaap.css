@@ -1,0 +1,127 @@
+.signInToAAP-container{
+    text-align: center;
+}
+
+h3{
+    padding-top: 100px;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+#link-to-register{
+    text-decoration: underline;
+    color: rgb(56, 56, 231);
+}
+
+#username-span{
+  margin-top: 25px;
+  margin-left: 550px;
+  margin-right: 550px;
+}
+
+.border-title-2{
+    margin-left: 550px;
+    margin-right: 550px;
+    margin-top: 30px;
+   
+}
+
+#border-title-or1{
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+    width: 200px;
+    display: inline-flex;
+}
+
+#border-title-or2{
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+    display: inline-flex;
+    width: 200px;
+}
+
+.border1{
+    
+    display: inline-block;
+    flex-wrap: wrap;
+}
+
+.border2{
+    display: inline-block;  
+}
+
+.facebook-button{
+    padding-top: 15px;
+}
+
+.google-button{
+    padding-top: 3px;
+}
+
+#label-checkbox{
+    color: black;
+    font-size: 14px;
+}
+
+#protect-account{
+    text-align: center;
+    margin-top: 0;
+    vertical-align: auto;
+}
+
+
+
+
+.container-read-more{
+    border-color: gray;
+    border-style: groove;
+    margin-left: 450px;
+    width: 700px;
+   margin-bottom: 10px;
+}
+
+.for-icon{
+    display: inline-block;
+    width: 10px;
+   margin-bottom: 60px;
+   margin-right: 30px;
+   position: static;
+   
+}
+
+.content-read-more{
+    display: inline-block;   
+    width: 500px;
+    margin-top: 30px;
+    margin-left: 30px;
+    position: static;
+}
+
+#info-icon{
+    font-size: 2.5em;
+}
+
+#border4{
+    margin-top: 30px;
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+  }
+
+  #copy-right{
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-bottom: 50px;
+    font-size: smaller;
+  }
+
+  #User_Agreement,#Privacy,#Cookies,#personal_information,#AdChoice{
+    color: gray;
+      text-decoration: underline;
+  }
+
+  #info_circle{
+    margin-left: 4px
+  }

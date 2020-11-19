@@ -11,6 +11,8 @@ import './TabViewDemo.css';
 import { Carousel } from 'primereact/carousel';
 import clothes2 from './img/clothes2.jpg'
 import Sony from './img/sony.jpg'
+import { Link, Route, NavLink } from 'react-router-dom';
+
 
 
 
@@ -124,12 +126,12 @@ export class Home extends Component {
 
         return (
             /*first row - unclude sign in / registered / sign out/ watch list.. */
-            <div className="container-home">
+            <div className="container-home">      
                 <div id="first-row"> &nbsp;
-          &nbsp; Hi! <a id="home_signIn" href="url">Sign in</a> or  <a id="home_register" href="url">register</a>  &nbsp;
+          &nbsp; Hi! <a id="home_signIn" href="/dashboard/signInToAAP">Sign in</a> or  <a id="home_register" href="/dashboard/registerToAAP">register</a>  &nbsp;
           <a id="home_dailydeals" href="url" color="black">Daily Deals</a>  &nbsp; <a id="home_helpconatct" href="url" color="black">Help&Contact</a>
                     <a id="home_ship" href="url" color="black">Ship to</a>
-
+    
                     {/*watchlist drop down*/}
                     <div className="dropDown1">
                     <Button id="watchlist" label="Watchlist" icon="pi pi-angle-down" iconPos="right" className="p-button-secondary p-button-text" />
