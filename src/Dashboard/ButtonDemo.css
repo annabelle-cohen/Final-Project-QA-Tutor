@@ -32,12 +32,19 @@
 }
 
 #watchlist{
+    background: none!important;
+    border: none;
     height: 5px;
    margin-bottom: 2px;
    font-size: 13px;
    width: 100px;
    color: black;
 }
+
+#watchlist:focus{
+    box-shadow:none !important;
+}
+
 
 #watchlist:hover{
     background-color: transparent;
@@ -46,11 +53,17 @@
 }
 
 #My_AAP{
+    background: none!important;
+    border: none;
     height: 5px;
     margin-bottom: 2px;
     font-size: 13px;
     width: 110px;
     color: black;
+}
+
+#My_AAP:focus{
+    box-shadow:none !important; 
 }
 
 #My_AAP:hover{
@@ -195,4 +208,40 @@
     font-weight: bold;
     border-color: gray;
     background-color: gray;
+}
+
+
+#login-with-facebook2{
+    width: 330px;
+    margin-top: 10px;
+    padding-top: 15px;
+    margin-left: 900px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: rgb(56, 56, 231);
+}
+
+
+#login-with-facebook2:hover{
+    background-color: rgb(84, 84, 209);
+}
+
+#login-with-google2{
+    width: 330px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-left: 900px;
+    border-radius: 0;
+    background-color: white;
+    font-weight: bold;
+    font-size: 14px;
+    color: gray;
+    border-color: darkgray;
+}
+
+#login-with-google2:hover{
+    background-color: rgb(224, 224, 238);
 }

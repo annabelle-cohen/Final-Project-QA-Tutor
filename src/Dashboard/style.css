@@ -597,5 +597,16 @@ border-radius: 50%;
                 #info_circle{
                   margin-left: 4px
                 }
+
+                #myDropdown{
+                  position: absolute;
+                  z-index: 999;
+                }
+
+                #msg_notifications{
+                  position: absolute;
+                  z-index: 999;
+                }
+                
                
                  

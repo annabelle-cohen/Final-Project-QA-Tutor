@@ -12,6 +12,7 @@ import About from './Auth/About'
 import {Home} from './Dashboard/dashboard'
 import {  SignInToAAP  } from './Dashboard/SignInToAAP'
 import {  RegisterToAAP  } from './Dashboard/RegisterToAAP'
+import { businessRegister } from './Dashboard/businessRegister'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
            <Route exact path='/signIn' component={SignIn}/>
            <Route exact path='/dashboard/signInToAAP' component={ SignInToAAP }/>
            <Route exact path='/dashboard/registerToAAP' component={ RegisterToAAP }/>
+           <Route exact path='/dashboard/registerToAAP/businessregister' component={ businessRegister }/>
            <Route path='/about' component={About}/>
          </Switch>
      </div>

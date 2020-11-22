@@ -36,7 +36,7 @@ export class SignInToAAP extends Component {
             <div className="signInToAAP-container">
             <h3>Hello</h3>
             <div className="title-1-sign-in-to-aap">
-                    Sign in to AAP or&nbsp;<Link id="link-to-register" to="/dashboard/register">create an account</Link>
+                    Sign in to AAP or&nbsp;<Link id="link-to-register" to="/dashboard/registerToAAP">create an account</Link>
             </div>
 
 
