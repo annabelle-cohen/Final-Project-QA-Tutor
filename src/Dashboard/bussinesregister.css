@@ -7,6 +7,7 @@
 .register-form{
     padding-top: 20px;
    padding-left: 100px;
+
 }
 
 #logo-aap{
@@ -91,6 +92,7 @@
 .card-form{
     margin-right: 300px;
     width: 360px;
+    height: 700px;
 }
 
 .info-icon-class{
@@ -135,5 +137,68 @@
 
 #recaptcha{
     margin-left: 15px;
+    position: absolute;
+    margin-top: 80px;
 }
 
+#number-country{
+    display: inline-block;
+    margin-right: 120px;
+    padding-bottom: 10px;
+    width: 70px;
+    position: absolute;
+    z-index: 0;
+}
+
+
+#number-country2{
+    display: inline-block;
+    width: 250px;
+    position: absolute;
+    margin-left: 80px;
+    z-index: 1;
+
+}
+
+
+#code-phone{
+    text-align: left;
+    z-index: 1;
+    border-color: transparent;
+}
+
+#code-phone:focus{
+    box-shadow:none !important; 
+    border-color: transparent;
+    border: transparent !important;
+    border:0px;
+    border-style: hidden;
+    outline:0px;
+}
+
+#code-phone::selection{
+    box-shadow:none !important; 
+    border-color: transparent;
+    border: transparent !important;
+    border:0px;
+    border-style: hidden;
+    outline:0px; 
+}
+
+#container-phone-number{
+    position: absolute; 
+}
+
+
+#phone-number-label{
+    position: absolute;
+    z-index: 0;
+    width: 1000px;
+}
+
+
+#phone-number-label2{
+    position: absolute;
+    z-index: 3;
+    width: 1000px;
+}

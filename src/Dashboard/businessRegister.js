@@ -6,10 +6,15 @@ import React, { Component} from 'react'
 import './bussinesregister.css'
 import './DropdownDemo2.css';
 import './flag.css';
+import { Dropdown } from 'primereact/dropdown';
+import './DropdownDemo.css';
 import { Link } from 'react-router-dom'
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import Recaptcha from 'react-recaptcha';
+
+
+
 
 
 
@@ -26,14 +31,43 @@ export class businessRegister extends Component {
             reenterEmail:null,
             passwordBussines:null,
             selectedCountry: null,
+            phoneNumber:null,
             bussinesNameError:"",
             bussinessEmailError:"",
             reenterEmailError:"",
             passwordBussinesError:"",
-            isVerified: false
+            phoneNumberError:"",
+            isVerified: false,
+           
+
         }
 
+        this.countries = [
+            {name: '+61', code: 'AU'},
+            {name: '+55', code: 'BR'},
+            {name: '+86', code: 'CN'},
+            {name: '+20', code: 'EG'},
+            {name: '+33', code: 'FR'},
+            {name: '+49', code: 'DE'},
+            {name: '+91', code: 'IN'},
+            {name: '+81', code: 'JP'},
+            {name: '+34', code: 'ES'},
+            {name: '+1', code: 'US'}
+        ];
+
+
     }
+
+
+    onCountryChanged = (e)=> {
+        console.log(e);
+        this.setState({selectedCountry:e.target.value.name})
+    }
+
+
+    
+
+
 
 
     recaptchaLoaded() {
@@ -41,6 +75,7 @@ export class businessRegister extends Component {
       }
 
       verifyCallback(response) {
+          console.log(response);
         if (response) {
           this.setState({
             isVerified: true
@@ -73,10 +108,20 @@ export class businessRegister extends Component {
 }
 
 
-  
+handleGoogleClientLoad() {
+    console.log('Success on load');
+}
+componentDidMount() {
+    <script src="https://www.google.com/recaptcha/api.js?render=explicit" async defer > </script>
+
+   }
 
 
 render(){
+
+
+
+
     return(
         <div className="register-bussiness-container">
         <label id="logo-aap">Logo in future</label>
@@ -143,13 +188,34 @@ render(){
             <small id="passwordBussines-help" className="p-invalid p-d-block">{this.state.passwordBussinesError}</small>
         </div>
 
+        <div id="phone-number-label">
+            <label  id="phone-number-label2" htmlFor="phoneNumber" className="p-d-block">Business Phone Number</label>
+        </div>
+        <br></br>
+
+        <div id="container-phone-number">
+
+        <div id="number-country">
+     
+        <Dropdown id="code-phone" value={this.state.selectedCountry} options={this.countries} onChange={this.onCountryChanged}  optionLabel="name" editable/> 
+
+    
+        </div>
+
+        <div id="number-country2">
+             <InputText id="phoneNumber" value={this.state.phoneNumber} type="tel" maxLength="10" onChange={(e) => this.setState({phoneNumber: e.target.value})} aria-describedby="phoneNumber-help" className="p-invalid p-d-block" />
+                    <small id="phoneNumber-help" className="p-invalid p-d-block">{this.state.phoneNumberError}</small>
+        </div>
+        </div>
+        
         <div id="recaptcha">
-        <Recaptcha
-            sitekey="6Le2Oe4ZAAAAAIFJA4GMLgm0rHZLyhjs9Q_llL3j"
-            render="explicit"
-            onloadCallback={this.recaptchaLoaded}
-            verifyCallback={this.verifyCallback}
-          />
+        <Recaptcha 
+        sitekey="6Le2Oe4ZAAAAAIFJA4GMLgm0rHZLyhjs9Q_llL3j"
+        render="explicit"
+        onloadCallback={this.recaptchaLoaded}
+        verifyCallback={this.verifyCallback}
+      />
+      
         </div>
 
  
