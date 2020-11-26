@@ -1,8 +1,8 @@
-package acs.data;
+package acs.data.entity;
 import javax.persistence.*;
-import java.io.Serializable;
+
 @Entity
-public class AdminEntity implements Serializable {
+public class AdminEntity  {
 @Id	 @GeneratedValue(strategy=GenerationType.AUTO)
 	private String AdminID;
 	@OneToOne(cascade = CascadeType.ALL)

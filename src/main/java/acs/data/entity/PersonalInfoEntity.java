@@ -1,9 +1,9 @@
-package acs.data;
+package acs.data.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 @Entity
-public class PersonalInfoEntity implements Serializable {
+public class PersonalInfoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)

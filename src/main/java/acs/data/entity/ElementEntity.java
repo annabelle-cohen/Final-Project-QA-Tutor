@@ -1,3 +1,4 @@
+package acs.data.entity;
 //package acs.data;
 //
 //import java.util.Date;

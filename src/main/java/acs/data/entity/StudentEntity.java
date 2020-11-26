@@ -1,4 +1,4 @@
-package acs.data;
+package acs.data.entity;
 
 public class StudentEntity {
 

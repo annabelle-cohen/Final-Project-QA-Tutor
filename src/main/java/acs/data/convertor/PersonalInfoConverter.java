@@ -1,4 +1,4 @@
-package acs.data;
+package acs.data.convertor;
 
 
 import javax.annotation.PostConstruct;
@@ -6,8 +6,9 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import acs.boundaries.PersonalInfoBoundary;
-import acs.boundaries.UserBoundary;
-import acs.logic.UserNotFoundException;
+
+import acs.data.entity.PersonalInfoEntity;
+
 
 @Component
 public class PersonalInfoConverter {
