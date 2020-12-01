@@ -15,6 +15,12 @@
   #first-row{
     margin-left:100px;
   }
+
+  #first-row-advanced{
+    position: static;
+    z-index: 999;
+    margin-left:100px; 
+  }
   
   #home_signIn:hover{
     color: blue;
@@ -606,6 +612,21 @@ border-radius: 50%;
                 #msg_notifications{
                   position: absolute;
                   z-index: 999;
+                }
+
+                #advanced{
+                  display: inline-block;
+                  position: static;
+                  z-index: 50;
+                  margin-left: 20px;
+                 margin-bottom: 25px;
+                 color: gray;
+                 font-size: 12px;
+                }
+
+
+                #advanced:hover{
+                  color: blue;
                 }
                 
                

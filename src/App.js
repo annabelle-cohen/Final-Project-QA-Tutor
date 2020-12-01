@@ -13,6 +13,7 @@ import {Home} from './Dashboard/dashboard'
 import {  SignInToAAP  } from './Dashboard/SignInToAAP'
 import {  RegisterToAAP  } from './Dashboard/RegisterToAAP'
 import { businessRegister } from './Dashboard/businessRegister'
+import { AdvancedSearch } from './Dashboard/AdvancedSearch'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
            <Route exact path='/signIn' component={SignIn}/>
            <Route exact path='/dashboard/signInToAAP' component={ SignInToAAP }/>
            <Route exact path='/dashboard/registerToAAP' component={ RegisterToAAP }/>
+           <Route exact path='/dashboard/advanced' component={ AdvancedSearch }/>
            <Route exact path='/dashboard/registerToAAP/businessregister' component={ businessRegister }/>
            <Route path='/about' component={About}/>
          </Switch>

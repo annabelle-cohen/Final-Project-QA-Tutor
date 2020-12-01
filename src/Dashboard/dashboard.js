@@ -178,6 +178,7 @@ export class Home extends Component {
                     </InputText>
                     <Dropdown id="selecet_category" value={this.state.selectedCategories} options={this.categories} onChange={this.onCategoryChange} optionLabel="name" placeholder="All Categories" />
                     <Button id="home_Search_button" label="Search" />   
+                    <Link to='/dashboard/advanced' id="advanced">Advanced</Link>
                 </span>
 
                 <hr id="border2" align="right" />
