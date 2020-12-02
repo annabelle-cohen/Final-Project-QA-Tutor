@@ -1,5 +1,8 @@
 package acs.data.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,10 +14,20 @@ public class UserEntity  {
 	private String password;
 	
 	@OneToOne(mappedBy = "user")
+	private CartEntity cart ; 
+	
+	@OneToOne(mappedBy = "user")
 	private PersonalInfoEntity personalInfo; 
 	public UserEntity() {
 		super();
 	}
+	
+	@OneToMany(
+	        cascade = CascadeType.ALL,
+	        orphanRemoval = true
+	    )
+		 private List<OrderEntity> orders = new ArrayList<>();
+	
 
 	public String getEmail() {
 		return email;
@@ -33,6 +46,20 @@ public class UserEntity  {
 	}
 	public void setPersonalInfo(PersonalInfoEntity personalInfo) {
 		this.personalInfo = personalInfo;
+	}
+
+	public CartEntity getCart() {
+		return cart;
+	}
+
+	public void setCart(CartEntity cart) {
+		this.cart = cart;
+	}
+	public List<OrderEntity> getOrders() {
+		return orders;
+	}
+	public void setOrders(List<OrderEntity> orders) {
+		this.orders = orders;
 	}
 
 
