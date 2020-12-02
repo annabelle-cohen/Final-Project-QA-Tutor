@@ -1,5 +1,8 @@
 package acs.data.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,13 +16,21 @@ public class PersonalInfoEntity {
 	private String city ; 
 	private String phone ; 
 	private String avatar ; 
-	private String BillingID;
+
 	private String firstName ; 
 	private String lastName ;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "user_email", referencedColumnName = "email", foreignKey=@ForeignKey(name = "fk_personalInfo_email"))
     private UserEntity user;
+
+	
+	 @OneToMany(
+		        mappedBy = "personalInfo",
+		        cascade = CascadeType.ALL,
+		        orphanRemoval = true
+		    )
+	 private List<BillingInfoEntity> billingInfos = new ArrayList<>();
 	
 	public Long  getPersonalID() {
 		return personalID;
@@ -69,12 +80,13 @@ public class PersonalInfoEntity {
 		this.avatar = avatar;
 	}
 
-	public String getBillingID() {
-		return BillingID;
+	
+	public List<BillingInfoEntity> getBillingInfos() {
+		return billingInfos;
 	}
 
-	public void setBillingID(String billingID) {
-		BillingID = billingID;
+	public void setBillingInfos(List<BillingInfoEntity> billingInfos) {
+		this.billingInfos = billingInfos;
 	}
 
 	public String getFirstName() {

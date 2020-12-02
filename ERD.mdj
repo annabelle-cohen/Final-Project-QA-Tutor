@@ -3755,7 +3755,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF1lC/MCAx54rQ="
 									},
-									"name": "CredCardID",
+									"name": "CreditCardID",
 									"length": 0
 								},
 								{
