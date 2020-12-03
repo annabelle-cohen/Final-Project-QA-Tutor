@@ -24,7 +24,7 @@
     margin-left: 100px;
     width: 200px;
 }
-#field2{
+#field2,#field3{
     display: inline-block;
     position: absolute;
     z-index: 0;
@@ -32,6 +32,7 @@
     margin-left: 320px;
     width: 1000px;
 }
+
 
 ul.breadcrumb {
     padding: 10px 16px;
@@ -103,7 +104,7 @@ ul.breadcrumb {
       background-color: rgb(212, 245, 245);  
     }
 
-#inputkeyword{
+#inputkeyword,#inputItemNumber{
        border: 0.8px solid rgb(110, 110, 110);
        margin-left: 30px;
         border-width: 0.1px;
@@ -112,7 +113,9 @@ ul.breadcrumb {
         width: 300px;
 }
 
-#inputkeyword:focus{
+
+
+#inputkeyword:focus,#inputItemNumber:focus{
     border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;
@@ -127,7 +130,24 @@ ul.breadcrumb {
      width: 150px;
 }
 
+#inputSellerName{
+    border: 0.8px solid rgb(110, 110, 110);
+    margin-left: 5px;
+     border-width: 0.1px;
+     margin-top: 1px;
+     height: 21px;
+     border-radius: 2px;
+     width: 150px;
+}
+
+
 #inputprice:focus{
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;  
+}
+
+#inputSellerName:focus{
     border-color: inherit;
     -webkit-box-shadow: none;
     box-shadow: none;  
@@ -148,7 +168,7 @@ ul.breadcrumb {
     box-shadow: none;  
 }
 
-#inputkeyword2{
+#inputkeyword2,#inputItemNumber-label{
     color: black;
     margin-left: 30px;
     font-size: 14px;
@@ -165,12 +185,41 @@ ul.breadcrumb {
     font-weight: bold;
 }
 
+#buying_format{
+    padding-bottom: 15px;
+}
+
+#buying_format_title{
+    color: black;
+    margin-left: 30px;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: bold;
+
+}
+#condition_title{
+    color: black;
+    margin-left: 30px;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: bold;
+}
+
 #price-title{
     color: black;
     margin-left: 30px;
     font-size: 14px;
     margin-top: 20px;
     font-weight: bold;  
+}
+
+#sellers_title{
+    color: black;
+    margin-left: 30px;
+    font-size: 14px;
+    margin-top: 20px;
+    font-weight: bold;
+ 
 }
 #category-select-label{
     color: black;
@@ -229,6 +278,30 @@ ul.breadcrumb {
     width: 275px;
 }
 
+#selectIncludeOrExclude{
+    display: inline-block;
+    position: static;
+    z-index: -1;
+}
+
+#inputSellerId{
+    display: inline-block;
+    position: static;
+    z-index: -1;   
+}
+
+#selectedDropDownIncludeExclude{
+    border: 0.8px solid rgb(110, 110, 110);
+    line-height: 10px;
+    height: 23px;
+    font-size: 8px;
+    top: 0.8px;
+    outline: transparent;
+    text-align-last: left;
+    margin-left: 50px;
+    width: 120px; 
+}
+
 #home_Search_button2{
     margin-left: 30px;
     margin-top: 25px;
@@ -247,13 +320,31 @@ ul.breadcrumb {
     margin-right: 30px;
   }
 
-  #checkbox1,#checkbox2{
+  #checkbox1,#checkbox2,#checkbox3,#checkbox4,#checkbox5,#checkbox6,#checkbox7,#checkbox8{
     margin-left: 30px; 
+  }
+
+  #radio-button-seller{
+    margin-left: 50px;  
+  }
+  #radio-button-item-list{
+    margin-left: 30px;    
+  }
+
+
+  .checkBoxTitle{
+      color: black;
   }
 
   #checkbox1{
       margin-top: 15px;
   }
+
+  #sellers{
+      margin-bottom: 15px;
+  }
+
+
 
   #min-max-price{
       margin-left: 30px;
@@ -274,10 +365,11 @@ ul.breadcrumb {
 }
 
 #border-bottom{
-    margin-top: 700px;
+    margin-top: 1200px;
     position: static;
     z-index: -20;
 }
+
 
 .InputText:focus::-webkit-input-placeholder { color:transparent; }
 .InputText:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
