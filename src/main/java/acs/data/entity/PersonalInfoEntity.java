@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class PersonalInfoEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(unique = true, nullable = false)
+	//@Column(unique = true, nullable = false)
 	private Long  personalID; 
 	private String Address ;
 	private String country ; 

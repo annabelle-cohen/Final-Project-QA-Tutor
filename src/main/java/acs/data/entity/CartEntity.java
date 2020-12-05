@@ -24,7 +24,7 @@ public class CartEntity {
 	private Set<ProductEntity> products = new HashSet<>();
 
 	  @OneToOne(fetch = FetchType.LAZY)
-	    @MapsId
+	  @JoinColumn(name = "user_email")
 	private UserEntity user ; 
 	
 	public Long getCartID() {
