@@ -16,12 +16,12 @@ import acs.boundaries.UserBoundary;
 import acs.dal.AdminDao;
 import acs.dal.PersonalInfoDao;
 import acs.dal.UserDao;
-import acs.data.AdminEntity;
-import acs.data.PersonalInfoConverter;
-import acs.data.PersonalInfoEntity;
-import acs.data.UserConverter;
-import acs.data.UserEntity;
 import acs.data.UserRole;
+import acs.data.convertor.PersonalInfoConverter;
+import acs.data.convertor.UserConverter;
+import acs.data.entity.AdminEntity;
+import acs.data.entity.PersonalInfoEntity;
+import acs.data.entity.UserEntity;
 
 @Service
 public class UserServiceWithDB implements EnhanceUserService {
@@ -114,7 +114,7 @@ public class UserServiceWithDB implements EnhanceUserService {
 		if (userEntity.isPresent()) {
 			return this.infoConverter.convertFromEntity(userEntity.get().getPersonalInfo());
 		} else {
-			throw new UserNotFoundException("Could not find user message for " + email);
+			throw new UserNotFoundException("User not found:" + email);
 		}
 	}
 	
@@ -161,7 +161,7 @@ public class UserServiceWithDB implements EnhanceUserService {
 				return existing;	
 			
 		} else {
-			throw new UserNotFoundException("user not found for email: " + email);
+			throw new UserNotFoundException("User not found: " + email);
 		}
 
 	}

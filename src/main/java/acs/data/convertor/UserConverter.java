@@ -1,11 +1,12 @@
-package acs.data;
+package acs.data.convertor;
 
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
 import acs.boundaries.UserBoundary;
-import acs.logic.UserNotFoundException;
+import acs.data.entity.UserEntity;
+
 
 @Component
 public class UserConverter {
