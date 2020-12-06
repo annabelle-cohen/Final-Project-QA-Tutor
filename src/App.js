@@ -10,10 +10,11 @@ import Navbar from './Layou/navbar'
 import SignIn from './Auth/SignIn'
 import About from './Auth/About'
 import {Home} from './Dashboard/dashboard'
-import {  SignInToAAP  } from './Dashboard/SignInToAAP'
+import   SignInToAAP   from './Dashboard/SignInToAAP'
 import {  RegisterToAAP  } from './Dashboard/RegisterToAAP'
 import { businessRegister } from './Dashboard/businessRegister'
 import { AdvancedSearch } from './Dashboard/AdvancedSearch'
+import  SignInToAAPWithPassword  from './Dashboard/SignInToAAPWithPass'
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
            <Route exact path='/dashboard/registerToAAP' component={ RegisterToAAP }/>
            <Route exact path='/dashboard/advanced' component={ AdvancedSearch }/>
            <Route exact path='/dashboard/registerToAAP/businessregister' component={ businessRegister }/>
+           <Route exact path='/dashboard/signInToAAP/signInToAAPWithPassword' component={ SignInToAAPWithPassword }/>
            <Route path='/about' component={About}/>
          </Switch>
      </div>

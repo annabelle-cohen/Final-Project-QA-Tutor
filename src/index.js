@@ -5,9 +5,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux'
 import rootReducer from './Reducers/rootReducer'
+import {loadState, saveState } from "./store/localStorage";
 import { Provider } from 'react-redux'
 
-const store = createStore(rootReducer);
+//restore the state that were last used
+const persistedState = loadState();
+
+//create kind of store with root reducer and the restore is we have one
+const store = createStore(rootReducer,persistedState);
+
+//saving the rootreducer to the local storage
+saveState(rootReducer.getState);
+
+store.subscribe(()=>{
+  saveState(store.getState())
+ });
+
+console.log(store.getState());
+
 
 ReactDOM.render(
   <React.StrictMode>

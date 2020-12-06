@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
+import {saveUserAAP} from '../Actions/authAAPActions'
+import {Redirect} from 'react-router-dom';
+import { connect } from 'react-redux';
 import "./signintoaap.css"
 import './ButtonDemo.css';
 
@@ -13,8 +16,16 @@ export class SignInToAAP extends Component {
         this.state={
             userName:null,
             checked:true,
-            isReadMore:false
+            isReadMore:false,
+            succeded: false,
+            isLoggedIn: false,
+            continue:false,
+            succededLog:false,
+            logError:"User doesn't exists!"
         };
+
+        this.props.saveUserAAP({ userAAP:{} ,isLoggedIn:false});
+        this.handleContinue = this.handleContinue.bind(this);
 
     }
 
@@ -27,6 +38,52 @@ export class SignInToAAP extends Component {
             console.log(this.state);
         }
     }
+
+    handleContinue = (e) =>{
+        e.preventDefault();
+      
+        fetch('http://localhost:8092//acs/users/login/'+this.state.userName)
+        .then(response => {
+          if (response.status===200){
+            this.setState({succeded:true})
+            response.json().then((d)=>{
+            const userAAP = d;
+    
+             //this.displayNotifaction(true, "login succeeded!")
+             this.props.saveUserAAP({ userAAP , isLoggedIn:true});
+
+        this.setState({isLoggedIn:true})
+            })
+          }else {
+            console.log('Error:', response);
+            response.json().then((d)=>{
+            //  this.displayNotifaction(false, d.message);
+              this.setState({succededLog:true})
+              console.log(this.state.succededLog);
+              console.log("Errordata", d)
+             })
+          }
+          this.setState({continue:true})
+        })
+        .catch((error) => {
+         // console.error('Error:', error.data);
+         console.log(error.data);
+        });
+        
+        
+      }
+
+
+      loggedIn() {
+        const isLoggedIn = this.state.isLoggedIn
+        if (isLoggedIn) {
+         console.log(this.props.authAAP);
+          return <Redirect  to="/dashboard/signInToAAP/signInToAAPWithPassword" />
+    
+         }
+        }
+      
+      
 
 
     render() {
@@ -44,7 +101,12 @@ export class SignInToAAP extends Component {
                 <InputText id="username" value={this.state.userName} onChange={(e) => this.setState({userName: e.target.value})} />
                 <label htmlFor="username">Email or username</label>
             </span>
-            <Button id="continue-button" label="Continue" />
+            <div id="err-div" style={{display:this.state.succededLog?"block":"none"}}>
+                     <label style={{color:"red"}}>{this.state.logError}</label>
+                </div>
+
+            <Button id="continue-button" label="Continue" onClick={this.handleContinue} />
+            {this.loggedIn()}
             <div className="border-title-2">
             <div className="border1">
             <hr id="border-title-or1" align="right" />
@@ -96,4 +158,24 @@ export class SignInToAAP extends Component {
            
             );
     }
+
 }
+
+
+function mapDispatchToProps(dispatch) {
+    return {
+      saveUserAAP: userAAP => dispatch(saveUserAAP(userAAP))
+    };
+  }
+  
+  
+  const mapStateToProps = state => {
+    return { authAAP: state.authAAP };
+  };
+  
+  const LoginToAAP = connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(SignInToAAP);
+
+  export default LoginToAAP
