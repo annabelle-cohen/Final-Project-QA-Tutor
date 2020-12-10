@@ -7,7 +7,8 @@ const iniState ={
     firstName:"ali",
     lastName:"ali",
     password:"1234"
-    }
+    },
+    isSignIn:false
 }
 
 

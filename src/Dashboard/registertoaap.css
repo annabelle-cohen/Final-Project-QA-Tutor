@@ -66,6 +66,18 @@
 
 }
 
+#pass-register-input:focus-within,#pass-register-input:hover ,
+#firstName:focus-within ,#firstName:hover,#lastName:focus-within,#lastName:hover
+,#email:focus-within,#email:hover{
+    border-color: gray;
+    box-shadow: none !important;
+}
+
+#password-label-regis,#email-label-regis,#lastName-label-regis,#firstName-label-regis{
+    color: gray !important;
+}
+
+
 
 #last-name-field{
     margin-left: 30px;

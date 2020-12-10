@@ -92,7 +92,25 @@
 .card-form{
     margin-right: 300px;
     width: 360px;
-    height: 700px;
+    height: 770px;
+}
+
+#copy-right{
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-bottom: 50px;
+    font-size: smaller;
+  }
+
+#border6{
+    margin-top: 800px;
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+  }
+
+#regis-div-button{
+   margin-top: 155px;
 }
 
 .info-icon-class{
@@ -128,6 +146,10 @@
     border: 0.8px solid rgb(192, 191, 191);
     border-radius: 2px;
     height: 35px;
+}
+
+#bussinessName:focus-within,#bussinessEmail:focus-within,#reenterEmail:focus-within,#passwordBussines:focus-within{
+    box-shadow: none !important;
 }
 
 
@@ -167,14 +189,14 @@
     border-color: transparent;
 }
 
-#code-phone:focus{
+#code-phone:focus-within,#code-phone:hover{
     box-shadow:none !important; 
-    border-color: transparent;
+    border-color: gray;
     border: transparent !important;
-    border:0px;
     border-style: hidden;
     outline:0px;
 }
+
 
 #code-phone::selection{
     box-shadow:none !important; 

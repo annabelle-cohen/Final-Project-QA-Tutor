@@ -7,7 +7,7 @@ import { InputText } from 'primereact/inputtext';
 import { Dropdown } from 'primereact/dropdown';
 import { Checkbox } from 'primereact/checkbox';
 import { RadioButton } from 'primereact/radiobutton';
-import { NavigationBarAAP } from './NavigationBarAAP';
+import  NavigationBarAAP  from './NavigationBarAAP';
 import './DropdownDemo.css';
 import './ButtonDemo.css';
 import './AdvancedSearch.css'

@@ -10,15 +10,21 @@
    position: absolute;
    margin-left: 647px;
    border-color: transparent;
+   outline: transparent;
+   text-align-last: left;
    border-left-color: lightslategray;
-   max-width: 185px !important;
+   width: 185px !important;
    font-size: small;
    
 }
 
-#selecet_category:focus{
-    border-color: transparent;
-    max-width: 185px !important;
+#selecet_category:focus-within{
+    box-shadow: none !important;
+}
+
+.dropDown{
+    display: inline-block;
+    position: relative;   
 }
 
 .dropDown1{
@@ -34,6 +40,16 @@
 .dropDown3{
     display: inline-block;
     position: relative;
+}
+
+.dropDown:hover .dropdown_profile{
+    display: block;  
+}
+
+#profile-div-drop{
+   z-index: 20;
+  left: -13px;
+  top:-1px;
 }
 
 .dropDown1:hover .dropDown-menu{
@@ -102,7 +118,7 @@
     border-style: ridge;
     border-color:lightgray;
     border-width: thin;
-    padding-top: 70px;
+    padding-top: 30px;
     text-align: center;
     width: 300px;
     height: 200px;
@@ -117,6 +133,30 @@
     width: 460px;
     height: 110px;
     font-weight: bold;
+}
+
+.msg_watchlist2{
+    color: gray;
+    font-size: 20px;
+    padding-top: 40px;
+    margin-right:30px;
+    padding-left: 20px;
+    width: 460px;
+    height: 110px;
+    font-weight: bold;  
+}
+
+
+
+.profile-option{
+    color: #808080;
+    font-size: 15px;
+    padding-top: 40px;
+    margin-right:30px;
+    padding-left: 20px;
+    width: 250px !important;
+    height: 250px;
+    font-weight: normal;  
 }
 
 #sign-in-msg{

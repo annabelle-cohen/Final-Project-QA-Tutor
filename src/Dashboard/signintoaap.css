@@ -17,6 +17,20 @@ h3{
   margin-top: 25px;
   margin-left: 550px;
   margin-right: 550px;
+  box-shadow: none;
+}
+#username{
+    border-color: gray;
+}
+
+#username:focus-within{
+    border-color: black; 
+    color: black;
+    box-shadow: none !important;
+}
+
+#label-user-name{
+    color: gray;
 }
 
 .border-title-2{

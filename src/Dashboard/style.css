@@ -120,6 +120,7 @@
 
   #home_search1:focus{
     outline: none !important;
+    box-shadow:none !important;
     border-style: groove !important;
     border-color: rgb(73, 73, 73) !important;
     border-width: 1.8px !important;
@@ -130,7 +131,7 @@
 }
 
 #icon_search{
- padding-bottom: 50%;
+  top: 24px;
 
 }
 
@@ -612,6 +613,10 @@ border-radius: 50%;
                 #msg_notifications{
                   position: absolute;
                   z-index: 999;
+                }
+
+                #notfication-p,#notfication-p2{
+                 bottom: 1000px;
                 }
 
                 #advanced{

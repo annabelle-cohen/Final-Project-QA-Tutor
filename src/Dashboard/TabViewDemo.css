@@ -6,6 +6,18 @@
     z-index: 0;
 }
 
+
+#tab-view-0:focus-within{
+    box-shadow: none !important;
+    outline: none!important;
+}
+.TabPanel :focus-within,.TabPanel:focus-visible,.TabPanel:focus {
+    box-shadow: none !important; 
+    outline: none!important;
+}
+
+
+
 #category-1,#category-2,#category-3{
     display: inline-block;
     border-color: rgb(255, 255, 255);

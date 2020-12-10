@@ -251,7 +251,7 @@ ul.breadcrumb {
     text-align-last: left;
 }
 
-#dropDown1:focus{
+#dropDown1:focus-within{
     border-color: 0;
     outline-color: none;
     outline: none;
@@ -278,6 +278,10 @@ ul.breadcrumb {
     width: 275px;
 }
 
+#selectedDropDown:focus-within{
+    box-shadow: none !important;
+}
+
 #selectIncludeOrExclude{
     display: inline-block;
     position: static;
@@ -300,6 +304,10 @@ ul.breadcrumb {
     text-align-last: left;
     margin-left: 50px;
     width: 120px; 
+}
+
+#selectedDropDownIncludeExclude:focus-within{
+    box-shadow: none !important;
 }
 
 #home_Search_button2{

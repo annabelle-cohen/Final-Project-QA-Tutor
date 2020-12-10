@@ -12,7 +12,7 @@ import { Carousel } from 'primereact/carousel';
 import clothes2 from './img/clothes2.jpg'
 import Sony from './img/sony.jpg'
 import { Link, Route, NavLink } from 'react-router-dom';
-import { NavigationBarAAP } from './NavigationBarAAP';
+import  NavigationBarAAP  from './NavigationBarAAP';
 
 
 
@@ -23,13 +23,14 @@ export class Home extends Component {
         super(props);
         this.state = {
             search: null,
-            selectedCategories: null,
+            selectedCategories: 'All Categories',
             images: require("./img/makeup.jpg")
         };
 
 
 
         this.categories = [
+            {name: 'All Categories'},
             {name: 'Art'},
             {name: 'Baby', code: 'BR'},
             {name: 'Books', code: 'CN'},
@@ -135,10 +136,10 @@ export class Home extends Component {
 
                 {/*Home search input*/}
                 <span id="home_search" className="p-input-icon-left">
-                    <i id="icon_search" className="pi pi-search" style={{ 'fontSize': '1.5em' }} />
+                    <i id="icon_search" className="pi pi-search" style={{ 'fontSize': '1.2em' }} />
                     <InputText id="home_search1" onChange = {this.handleSearch} placeholder="Search for anything" >
                     </InputText>
-                    <Dropdown id="selecet_category" value={this.state.selectedCategories} options={this.categories} onChange={this.onCategoryChange} optionLabel="name" placeholder="All Categories" />
+                    <Dropdown id="selecet_category" value={this.state.selectedCategories} options={this.categories} onChange={this.onCategoryChange} optionLabel="name" placeholder={this.state.selectedCategories} />
                     <Button id="home_Search_button" label="Search" />   
                     <Link to='/dashboard/advanced' id="advanced">Advanced</Link>
                 </span>

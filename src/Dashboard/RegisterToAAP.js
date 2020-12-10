@@ -51,7 +51,7 @@ export class RegisterToAAP extends Component {
             <div className="first-row-name">
             <div id="first-name-field" className="p-float-label">
                 <InputText id="firstName" value={this.state.firstName} onChange={this.handleChange} />
-                <label htmlFor="firstName">First Name</label>
+                <label id="firstName-label-regis" htmlFor="firstName">First Name</label>
                 {/*for submit check*/}
                 <small id="username2-help"  className="p-invalid p-d-block">{this.state.firstNameError}</small>
             </div>
@@ -59,22 +59,22 @@ export class RegisterToAAP extends Component {
 
             <div id="last-name-field" className="p-float-label">
                 <InputText id="lastName" value={this.state.lastName} onChange={this.handleChange} />
-                <label htmlFor="lastName">Last Name</label>
+                <label id="lastName-label-regis" htmlFor="lastName">Last Name</label>
                 {/*for submit check*/}
                 <small id="username2-help"  className="p-invalid p-d-block">{this.state.lastNameError}</small>
             </div>
 
             
             <span id="email-field" className="p-float-label">
-                <InputText value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
-               <label htmlFor="email">Email</label>
+                <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
+               <label id="email-label-regis" htmlFor="email">Email</label>
                 {/*for submit check*/}
                 <small id="username2-help"  className="p-invalid p-d-block">{this.state.emailError}</small>
             </span>
 
             <span id="password-field" className="p-float-label">
-                <InputText type="password" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} />
-               <label htmlFor="password">Password</label>
+                <InputText id="pass-register-input" type="password" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} />
+               <label id="password-label-regis" htmlFor="password">Password</label>
                 {/*for submit check*/}
                 <small id="username2-help"  className="p-invalid p-d-block">{this.state.passwordError}</small>
             </span>

@@ -1,18 +1,95 @@
-import React, { Component} from 'react'
-import { connect } from 'react-redux'
+import React, { Component} from 'react';
+import { connect } from 'react-redux';
+import { StaySignIn } from './staySignIn';
+import { Button } from 'primereact/button';
+import { InputText } from 'primereact/inputtext';
+import {saveUserAAP} from '../Actions/authAAPActions'
+import {Redirect} from 'react-router-dom';
+import './signintoaapwithpass.css' ;
+import { Link } from 'react-router-dom'
+import './ButtonDemo.css';
 
 export class SignInToAAPWithPassword extends Component{
 
-    showDetails(){
-        console.log(this.props.authAAP.userAAP)
+  constructor(props){
+    super(props);
+    this.state={
+      password:'',
+      succededLog:false,
+      isSucced:false,
+      logError:'Oops! that\'s not a match'
+
     }
+
+    this.props.saveUserAAP({ userAAP:this.props.authAAP.userAAP,isLoggedIn:this.props.authAAP.isLoggedIn,isSignIn:false});
+    this.signInContinue = this.signInContinue.bind(this);
+  }
+
+  signInContinue = (e) =>{
+
+    if(this.props.authAAP.userAAP.password === this.state.password){
+
+      this.setState({succededLog:false}); 
+
+      const userAAP = this.props.authAAP.userAAP;
+      
+      console.log(userAAP);
+      //this.displayNotifaction(true, "login succeeded!")
+      this.props.saveUserAAP({ userAAP , isLoggedIn:this.props.authAAP.isLoggedIn,isSignIn:true});
+
+      this.setState({isSucced:true});
+    }else{
+      this.setState({succededLog:true}); 
+    }
+  }
+
+
+  SignedIn() {
+    const isLoggedIn = this.state.isSucced;
+    if (isLoggedIn) {
+     console.log(this.props.authAAP);
+      return <Redirect  to="/dashboard"/>
+
+     }
+    }
+
 
     render(){
         
         return(
-           <div>
-            <div>{this.props.authAAP.userAAP.email}</div>
-            {this.showDetails()}
+           <div className="signInToAAPWithPass-container">
+                <h3>Welcome</h3>
+                {/**the email from local storage */}
+                {this.props.authAAP.userAAP.email}
+
+                  {/**switch account to sign in again*/}
+                <div><br></br>Not you? <Link id="switch-account" to='/dashboard/signInToAAP'>Switch Account</Link></div>
+
+                  {/**enter password*/}
+                <span id="password-span" className="p-float-label">
+                <InputText id="password1" style={{color:"black"}} placeholder="Enter Password" value={this.state.password} type='password' onChange={(e) => this.setState({password: e.target.value})} />
+            </span>
+            <div>
+
+
+          {/**password error*/}
+        <div id="err-div" style={{display:this.state.succededLog?"block":"none"}}>
+              <label style={{color:"red"}}>{this.state.logError}</label>
+        </div>
+
+            {/**forgot password button*/}
+            <Button id="forgot-pass" label="Forgot Password?" className="p-button-link" />
+            </div>
+
+  
+             {/**Signed In*/}
+                <Button id="SignInToAAP-button" label="Sign In" onClick={this.signInContinue} />
+                {this.SignedIn()}
+              <div>
+
+            {/**Stay Signed in*/}
+              <StaySignIn></StaySignIn>
+              </div>
             </div>
         );
 
@@ -21,15 +98,18 @@ export class SignInToAAPWithPassword extends Component{
 
 }
 
+function mapDispatchToProps(dispatch) {
+  return {
+    saveUserAAP: userAAP => dispatch(saveUserAAP(userAAP))
+  };
+}
+
 
 const mapStateToProps = state => {
   
     return { authAAP: state.authAAP };
   };
 
-  function mapDispatchToProps() {
-    return {}
-  }
 
   const SignInToAAPWithPassword1 = connect(mapStateToProps,mapDispatchToProps)(SignInToAAPWithPassword);
 

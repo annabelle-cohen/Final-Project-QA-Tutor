@@ -29,7 +29,7 @@ function App() {
            <Route exact path='/dashboard/registerToAAP' component={ RegisterToAAP }/>
            <Route exact path='/dashboard/advanced' component={ AdvancedSearch }/>
            <Route exact path='/dashboard/registerToAAP/businessregister' component={ businessRegister }/>
-           <Route exact path='/dashboard/signInToAAP/signInToAAPWithPassword' component={ SignInToAAPWithPassword }/>
+           <Route exact path='/dashboard/signInToAAPWithPassword' component={ SignInToAAPWithPassword }/>
            <Route path='/about' component={About}/>
          </Switch>
      </div>

@@ -1,0 +1,49 @@
+.signInToAAPWithPass-container{
+    text-align: center;
+}
+
+h3{
+    padding-top: 100px;
+    font-weight: bold;
+    font-size: 36px;
+}
+
+#switch-account{
+    color: blue;
+    text-decoration: underline;
+}
+
+
+#password-span{
+    margin-top: 25px;
+    margin-left: 550px;
+    margin-right: 550px;
+    color: black;
+  }
+
+  #password-span:focus{
+          color: black;
+  }
+
+  #password1{
+    position: static;
+    z-index: 0;
+  }
+
+  #password1:focus{
+    border-color: black;
+  }
+
+  #password1:hover{
+    border-color: black;
+  }
+
+  #pass-label{
+      color: black;
+      position: absolute;
+      z-index: 1;
+  }
+
+  #pass-label:focus{
+    color: black;
+  }

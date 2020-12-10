@@ -12,6 +12,8 @@ import { Link } from 'react-router-dom'
 import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
 import Recaptcha from 'react-recaptcha';
+import { Button } from 'primereact/button';
+import './ButtonDemo.css';
 
 
 
@@ -120,8 +122,6 @@ componentDidMount() {
 render(){
 
 
-
-
     return(
         <div className="register-bussiness-container">
         <label id="logo-aap">Logo in future</label>
@@ -215,15 +215,35 @@ render(){
         onloadCallback={this.recaptchaLoaded}
         verifyCallback={this.verifyCallback}
       />
+
       
         </div>
-
+        <div id="regis-div-button">
+        <Button id="register-button" label="Register" onClick={this.handleContinue} />
+        
+        </div>
  
         </Card>
+
+
         </div>
+
 
         
         </div>
+
+        <div>
+            <hr id="border6" align="right" />
+        </div>
+
+            <div id="copy-right">
+            Copyright © 2020-2021 AAP Inc. All Rights Reserved. <a id="User_Agreement" href="url" color="black">User Agreement</a>, 
+            <a id="Privacy" href="url" color="black">Privacy</a>,
+            <a id="Cookies" href="url" color="black">Cookies</a> ,
+            <a id="personal_information" href="url" color="black">Do not sell my personal information</a> and <a id="AdChoice" href="url" color="black">AdChoice</a> 
+            <i id="info_circle" className="pi pi-info-circle"></i>
+            </div>
+
 
         </div>
     )

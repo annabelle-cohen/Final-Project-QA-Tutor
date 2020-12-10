@@ -41,6 +41,26 @@
    color: black;
 }
 
+#profile-div{
+    background: none!important;
+    border: none;
+    height: 5px;
+    direction: ltr;
+   margin-bottom: 2px;
+   font-size: 13px;
+   width: fit-content;
+   color: black;  
+}
+
+
+#profile-buttons-nav{
+margin-top: 70px;
+}
+
+#account-setting,#sign-out{
+    left: -10px;
+}
+
 #watchlist:focus{
     box-shadow:none !important;
 }
@@ -77,6 +97,13 @@
     font-size: 13px;
     color: black;
    
+}
+
+#userProfile{
+    margin-top: 5px;
+    height: 5px;
+    font-size: 13px;
+    color: black;
 }
 
 #notification:hover{
@@ -132,9 +159,40 @@
     background-color: rgb(56, 56, 231);
 }
 
-#continue-button:hover{
+#continue-button:hover , #register-button:hover{
     background-color: rgb(84, 84, 209);
 }
+
+#register-button{
+    width: 300px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    font-weight: bold;
+    background-color: rgb(56, 56, 231);
+}
+
+
+#SignInToAAP-button{
+    width: 437px;
+    margin-top: 10px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 0;
+    font-weight: bold;
+    background-color: rgb(56, 56, 231);
+}
+
+#SignInToAAP-button:hover{
+    background-color: rgb(84, 84, 209);
+}
+
+#forgot-pass{
+    color: blue;
+    font-size: 12px;
+}
+
 
 #login-with-facebook{
     width: 437px;
