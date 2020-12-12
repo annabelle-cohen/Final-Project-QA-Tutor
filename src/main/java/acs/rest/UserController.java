@@ -9,18 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import acs.boundaries.PasswordBoundary;
 import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
 import acs.logic.UserService;
+import acs.logic.UserServiceWithDB;
 
 @CrossOrigin("*")
 @RestController
 public class UserController {
 
-	private UserService userService;
+	private UserServiceWithDB userService;
 	
 	@Autowired
-	public UserController(UserService userService) {
+	public UserController(UserServiceWithDB userService) {
 		super();
 		this.userService = userService;
 	}
@@ -61,5 +63,26 @@ public class UserController {
 		return this.userService.getUserDetails(email);
 
 	}
+	
+	
+	@RequestMapping(path = "/acs/users/verify/{userEmail}",
+			method = RequestMethod.GET, 
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	public Boolean verify(@PathVariable("userEmail") String email) {
+
+		return this.userService.verify(email);
+
+	}
+
+	
+	@RequestMapping(path = "/acs/users/updatePassword/{userEmail}",
+			method = RequestMethod.PUT, 
+					produces = MediaType.APPLICATION_JSON_VALUE)
+	public UserBoundary  updateUserPassword(@PathVariable("userEmail") String email ,@RequestBody PasswordBoundary input ) {
+
+		return this.userService.updateUserPassword(email ,input);
+
+	}
+
 	
 }

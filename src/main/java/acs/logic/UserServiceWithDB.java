@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import acs.boundaries.PasswordBoundary;
 import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
 import acs.dal.AdminDao;
@@ -22,6 +23,7 @@ import acs.data.convertor.UserConverter;
 import acs.data.entity.AdminEntity;
 import acs.data.entity.PersonalInfoEntity;
 import acs.data.entity.UserEntity;
+
 
 @Service
 public class UserServiceWithDB implements EnhanceUserService {
@@ -223,6 +225,44 @@ public class UserServiceWithDB implements EnhanceUserService {
 				throw new UserNotFoundException("Could not export all users for " + email);
 			}
 		
+	}
+
+	
+	@Transactional
+	public Boolean verify(String email) {
+		Optional<UserEntity> userEntity = this.usersDao.findById(email);
+		if (userEntity.isPresent()) {
+			return true ;
+		} else {
+			throw new UserNotFoundException("Could not find user message for " + email);
+		}
+	}
+	
+	
+	@Transactional
+	public UserBoundary updateUserPassword(String email,PasswordBoundary input) {
+		
+		Optional<UserEntity> user = this.usersDao.findById(email);
+		
+	
+		if (user.isPresent()) {
+			
+			UserEntity	usr  = user.get();
+				
+				if (Helper.isDefined(input.getPassword())  ) {
+					usr.setPassword(input.getPassword());
+				}else {
+					throw new UserNotFoundException("Password is invalid:" + input.getPassword());
+				}
+	
+				this.usersDao.save(usr);
+
+				return this.entityConverter.convertFromEntity(usr);	
+			
+		} else {
+			throw new UserNotFoundException("User not found: " + email);
+		}
+
 	}
 
 }
