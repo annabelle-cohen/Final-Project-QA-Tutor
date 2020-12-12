@@ -181,6 +181,37 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "updatePersonalInfo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": null,\n    \"country\": null,\n    \"city\": null,\n    \"phone\": 5345324,\n    \"avatar\": null,\n    \"firstName\": \"al2i\",\n    \"lastName\": \"ali\",\n    \"billingInfos\": [{\n        \"billingAdress\" : \"billingAdress\" ,\n\t    \"creditCardID\" : \"131234\",\n\t    \"creditCardPIN\": \"312edsv\",\n        \"creditCardNo\": \"211242\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users/detail/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"detail",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
