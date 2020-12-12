@@ -1,13 +1,9 @@
 package acs.data.convertor;
 
 import javax.annotation.PostConstruct;
-
 import org.springframework.stereotype.Component;
-
 import acs.boundaries.BusinessBoundary;
-import acs.boundaries.UserBoundary;
 import acs.data.entity.BusinessEntity;
-import acs.data.entity.UserEntity;
 
 @Component
 public class BusinessConverter {

@@ -88,6 +88,12 @@ public class PersonalInfoEntity {
 	public void setBillingInfos(List<BillingInfoEntity> billingInfos) {
 		this.billingInfos = billingInfos;
 	}
+	
+	public void addBillingInfo(BillingInfoEntity billingInfo){
+        this.billingInfos.add(billingInfo);
+        billingInfo.setPersonalInfo(this);
+		}
+	
 
 	public String getFirstName() {
 		return firstName;

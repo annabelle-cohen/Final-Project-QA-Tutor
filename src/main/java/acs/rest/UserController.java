@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import acs.boundaries.PasswordBoundary;
 import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
-import acs.logic.UserService;
 import acs.logic.UserServiceWithDB;
 
 @CrossOrigin("*")
@@ -46,12 +45,12 @@ public class UserController {
 
 	}
 
-	@RequestMapping(path = "/acs/users/{userEmail}",
+	@RequestMapping(path = "/acs/users/detail/{userEmail}",
 			method = RequestMethod.PUT, 
 			consumes = MediaType.APPLICATION_JSON_VALUE)
-	public void updateUserDetails(@PathVariable("userEmail") String email, @RequestBody PersonalInfoBoundary input) {
+	public PersonalInfoBoundary updateUserDetails(@PathVariable("userEmail") String email, @RequestBody PersonalInfoBoundary input) {
 
-		this.userService.updateUserDetails(email,input);
+	return 	this.userService.updateUserDetails(email,input);
 
 	}
 

@@ -3,11 +3,7 @@ package acs.logic;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,10 +13,10 @@ import acs.boundaries.UserBoundary;
 import acs.dal.AdminDao;
 import acs.dal.PersonalInfoDao;
 import acs.dal.UserDao;
-import acs.data.UserRole;
 import acs.data.convertor.PersonalInfoConverter;
 import acs.data.convertor.UserConverter;
 import acs.data.entity.AdminEntity;
+import acs.data.entity.BillingInfoEntity;
 import acs.data.entity.PersonalInfoEntity;
 import acs.data.entity.UserEntity;
 
@@ -130,8 +126,11 @@ public class UserServiceWithDB implements EnhanceUserService {
 	
 		if (user.isPresent()) {
 			
-				PersonalInfoBoundary existing = this.infoConverter.convertFromEntity(user.get().getPersonalInfo());
+				UserEntity  usr	 = user.get() ; 
+				PersonalInfoEntity existing = usr.getPersonalInfo();
+
 				
+
 				if (update.getFirstName()!= null ) {
 					existing.setFirstName(update.getFirstName());
 				}
@@ -157,10 +156,19 @@ public class UserServiceWithDB implements EnhanceUserService {
 				if (update.getPhone()!= null ) {
 					existing.setPhone(update.getPhone());
 				}
-
-				this.personalInfoDao.save(this.infoConverter.convertToEntity(existing));
-
-				return existing;	
+				
+				if (update.getBillingInfos() !=null) {
+						
+					PersonalInfoEntity newEntity = this.infoConverter.convertToEntity(update); 
+				    existing.getBillingInfos().clear();
+				    for ( BillingInfoEntity billingInfo : newEntity.getBillingInfos()) {
+				    	existing.addBillingInfo(billingInfo);
+				    }
+				}
+				
+				this.personalInfoDao.save(existing);
+			
+				return  this.infoConverter.convertFromEntity(existing);	
 			
 		} else {
 			throw new UserNotFoundException("User not found: " + email);

@@ -1,5 +1,8 @@
 package acs.boundaries;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PersonalInfoBoundary {
 	private String address ;
 	private String country ; 
@@ -7,14 +10,19 @@ public class PersonalInfoBoundary {
 	private String phone ; 
 	private String avatar ; 
 	private String firstName ;
-	private String lastName ;
-	// TODO: add billingINfo
+	private String lastName ; 
+	
+	private List<BillingInfoBoundary>  billingInfos = new ArrayList<>();
+	
+	
 	public PersonalInfoBoundary(){
 		
 	}
 	
+
+
 	public PersonalInfoBoundary(String address, String country, String city, String phone, String avatar,
-			  String firstName , String lastName  ) {
+			String firstName, String lastName, List<BillingInfoBoundary> billingInfos) {
 		super();
 		this.address = address;
 		this.country = country;
@@ -22,8 +30,11 @@ public class PersonalInfoBoundary {
 		this.phone = phone;
 		this.avatar = avatar;
 		this.firstName = firstName;
-		this.lastName= lastName;
+		this.lastName = lastName;
+		this.billingInfos = billingInfos;
 	}
+
+
 
 	public String getAddress() {
 		return this.address;
@@ -69,6 +80,14 @@ public class PersonalInfoBoundary {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public List<BillingInfoBoundary> getBillingInfos() {
+		return billingInfos;
+	}
+
+	public void setBillingInfos(List<BillingInfoBoundary> billingInfos) {
+		this.billingInfos = billingInfos;
 	}
 	
 	
