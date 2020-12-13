@@ -25,7 +25,7 @@
 
 .first-row-name{
     position: absolute;
-    z-index: 999;
+    z-index: 99;
 }
 
 .second-row-email{
@@ -54,16 +54,20 @@
     margin-top: 20px;
 
  
- 
 }
 
 #password-field{
     margin-left: 400px; 
     margin-top: 20px;
- 
- 
 
+}
+#pass-register-input{
+    color: gray !important;
+}
 
+#submit-button-div{
+    position: relative;
+    z-index: 99;
 }
 
 #pass-register-input:focus-within,#pass-register-input:hover ,
@@ -71,6 +75,7 @@
 ,#email:focus-within,#email:hover{
     border-color: gray;
     box-shadow: none !important;
+    color: gray !important;
 }
 
 #password-label-regis,#email-label-regis,#lastName-label-regis,#firstName-label-regis{
@@ -87,7 +92,7 @@
 }
 
 #firstName{
-   
+
     width: 150px;
 
 }
@@ -142,7 +147,7 @@
 
 
   #border5{
-    margin-top:100px;  
+    margin-top:400px;  
     border-color: rgb(255, 255, 255);
     border-width: 0.2;
     border-bottom: thin;

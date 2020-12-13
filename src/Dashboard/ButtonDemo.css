@@ -57,8 +57,18 @@
 margin-top: 70px;
 }
 
-#account-setting,#sign-out{
+#account-setting{
+    margin-left: 6px;
+    color: rgb(47, 47, 218);
+}
+
+#account-setting:hover{
+    text-decoration: underline;
+}
+
+#sign-out{
     left: -10px;
+    color: rgb(47, 47, 218);
 }
 
 #watchlist:focus{
@@ -165,7 +175,7 @@ margin-top: 70px;
 
 #register-button{
     width: 300px;
-    margin-top: 10px;
+    margin-top: 5px;
     padding-top: 15px;
     padding-bottom: 15px;
     border-radius: 0;
@@ -174,7 +184,7 @@ margin-top: 70px;
 }
 
 
-#SignInToAAP-button{
+#SignInToAAP-button,#Submit-new-password-button{
     width: 437px;
     margin-top: 10px;
     padding-top: 15px;
@@ -184,13 +194,15 @@ margin-top: 70px;
     background-color: rgb(56, 56, 231);
 }
 
-#SignInToAAP-button:hover{
+#SignInToAAP-button:hover,#Submit-new-password-button:hover{
     background-color: rgb(84, 84, 209);
 }
 
 #forgot-pass{
     color: blue;
     font-size: 12px;
+    position: static;
+    z-index: 99;
 }
 
 
@@ -256,16 +268,18 @@ margin-top: 70px;
 
 
 #submit-form{
-    border-radius: 0;
-    margin-top: 250px;
-    margin-left: 400px;
     width: 330px;
-    height: 50px;
-    color: white;
-    font-size: 16px;
+    margin-top: 10px;
+    padding-top: 15px;
+    margin-left: 900px;
+    padding-bottom: 15px;
+    border-radius: 0;
     font-weight: bold;
+    font-size: 14px;
     border-color: gray;
     background-color: gray;
+    position: relative;
+    
 }
 
 
@@ -279,6 +293,8 @@ margin-top: 70px;
     font-weight: bold;
     font-size: 14px;
     background-color: rgb(56, 56, 231);
+    position: relative;
+    z-index: 99;
 }
 
 
@@ -298,6 +314,8 @@ margin-top: 70px;
     font-size: 14px;
     color: gray;
     border-color: darkgray;
+    position: relative;
+    z-index: 99;
 }
 
 #login-with-google2:hover{

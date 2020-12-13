@@ -1,0 +1,24 @@
+.container-account-setting{
+    text-align: left;
+    margin-top: -80px;
+}
+
+#border9{
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+
+  .card-form-account-setting{
+    margin-left: 100px;
+    width: 1320px;
+    height: 800px;
+}
+
+#border10{
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+  }

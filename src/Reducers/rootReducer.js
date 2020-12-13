@@ -1,13 +1,13 @@
-import authReducer from './authReducer'
-import authAAPReducer from './authAAPReducer'
-import { combineReducers } from 'redux'
+import authReducer from "./authReducer";
+import authAAPReducer from "./authAAPReducer";
+import { combineReducers } from "redux";
 // in future will be shopCartReducer
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  isLogin:false,
+  isLogin: false,
   authAAP: authAAPReducer,
-  isLoginAAP: false
+  isLoginAAP: false,
 });
 
-export default rootReducer
+export default rootReducer;

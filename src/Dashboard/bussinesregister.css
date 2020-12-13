@@ -92,7 +92,7 @@
 .card-form{
     margin-right: 300px;
     width: 360px;
-    height: 770px;
+    height: 800px;
 }
 
 #copy-right{
@@ -103,14 +103,14 @@
   }
 
 #border6{
-    margin-top: 800px;
+    margin-top: 820px;
     border-color: rgb(255, 255, 255);
     border-width: 0.2;
     border-bottom: thin;
   }
 
 #regis-div-button{
-   margin-top: 155px;
+   margin-top: 80px;
 }
 
 .info-icon-class{
@@ -142,10 +142,16 @@
 
 }
 
+#container-input{
+    position: relative;
+    z-index: 2;
+    top: -90px;
+}
+
 #bussinessName,#bussinessEmail,#reenterEmail,#passwordBussines{
     border: 0.8px solid rgb(192, 191, 191);
     border-radius: 2px;
-    height: 35px;
+    height:35px;
 }
 
 #bussinessName:focus-within,#bussinessEmail:focus-within,#reenterEmail:focus-within,#passwordBussines:focus-within{
@@ -160,7 +166,13 @@
 #recaptcha{
     margin-left: 15px;
     position: absolute;
-    margin-top: 80px;
+    z-index: 1;
+    margin-top: 5px;
+}
+
+#recapatcha2{
+    position: absolute;
+    z-index: 1;  
 }
 
 #number-country{
@@ -185,7 +197,8 @@
 
 #code-phone{
     text-align: left;
-    z-index: 1;
+    position: static;
+    z-index: 99;
     border-color: transparent;
 }
 
@@ -209,6 +222,7 @@
 
 #container-phone-number{
     position: absolute; 
+    z-index: 99;
 }
 
 

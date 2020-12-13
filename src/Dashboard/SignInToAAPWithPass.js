@@ -41,19 +41,28 @@ export class SignInToAAPWithPassword extends Component {
         isSignIn: true,
       });
 
+      console.log("im in log in success");
       this.setState({ isSucced: true });
     } else {
       this.setState({ succededLog: true });
+
+      const userAAP = this.props.authAAP.userAAP;
+
+      this.props.saveUserAAP({
+        userAAP,
+        isLoggedIn: this.props.authAAP.isLoggedIn,
+        isSignIn: false,
+      });
     }
   };
 
-  SignedIn() {
+  SignedIn = (e) => {
     const isLoggedIn = this.state.isSucced;
     if (isLoggedIn) {
       console.log(this.props.authAAP);
       return <Redirect to="/dashboard" />;
     }
-  }
+  };
 
   render() {
     return (
@@ -91,11 +100,12 @@ export class SignInToAAPWithPassword extends Component {
           </div>
 
           {/**forgot password button*/}
-          <Button
+          <Link
             id="forgot-pass"
-            label="Forgot Password?"
-            className="p-button-link"
-          />
+            to="/dashboard/signInToAAPWithPassword/forgotPassword"
+          >
+            Forgot Password?
+          </Link>
         </div>
 
         {/**Signed In*/}
