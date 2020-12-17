@@ -117,6 +117,21 @@ export class businessRegister extends Component {
       isOk = false;
     } else {
       this.setState({ passwordBussinesError: "" });
+      if (
+        (this.state.passwordBussines.length >= 5 &&
+          this.state.passwordBussines.match("[0-9]+[a-z]+[A-Z]*")) ||
+        this.state.passwordBussines.match("[a-z]+[A-Z]*[0-9]+")
+      ) {
+        this.setState({
+          passwordBussinesError: "",
+        });
+      } else {
+        isOk = false;
+        this.setState({
+          passwordBussinesError:
+            "Password must include digits and letters and at least 5 characters",
+        });
+      }
     }
 
     if (this.state.selectedCountry === "" || this.state.phoneNumber === "") {
@@ -124,12 +139,17 @@ export class businessRegister extends Component {
       isOk = false;
     } else {
       var numbers = /^[0-9]+$/;
-      if (this.state.phoneNumber.match(numbers)) {
+      if (
+        this.state.phoneNumber.match(numbers) &&
+        this.state.phoneNumber.length == 10
+      ) {
         console.log("im here in if");
         this.setState({ phoneNumberError: "" });
       } else {
         isOk = false;
-        this.setState({ phoneNumberError: "Number must include only digits!" });
+        this.setState({
+          phoneNumberError: "Number must include only digits and length of 10!",
+        });
       }
     }
 

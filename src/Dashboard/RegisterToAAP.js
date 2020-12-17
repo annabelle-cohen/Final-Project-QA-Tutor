@@ -18,7 +18,6 @@ export class RegisterToAAP extends Component {
       emailError: "",
       passwordError: "",
       serverError: "",
-      isFine: true,
       isServerError: false,
       isFill: true,
       isSuccedRegister: false,
@@ -36,39 +35,80 @@ export class RegisterToAAP extends Component {
   };
 
   handleCreateAccount = (e) => {
-    console.log("in handle create");
     //initialize for new checking
-    this.setState({ isFine: true });
+
+    var letterNumber = /^[0-9a-zA-Z]+$/;
+
+    let check = {
+      isFirstNameValid: false,
+      isLastNameValid: false,
+      isEmailValid: false,
+      isPasswordValid: false,
+      isPasswordInFormat: false,
+      isFine: false,
+    };
 
     if (this.state.firstName === "") {
-      this.setState({ isFine: false });
-      this.setState({ firstNameError: "First name cann't be empty" });
+      check.isFirstNameValid = false;
+      this.setState({ firstNameError: "first name cann't be null" });
     } else {
+      check.isFirstNameValid = true;
       this.setState({ firstNameError: "" });
     }
 
     if (this.state.lastName === "") {
-      this.setState({ isFine: false });
+      check.isLastNameValid = false;
       this.setState({ lastNameError: "Last name cann't be empty" });
     } else {
+      check.isLastNameValid = true;
       this.setState({ lastNameError: "" });
     }
 
     if (this.state.email === "") {
-      this.setState({ isFine: false });
+      check.isEmailValid = false;
       this.setState({ emailError: "Email cann't be empty" });
     } else {
+      check.isEmailValid = true;
       this.setState({ emailError: "" });
     }
 
     if (this.state.password === "") {
-      this.setState({ isFine: false });
+      check.isPasswordValid = false;
       this.setState({ passwordError: "Password cann't be empty" });
     } else {
+      check.isPasswordValid = true;
       this.setState({ passwordError: "" });
+
+      if (
+        (check.isPasswordValid &&
+          this.state.password.length >= 5 &&
+          this.state.password.match("[0-9]+[a-z]+[A-Z]*")) ||
+        this.state.password.match("[a-z]+[A-Z]*[0-9]+")
+      ) {
+        check.isPasswordInFormat = true;
+        this.setState({
+          passwordError: "",
+        });
+      } else {
+        check.isPasswordInFormat = false;
+        this.setState({
+          passwordError:
+            "Password must include digits and letters and at least 5 characters",
+        });
+      }
     }
 
-    if (this.state.isFine) {
+    if (
+      check.isFirstNameValid &&
+      check.isLastNameValid &&
+      check.isEmailValid &&
+      check.isPasswordValid &&
+      check.isPasswordInFormat
+    ) {
+      check.isFine = true;
+    }
+
+    if (check.isFine) {
       const main = "http://localhost:8092//";
       const register = main + "/acs/users";
 

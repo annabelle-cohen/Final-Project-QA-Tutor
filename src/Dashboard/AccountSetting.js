@@ -22,9 +22,10 @@ class AccountSetting extends Component {
 
     this.props.saveUserAAP({
       isLoggedIn: this.props.authAAP.isLoggedIn,
-      isSignIn: this.props.isSignIn,
+      isSignIn: this.props.authAAP.isSignIn,
       userAAP: this.props.authAAP.userAAP,
     });
+
     this.checkIfIsPersonalInfo = this.checkIfIsPersonalInfo.bind(this);
     this.checkIfIsPersonalInfo();
   }

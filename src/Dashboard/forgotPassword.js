@@ -38,91 +38,123 @@ export class ForgotPassword extends Component {
   }
 
   handleSubmitNewPassword = (e) => {
-    if (this.state.newPassword !== "") {
-      this.setState({ isShowNewPassError: false });
-      if (this.state.newPassword === this.state.verifyPassword) {
-        this.setState({ isShowVerifyError: false });
-        const userAAPNew = {
-          email: this.props.authAAP.userAAP.email,
-          firstName: this.props.authAAP.userAAP.firstName,
-          lastName: this.props.authAAP.userAAP.lastName,
-          password: this.state.newPassword,
-        };
+    let check = {
+      isFine: false,
+      isNewPassValid: false,
+      isVerifyPass: false,
+    };
 
-        const userNew = {
-          avatar: this.props.auth.avatar,
-          email: this.props.auth.email,
-          roleEnum: this.props.auth.roleEnum,
-          username: this.props.auth.username,
-          password: this.state.newPassword,
-        };
-
-        const main = "http://localhost:8092//";
-        const resetPassword = main + "/acs/users/updatePassword/";
-        const verifyEmail = main + "/acs/users/verify/";
-        //prepare the jason for the server
-        const data = { password: userAAPNew.password };
-        const dataJson = JSON.stringify(data);
-
-        fetch(verifyEmail + userAAPNew.email)
-          .then((response) => {
-            if (response.status === 200) {
-              response.json().then((d) => {
-                //check if email exist in the system
-                if (d) {
-                  fetch(resetPassword + userAAPNew.email, {
-                    method: "PUT", // or 'PUT'
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: dataJson,
-                  }).then(
-                    (response) => {
-                      if (response.status === 200) {
-                        //save that we verify
-                        this.setState({ isSuccesReset: true });
-
-                        //save the changes
-                        this.props.saveUserAAP({
-                          userAAP: userAAPNew,
-                          isLoggedIn: this.props.authAAP.isLoggedIn,
-                          isSignIn: false,
-                        });
-
-                        //save the changes
-                        this.props.saveUser({
-                          userNew,
-                          isLoggedIn: this.props.auth.isLoggedIn,
-                        });
-                      } else {
-                        response.json().then((x) => {
-                          console.log(x);
-                          this.setState({ isSuccesReset: false });
-                        });
-                      }
-                    },
-                    (error) => {
-                      console.log(error);
-                      this.setState({ isSuccesReset: false });
-                    }
-                  );
-                }
-              });
-            } else {
-              console.log("Error:", response);
-              response.json().then((d) => {
-                console.log("Errordata", d);
-              });
-            }
-          })
-          .catch((error) => {
-            console.log(error.data);
-          });
-      } else {
-        this.setState({ isShowVerifyError: true });
-      }
-    } else {
+    if (this.state.newPassword === "") {
       this.setState({ isShowNewPassError: true });
+      this.setState({ newPasswordError: "Field cann't be empty" });
+      check.isNewPassValid = false;
+    } else {
+      if (
+        (this.state.newPassword.length >= 5 &&
+          this.state.newPassword.match("[0-9]+[a-z]+[A-Z]*")) ||
+        this.state.newPassword.match("[a-z]+[A-Z]*[0-9]+")
+      ) {
+        this.setState({ isShowNewPassError: false });
+        check.isNewPassValid = true;
+        if (this.state.newPassword === this.state.verifyPassword) {
+          check.isVerifyPass = true;
+          this.setState({ isShowVerifyError: false });
+        } else {
+          check.isVerifyPass = false;
+          this.setState({ isShowVerifyError: true });
+        }
+      } else {
+        this.setState({ isShowNewPassError: true });
+        this.setState({
+          newPasswordError:
+            "Password must include digits and letters and at least 5 characters",
+        });
+        check.isNewPassValid = false;
+      }
+    }
+
+    if (check.isVerifyPass && check.isNewPassValid) {
+      check.isFine = true;
+    }
+
+    if (check.isFine) {
+      const main = "http://localhost:8092//";
+      const resetPassword = main + "/acs/users/updatePassword/";
+      const verifyEmail = main + "/acs/users/verify/";
+
+      const userAAPNew = {
+        email: this.props.authAAP.userAAP.email,
+        firstName: this.props.authAAP.userAAP.firstName,
+        lastName: this.props.authAAP.userAAP.lastName,
+        password: this.state.newPassword,
+      };
+
+      const userNew = {
+        avatar: this.props.auth.avatar,
+        email: this.props.auth.email,
+        roleEnum: this.props.auth.roleEnum,
+        username: this.props.auth.username,
+        password: this.state.newPassword,
+      };
+
+      //prepare the jason for the server
+      const data = { password: userAAPNew.password };
+      const dataJson = JSON.stringify(data);
+
+      fetch(verifyEmail + userAAPNew.email)
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              //check if email exist in the system
+              if (d) {
+                fetch(resetPassword + userAAPNew.email, {
+                  method: "PUT", // or 'PUT'
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: dataJson,
+                }).then(
+                  (response) => {
+                    if (response.status === 200) {
+                      //save that we verify
+                      this.setState({ isSuccesReset: true });
+
+                      //save the changes
+                      this.props.saveUserAAP({
+                        userAAP: userAAPNew,
+                        isLoggedIn: this.props.authAAP.isLoggedIn,
+                        isSignIn: false,
+                      });
+
+                      //save the changes
+                      this.props.saveUser({
+                        userNew,
+                        isLoggedIn: this.props.auth.isLoggedIn,
+                      });
+                    } else {
+                      response.json().then((x) => {
+                        console.log(x);
+                        this.setState({ isSuccesReset: false });
+                      });
+                    }
+                  },
+                  (error) => {
+                    console.log(error);
+                    this.setState({ isSuccesReset: false });
+                  }
+                );
+              }
+            });
+          } else {
+            console.log("Error:", response);
+            response.json().then((d) => {
+              console.log("Errordata", d);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error.data);
+        });
     }
   };
 
