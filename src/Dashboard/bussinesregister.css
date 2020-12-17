@@ -154,6 +154,8 @@
     height:35px;
 }
 
+
+
 #bussinessName:focus-within,#bussinessEmail:focus-within,#reenterEmail:focus-within,#passwordBussines:focus-within{
     box-shadow: none !important;
 }

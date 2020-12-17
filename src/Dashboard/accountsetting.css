@@ -14,7 +14,7 @@
   .card-form-account-setting{
     margin-left: 100px;
     width: 1320px;
-    height: 800px;
+    height: 650px;
 }
 
 #border10{
@@ -22,3 +22,158 @@
     border-width: 0.2;
     border-bottom: thin;
   }
+
+  .container-personal{
+    position: static;
+    z-index: 0;
+  }
+
+  .container-personal-addres{
+    margin-left:130px ;
+  }
+
+  .biiling-container{
+    position: static;
+    z-index: 0;
+  }
+
+  .credit-card-container{
+    position: static;
+    z-index: 0;
+  }
+
+  .container-phone{
+    margin-left:205px ;
+    margin-top: -70px;
+  }
+  #imgPersonal{
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+  }
+  .div-account-setting{
+    position: relative;
+    z-index: 0;
+  }
+
+  #image-default{
+    width: 120px;
+    height: 120px;
+    border: 1px solid #555;
+    margin-left: 10px;
+  }
+
+  #firstNameDiv,#lastNameInputDiv{
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    top:-80px;
+    margin-left: 75px;
+  }
+
+
+  #addresInputDiv,#countryInputDiv,#cityInputDiv{
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    top:-75px;
+    margin-left: 75px;
+  }
+
+  #billing-address-div{
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+  }
+
+  #id-owner-credit-div,#credit-number-div,#credit-cv-div{
+    display: inline-block;
+    position: relative;
+    z-index: 0;
+    margin-left: 20px; 
+  }
+
+  #div-button-update{
+    position: absolute;
+    z-index: 2;
+  }
+  #input-file{
+    position: absolute;
+    z-index: 2;
+    margin-top: -35px;
+    margin-left: 10px;
+  }
+
+  #upload-file{
+    position: absolute;
+    z-index: 2;
+    margin-top: -45px;
+    width: 93px;
+    margin-left: 10px;
+  }
+
+  #phoneInputDiv{
+    position: relative;
+    z-index: 0;
+  }
+
+  #dateCreditDiv{
+    display: inline-block;
+    position: relative;
+    z-index: 0; 
+  }
+
+ 
+
+  #firstNameInput,#lastNameInput,#addresInput,#countryInput,#cityInput,#phoneInput, #billingAddressInput,#ownerIdInput,#dateInput{
+    border: 0.8px solid rgb(192, 191, 191);
+    border-radius: 2px;
+    height:25px;
+    width: 150px;
+  }
+#creditNumberInput,#cvvInput{
+  border: 0.8px solid rgb(192, 191, 191);
+  border-radius: 2px;
+  height:25px;
+  width: 165px;
+}
+
+  #firstNameInput:focus,#lastNameInput:focus,#addresInput:focus,#countryInput:focus,#cityInput:focus,#phoneInput:focus,#billingAddressInput:focus
+  #ownerIdInput:focus,#dateInput:focus{
+    box-shadow: none !important;    
+  }
+
+  #creditNumberInput:focus,#cvvInput:focus{
+    box-shadow: none !important;      
+  }
+
+  #personal-info-button:focus-within,#billing-info-button:focus-within{
+    box-shadow: none !important;   
+ 
+  }
+  #personal-info-button{
+    margin-left: 10px;
+  }
+
+  #copy-right{
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-bottom: 50px;
+    font-size: smaller;
+  }
+
+  #border4{
+    margin-top: 30px;
+    border-color: rgb(255, 255, 255);
+    border-width: 0.2;
+    border-bottom: thin;
+  }
+
+  #firstName-help,#lastName-help, #country-help,#addres-help,#city-help,#phone-help,#billingAddress-help,
+  #ownerId-help,#exp-date-help,#card-number-help,#cvv-help{
+    position: absolute;
+    z-index: 2;
+    top: 50px;
+  }
+
+
