@@ -57,7 +57,7 @@ public class PersonalInfoConverter {
 				infoBound.setAddress(entity.getAddress());
 				infoBound.setAvatar(entity.getAvatar());
 				infoBound.setCity(entity.getCity());
-				infoBound.setCountry(entity.getCity());
+				infoBound.setCountry(entity.getCountry());
 				infoBound.setPhone(entity.getPhone());
 				infoBound.setFirstName(entity.getFirstName());
 				infoBound.setLastName(entity.getLastName());
