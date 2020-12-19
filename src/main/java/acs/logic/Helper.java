@@ -1,5 +1,7 @@
 package acs.logic;
 
+import java.util.Random;
+
 public class Helper {
 	public static boolean isValidEmail(String email) {
 		String emailFormat = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
@@ -17,4 +19,11 @@ public class Helper {
 		
 		return str!=null && !str.isEmpty();
 	}
+	
+	
+	public static  int getRandomNumberUsingNextInt(int min, int max) {
+	    Random random = new Random();
+	    return random.nextInt(max - min) + min;
+	}
+	
 }

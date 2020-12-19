@@ -11,9 +11,9 @@ public class SupplierEntity {
     @GeneratedValue
 	private Long supplierID;
 	
-	private String companyName ;
+	private String supplierUserName ;
 	private String email; 
-	
+	private String positiveFeedbackPercent;
 	@OneToMany(
 	        cascade = CascadeType.ALL,
 	        orphanRemoval = true
@@ -28,12 +28,21 @@ public class SupplierEntity {
 		this.supplierID = supplierID;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	
+	public String getSupplierUserName() {
+		return supplierUserName;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setSupplierUserName(String supplierUserName) {
+		this.supplierUserName = supplierUserName;
+	}
+
+	public String getPositiveFeedbackPercent() {
+		return positiveFeedbackPercent;
+	}
+
+	public void setPositiveFeedbackPercent(String positiveFeedbackPercent) {
+		this.positiveFeedbackPercent = positiveFeedbackPercent;
 	}
 
 	public String getEmail() {

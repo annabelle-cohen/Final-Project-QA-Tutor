@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "5c216e15-db42-4755-b2a7-a86d3188062a",
+		"_postman_id": "143f9132-5781-4cc9-ae1b-40c1c271020a",
 		"name": "backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -212,7 +212,125 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getProducstByCategroyID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"categoryID\":15032  , \r\n \"page\":0 ,\r\n \"size\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/getByCategory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"getByCategory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductsByKeyword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"keyword\":\"samsung\", \r\n \"page\":0 ,\r\n \"size\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/getByKeyword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"getByKeyword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCategory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"categoryID\": 15032\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCategories",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"page\" : 0 ,\r\n\"size\" : 5\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/category/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"category",
+						"all"
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
