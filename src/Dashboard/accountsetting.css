@@ -146,7 +146,9 @@
   #creditNumberInput:focus,#cvvInput:focus{
     box-shadow: none !important;      
   }
-
+#billing-info-button{
+  margin-top: 15px;
+}
   #personal-info-button:focus-within,#billing-info-button:focus-within{
     box-shadow: none !important;   
  

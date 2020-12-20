@@ -164,7 +164,94 @@ class AccountSetting extends Component {
   };
 
   handleSubmitBillingInfo = (e) => {
-    console.log("click handle submit billing info");
+    const billingInfoUpdate = {
+      billingInfos: [
+        {
+          billingAdress: null,
+          creditCardID: null,
+          creditCardEXPDate: null,
+          creditCardPIN: null,
+          creditCardNo: null,
+        },
+      ],
+    };
+
+    const existBilling = this.props.personalInfo.billingInfos;
+
+    for (var i = 0; i < existBilling.length; i++) {
+      //billingInfoUpdate.billingInfos[i] = existBilling[i];
+      console.log(existBilling[i]);
+      billingInfoUpdate.billingInfos[i + 1] = existBilling[i];
+      console.log(billingInfoUpdate.billingInfos[i + 1]);
+    }
+
+    if (this.state.billingAddress === "") {
+      this.setState({ billingError: "must enter address" });
+    } else {
+      this.setState({ billingError: "" });
+      if (this.state.billingAddress === "Enter Billing Address")
+        this.setState({ billingAddress: "" });
+      billingInfoUpdate.billingInfos[0].billingAddress = this.state.billingAddress;
+    }
+
+    if (this.state.ownerID === "") {
+      this.setState({ ownerIdError: "must enter owner Id" });
+    } else {
+      this.setState({ ownerIdError: "" });
+      if (this.state.ownerID === "Enter Owner Id")
+        this.setState({ ownerID: "" });
+      billingInfoUpdate.billingInfos[0].creditCardID = this.state.ownerID;
+    }
+
+    if (this.state.expDate.length != 10) {
+      this.setState({ expDateError: "must enter expiry date" });
+    } else {
+      this.setState({ expDateError: "" });
+      //  billingInfoUpdate.billingInfos[0].creditCardEXPDate = this.state.expDate;
+    }
+
+    if (this.state.creditNumber.length != 19) {
+      this.setState({ creditError: "must enter valid credit card number" });
+    } else {
+      this.setState({ creditError: "" });
+      billingInfoUpdate.billingInfos[0].creditCardNo = this.state.creditNumber;
+    }
+
+    if (this.state.cvv.length != 3) {
+      this.setState({ cvvError: "must enter valid cvv" });
+    } else {
+      this.setState({ cvvError: "" });
+      billingInfoUpdate.billingInfos[0].creditCardPIN = this.state.cvv;
+    }
+
+    const dataJson = JSON.stringify(billingInfoUpdate);
+    console.log(dataJson);
+    const main = "http://localhost:8092/";
+    const PersonalInfo = main + "/acs/users/detail/";
+    const user = this.props.authAAP.userAAP;
+
+    fetch(PersonalInfo + user.email, {
+      method: "PUT", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          this.props.savePersonalInfo({
+            isPersonalInfoExist: this.props.personalInfo.isPersonalInfoExist,
+            personalInfo: this.props.personalInfo.personalInfo,
+            billingInfos: billingInfoUpdate.billingInfos,
+          });
+        } else {
+          response.json().then((x) => {});
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   };
 
   checkIfIsPersonalInfo = (e) => {
@@ -224,6 +311,12 @@ class AccountSetting extends Component {
             } else {
               this.setState({ avatar: avatar["default"] });
             }
+
+            this.props.savePersonalInfo({
+              isPersonalInfoExist: this.props.personalInfo.isPersonalInfoExist,
+              personalInfo: this.props.personalInfo.personalInfo,
+              billingInfos: d.billingInfos,
+            });
           });
         } else {
           console.log("Error:", response);
@@ -429,7 +522,7 @@ class AccountSetting extends Component {
                     onChange={(e) => this.setState({ expDate: e.value })}
                   ></InputMask>
                   <small id="exp-date-help" className="p-invalid p-d-block">
-                    {this.state.ownerIdError}
+                    {this.state.expDateError}
                   </small>
                 </div>
 
@@ -455,7 +548,7 @@ class AccountSetting extends Component {
                   </div>
                   <InputMask
                     id="cvvInput"
-                    mask="CVV"
+                    mask="999"
                     value={this.state.cvv}
                     placeholder="CVV"
                     onChange={(e) => this.setState({ cvv: e.value })}

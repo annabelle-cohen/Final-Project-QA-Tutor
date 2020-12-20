@@ -9,7 +9,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./Layou/navbar";
 import SignIn from "./Auth/SignIn";
 import About from "./Auth/About";
-import { Home } from "./Dashboard/dashboard";
+import Home from "./Dashboard/dashboard";
 import SignInToAAP from "./Dashboard/SignInToAAP";
 import { RegisterToAAP } from "./Dashboard/RegisterToAAP";
 import { businessRegister } from "./Dashboard/businessRegister";
@@ -18,6 +18,7 @@ import NavigationBarAAP from "./Dashboard/NavigationBarAAP";
 import SignInToAAPWithPassword from "./Dashboard/SignInToAAPWithPass";
 import ForgotPassword from "./Dashboard/forgotPassword";
 import AccountSetting from "./Dashboard/AccountSetting";
+import productByCategoryAAP from "./Dashboard/productByCategoryAAP";
 
 function App() {
   return (
@@ -26,10 +27,14 @@ function App() {
         <Navbar />
         <Switch>
           <Route exact path="/" component={SignIn} />
-          <Route exact path="/dashboard" component={Home} />
+          <Route exact path="/dashboard" component={Home}></Route>
           <Route exact path="/signIn" component={SignIn} />
           <Route exact path="/dashboard/signInToAAP" component={SignInToAAP} />
           <Route exact path="navigationBarAAP" component={NavigationBarAAP} />
+          <Route
+            path="/dashboard/productByCategory"
+            component={productByCategoryAAP}
+          />
           <Route
             exact
             path="/dashboard/registerToAAP"

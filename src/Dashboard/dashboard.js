@@ -13,6 +13,10 @@ import clothes2 from "./img/clothes2.jpg";
 import Sony from "./img/sony.jpg";
 import { Link, Route, NavLink } from "react-router-dom";
 import NavigationBarAAP from "./NavigationBarAAP";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { saveAllCategories } from "../Actions/allCategoriesAAP";
+import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 
 export class Home extends Component {
   constructor(props) {
@@ -20,6 +24,7 @@ export class Home extends Component {
     this.state = {
       search: null,
       selectedCategories: "All Categories",
+      isSuccessed: false,
       images: require("./img/makeup.jpg"),
     };
 
@@ -65,10 +70,58 @@ export class Home extends Component {
       },
     ];
 
+    this.props.saveAllCategories({
+      categories: [],
+    });
+
+    this.props.saveProductsByCategoryID({
+      categoryID: this.props.productsByCategory.categoryID,
+      productsById: this.props.productsByCategory.productsById,
+    });
+
+    this.fillCategories = this.fillCategories.bind(this);
     this.productTemplate = this.productTemplate.bind(this);
-    //console.log(this.state);
+    this.handleClick = this.handleClick.bind(this);
+
+    this.fillCategories();
   }
 
+  fillCategories = (e) => {
+    const data = {
+      page: 0,
+      size: 5,
+    };
+
+    const main = "http://localhost:8092//";
+    const getAllCategories = main + "/acs/category/all";
+    const dataJson = JSON.stringify(data);
+
+    fetch(getAllCategories, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const categoriesArray = d;
+            this.props.saveAllCategories({
+              categories: categoriesArray,
+            });
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
   onCategoryChange = (e) => {
     this.setState({ selectedCategories: e.value.name });
     console.log(e.value.name);
@@ -81,6 +134,66 @@ export class Home extends Component {
     console.log(this.state);
   };
 
+  handleClick = (e) => {
+    const selectedCategory = e.target.innerText;
+    const allCategories = this.props.categories;
+    const id = 0;
+
+    for (var i = 0; i < allCategories.categories.length; i++) {
+      if (selectedCategory === allCategories.categories[i].catgeroyName) {
+        this.props.saveProductsByCategoryID({
+          categoryID: allCategories.categories[i].categoryID,
+          productsById: this.props.productsByCategory.productsById,
+        });
+      }
+    }
+    setTimeout(() => {
+      const data = {
+        categoryID: this.props.productsByCategory.categoryID,
+        page: 0,
+        size: 5,
+      };
+
+      const main = "http://localhost:8092/";
+      const getproductsByCategoryId = main + "/acs/products/getByCategory";
+      const dataJson = JSON.stringify(data);
+
+      fetch(getproductsByCategoryId, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              const productsArray = d;
+              this.setState({ isSuccessed: true });
+              this.props.saveProductsByCategoryID({
+                categoryID: this.props.productsByCategory.categoryID,
+                productsById: productsArray,
+              });
+            });
+          } else {
+            response.json().then((x) => {
+              console.log(x);
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }, 400);
+  };
+
+  isCategoryPageByTab() {
+    console.log(this.props.productsByCategory.productsById);
+    if (this.state.isSuccessed) {
+      return <Redirect to="/dashboard/productByCategory" />;
+    }
+  }
   productTemplate(product) {
     return (
       <div className="product-item">
@@ -144,7 +257,6 @@ export class Home extends Component {
         <div>
           <hr id="border1" align="right" />
         </div>
-
         {/*Home search input*/}
         <span id="home_search" className="p-input-icon-left">
           <i
@@ -170,9 +282,7 @@ export class Home extends Component {
             Advanced
           </Link>
         </span>
-
         <hr id="border2" align="right" />
-
         {/*drop down menu for tabView menu*/}
         <TabView id="tab-view-0">
           <TabPanel header="Home"></TabPanel>
@@ -191,7 +301,8 @@ export class Home extends Component {
                   <Button
                     id="Cell-Phones-link"
                     label="Cell Phones & Accessories"
-                    onClick={(e) => console.log("top categories - cell phone")}
+                    name="Cell Phones & Accessories"
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -199,9 +310,7 @@ export class Home extends Component {
                   <Button
                     id="Smart-Watches-link"
                     label="Smart Watches"
-                    onClick={(e) =>
-                      console.log("top categories - Smart-Watches")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -209,7 +318,7 @@ export class Home extends Component {
                   <Button
                     id="Video-Games-link"
                     label="Video Games & Accessories"
-                    onClick={(e) => console.log("top categories - Video-Games")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -217,9 +326,7 @@ export class Home extends Component {
                   <Button
                     id="Computers-Tablets-link"
                     label="Computers & Tablets"
-                    onClick={(e) =>
-                      console.log("top categories - Computers-Tablets")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -227,9 +334,7 @@ export class Home extends Component {
                   <Button
                     id="Digital-Cameras-link"
                     label="Digital Cameras & Photo"
-                    onClick={(e) =>
-                      console.log("top categories - Digital-Cameras")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -237,9 +342,7 @@ export class Home extends Component {
                   <Button
                     id="Camera-Drones-link"
                     label="Camera Drones"
-                    onClick={(e) =>
-                      console.log("top categories - Camera-Drones")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -247,7 +350,7 @@ export class Home extends Component {
                   <Button
                     id="Deals-link"
                     label="Deals"
-                    onClick={(e) => console.log("top categories - Deals")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -263,7 +366,7 @@ export class Home extends Component {
                   <Button
                     id="iPhone-link"
                     label="iPhone"
-                    onClick={(e) => console.log("top categories - iPhone")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -271,7 +374,7 @@ export class Home extends Component {
                   <Button
                     id="Samsung-link"
                     label="Samsung"
-                    onClick={(e) => console.log("top categories - Samsung")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -279,9 +382,7 @@ export class Home extends Component {
                   <Button
                     id="Portable-Audio-link"
                     label="Portable Audio & Headphones"
-                    onClick={(e) =>
-                      console.log("top categories - Portable-Audio")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -289,7 +390,7 @@ export class Home extends Component {
                   <Button
                     id="TV-Video-link"
                     label="TV, Video & Home Audio"
-                    onClick={(e) => console.log("top categories - TV-Video")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -297,9 +398,7 @@ export class Home extends Component {
                   <Button
                     id="Vehicle-Electronics-link"
                     label="Vehicle Electronics & GPS"
-                    onClick={(e) =>
-                      console.log("top categories - Vehicle-Electronics")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -307,7 +406,7 @@ export class Home extends Component {
                   <Button
                     id="Smart-Home-link"
                     label="Smart Home"
-                    onClick={(e) => console.log("top categories - Smart-Home")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -329,9 +428,7 @@ export class Home extends Component {
                   <Button
                     id="Womens-Clothing-link"
                     label="Women's Clothing"
-                    onClick={(e) =>
-                      console.log("top categories - Womens-Clothing")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -339,9 +436,7 @@ export class Home extends Component {
                   <Button
                     id="Womens-Shoes-link"
                     label="Women's Shoes"
-                    onClick={(e) =>
-                      console.log("top categories - Womens-Shoes")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -349,9 +444,7 @@ export class Home extends Component {
                   <Button
                     id="Mens-Clothing-link"
                     label="Men's Clothing"
-                    onClick={(e) =>
-                      console.log("top categories - Mens-Clothing")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -359,7 +452,7 @@ export class Home extends Component {
                   <Button
                     id="Men-Shoes-link"
                     label="Men's Shoes"
-                    onClick={(e) => console.log("top categories - Men-Shoes")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -367,9 +460,7 @@ export class Home extends Component {
                   <Button
                     id="Watches-Parts-Accessories-link"
                     label="Watches, Parts & Accessories"
-                    onClick={(e) =>
-                      console.log("top categories - Watches-Parts-Accessories")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -393,9 +484,7 @@ export class Home extends Component {
                   <Button
                     id="Fine-Jewelry-link"
                     label="Fine Jewelry"
-                    onClick={(e) =>
-                      console.log("top categories - Fine-Jewelry")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -403,9 +492,7 @@ export class Home extends Component {
                   <Button
                     id="Fashion-Jewelry-link"
                     label="Fashion Jewelry"
-                    onClick={(e) =>
-                      console.log("top categories - Fashion-Jewelry")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -413,9 +500,7 @@ export class Home extends Component {
                   <Button
                     id="Mens-Accessories-link"
                     label="Men's Accessories"
-                    onClick={(e) =>
-                      console.log("top categories - Mens-Accessories")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -423,9 +508,7 @@ export class Home extends Component {
                   <Button
                     id="Womens-Handbags-Bags-link"
                     label="Women's Handbags & Bags"
-                    onClick={(e) =>
-                      console.log("top categories - Womens-Handbags-Bags")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -433,9 +516,7 @@ export class Home extends Component {
                   <Button
                     id="Kids-Clothing-Shoes-Accs-link"
                     label="Kids' Clothing, Shoes & Accs"
-                    onClick={(e) =>
-                      console.log("top categories - Kids-Clothing-Shoes-Accs")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -443,7 +524,7 @@ export class Home extends Component {
                   <Button
                     id="Smart-Home-link"
                     label="Smart Home"
-                    onClick={(e) => console.log("top categories - Smart-Home")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -465,7 +546,7 @@ export class Home extends Component {
                   <Button
                     id="Makeup-link"
                     label="Makeup"
-                    onClick={(e) => console.log("top categories - Makeup")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -473,7 +554,7 @@ export class Home extends Component {
                   <Button
                     id="Health-Care-link"
                     label="Health Care"
-                    onClick={(e) => console.log("top categories - Health-Care")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -481,7 +562,7 @@ export class Home extends Component {
                   <Button
                     id="Fragrances-link"
                     label="Fragrances"
-                    onClick={(e) => console.log("top categories - Fragrances")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -489,11 +570,7 @@ export class Home extends Component {
                   <Button
                     id="Nail-Care-Manicure-Pedicure-link"
                     label="Nail Care, Manicure & Pedicure"
-                    onClick={(e) =>
-                      console.log(
-                        "top categories - Nail-Care-Manicure-Pedicure"
-                      )
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -501,9 +578,7 @@ export class Home extends Component {
                   <Button
                     id="Hair-Care-Styling-link"
                     label="Hair Care & Styling"
-                    onClick={(e) =>
-                      console.log("top categories - Hair-Care-Styling")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -511,7 +586,7 @@ export class Home extends Component {
                   <Button
                     id="Deals-link3"
                     label="Deals"
-                    onClick={(e) => console.log("top categories - Deals")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -527,7 +602,7 @@ export class Home extends Component {
                   <Button
                     id="Skin-Care-link"
                     label="Skin Care"
-                    onClick={(e) => console.log("top categories - Skin-Care")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -535,11 +610,7 @@ export class Home extends Component {
                   <Button
                     id="Vitamins-Dietary-Supplements-link"
                     label="Vitamins & Dietary Supplements"
-                    onClick={(e) =>
-                      console.log(
-                        "top categories - Vitamins-Dietary-Supplements"
-                      )
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -547,9 +618,7 @@ export class Home extends Component {
                   <Button
                     id="Shaving-Hair-Removal-link"
                     label="Shaving & Hair Removal"
-                    onClick={(e) =>
-                      console.log("top categories - Shaving-Hair-Removal")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -557,7 +626,7 @@ export class Home extends Component {
                   <Button
                     id="Vision-Care-link"
                     label="Vision Care"
-                    onClick={(e) => console.log("top categories - Vision-Care")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -565,7 +634,7 @@ export class Home extends Component {
                   <Button
                     id="Bath-Body-link"
                     label="Bath & Body"
-                    onClick={(e) => console.log("top categories - Bath-Body")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -573,7 +642,7 @@ export class Home extends Component {
                   <Button
                     id="Oral-Care-link"
                     label="Oral Care"
-                    onClick={(e) => console.log("top categories - Oral-Care")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -595,7 +664,7 @@ export class Home extends Component {
                   <Button
                     id="Cycling-link"
                     label="Cycling"
-                    onClick={(e) => console.log("top categories - Cycling")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -603,9 +672,7 @@ export class Home extends Component {
                   <Button
                     id="Outdoor-Sports-link"
                     label="Outdoor Sports"
-                    onClick={(e) =>
-                      console.log("top categories - Outdoor-Sports")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -613,7 +680,7 @@ export class Home extends Component {
                   <Button
                     id="Hunting-link"
                     label="Hunting"
-                    onClick={(e) => console.log("top categories - Hunting")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -621,7 +688,7 @@ export class Home extends Component {
                   <Button
                     id="Fishing-link"
                     label="Fishing"
-                    onClick={(e) => console.log("top categories - Fishing")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -629,9 +696,7 @@ export class Home extends Component {
                   <Button
                     id="Fitness-Running-Yoga-link"
                     label="Fitness, Running & Yoga"
-                    onClick={(e) =>
-                      console.log("top categories - Fitness-Running-Yoga")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -655,7 +720,7 @@ export class Home extends Component {
                   <Button
                     id="Tennis-link"
                     label="Tennis"
-                    onClick={(e) => console.log("top categories - Tennis")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -663,7 +728,7 @@ export class Home extends Component {
                   <Button
                     id="Swimming-link"
                     label="Swimming"
-                    onClick={(e) => console.log("top categories - Swimming")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -671,9 +736,7 @@ export class Home extends Component {
                   <Button
                     id="Water-Sports-link"
                     label="Water Sports"
-                    onClick={(e) =>
-                      console.log("top categories - Water-Sports")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -681,9 +744,7 @@ export class Home extends Component {
                   <Button
                     id="Winter-Sports-link"
                     label="Winter Sports"
-                    onClick={(e) =>
-                      console.log("top categories - Winter-Sports")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -691,7 +752,7 @@ export class Home extends Component {
                   <Button
                     id="Team-Sports-link"
                     label="Team Sports"
-                    onClick={(e) => console.log("top categories - Team-Sports")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -699,9 +760,7 @@ export class Home extends Component {
                   <Button
                     id="Fitness-Technology-link"
                     label="Fitness Technology"
-                    onClick={(e) =>
-                      console.log("top categories - Fitness-Technology")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -723,9 +782,7 @@ export class Home extends Component {
                   <Button
                     id="Tool-Workshop-Equipment-link"
                     label="Tools & Workshop Equipment"
-                    onClick={(e) =>
-                      console.log("top categories - Tool-Workshop-Equipment")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -733,9 +790,7 @@ export class Home extends Component {
                   <Button
                     id="Yard-Garden-Outdoor-Living-link"
                     label="Yard, Garden & Outdoor Living"
-                    onClick={(e) =>
-                      console.log("top categories - Yard-Garden-Outdoor-Living")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -743,9 +798,7 @@ export class Home extends Component {
                   <Button
                     id="Home-Improvement-link"
                     label="Home Improvement"
-                    onClick={(e) =>
-                      console.log("top categories - Home-Improvement")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -753,7 +806,7 @@ export class Home extends Component {
                   <Button
                     id="Baby-link"
                     label="Baby"
-                    onClick={(e) => console.log("top categories - Baby")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -761,9 +814,7 @@ export class Home extends Component {
                   <Button
                     id="Kitchen-Dining-Bar-link"
                     label="Kitchen, Dining & Bar"
-                    onClick={(e) =>
-                      console.log("top categories - Kitchen-Dining-Bar")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -771,11 +822,7 @@ export class Home extends Component {
                   <Button
                     id="Lamps-Lighting-Ceiling-Fans-link"
                     label="Lamps, Lighting & Ceiling Fans"
-                    onClick={(e) =>
-                      console.log(
-                        "top categories - Lamps-Lighting-Ceiling-Fans"
-                      )
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -799,7 +846,7 @@ export class Home extends Component {
                   <Button
                     id="Home-Decor-link"
                     label="Home Décor"
-                    onClick={(e) => console.log("top categories - Home Décor")}
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -807,9 +854,7 @@ export class Home extends Component {
                   <Button
                     id="Home-Organization-Supplies-link"
                     label="Home Organization Supplies"
-                    onClick={(e) =>
-                      console.log("top categories - Home-Organization-Supplies")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -817,9 +862,7 @@ export class Home extends Component {
                   <Button
                     id="Art-Craft-Supplies-link"
                     label="Art & Craft Supplies"
-                    onClick={(e) =>
-                      console.log("top categories - Art-Craft-Supplies")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -827,11 +870,7 @@ export class Home extends Component {
                   <Button
                     id="Beads-Jewelry-Making-Supplies-link"
                     label="Beads & Jewelry Making Supplies"
-                    onClick={(e) =>
-                      console.log(
-                        "top categories - Beads-Jewelry-Making-Supplies"
-                      )
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -839,9 +878,7 @@ export class Home extends Component {
                   <Button
                     id="Art-Supplies-link"
                     label="Art Supplies"
-                    onClick={(e) =>
-                      console.log("top categories - Art-Supplies")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -849,9 +886,7 @@ export class Home extends Component {
                   <Button
                     id="Scrapbooking-Paper-Crafts-link"
                     label="Scrapbooking & Paper Crafts"
-                    onClick={(e) =>
-                      console.log("top categories - Scrapbooking-Paper")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -859,9 +894,7 @@ export class Home extends Component {
                   <Button
                     id="Pets-Supplies-link"
                     label="Pets Supplies"
-                    onClick={(e) =>
-                      console.log("top categories - Pets-Supplies")
-                    }
+                    onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
@@ -1018,7 +1051,7 @@ export class Home extends Component {
           </TabPanel>
           <TabPanel header="Under $10"></TabPanel>
         </TabView>
-
+        {this.isCategoryPageByTab()}
         {/*first carousel for images soon will be read from server right now static*/}
         <div id="div_carousel-item" className="card">
           <Carousel
@@ -1034,7 +1067,6 @@ export class Home extends Component {
             header={""}
           />
         </div>
-
         {/*explore popular categories - right now static soon from server and another categories*/}
         <div id="second-title">
           <h5>Explore Popular Categories</h5>
@@ -1070,7 +1102,6 @@ export class Home extends Component {
             <div id="p_img6">Clothes</div>
           </div>
         </div>
-
         {/*Daily deals - soon from server*/}
         <div id="third-title">
           <div id="daily_deals" onClick={(e) => console.log("Clicked 7")}>
@@ -1092,7 +1123,6 @@ export class Home extends Component {
             />
           </div>
         </div>
-
         {/*explore popular categories - right now static soon from server and another categories*/}
         <div id="fourth-title">
           <h5>Explore Popular Categories</h5>
@@ -1128,11 +1158,9 @@ export class Home extends Component {
             <div id="p_img12">Sony</div>
           </div>
         </div>
-
         <div>
           <hr id="border3" align="right" />
         </div>
-
         {/*bottom - info - Buy,sell,Tools & apps,Companies,About AAP,Stay connected...*/}
         <div className="about_bottom">
           <div id="buy">
@@ -1453,7 +1481,6 @@ export class Home extends Component {
             </div>
           </div>
         </div>
-
         {/*copy-right*/}
         <div id="copy-right">
           Copyright © 2020-2021 AAP Inc. All Rights Reserved.{" "}
@@ -1482,3 +1509,22 @@ export class Home extends Component {
     );
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    saveAllCategories: (categories) => dispatch(saveAllCategories(categories)),
+    saveProductsByCategoryID: (productsById) =>
+      dispatch(saveProductsByCategoryID(productsById)),
+  };
+}
+
+const mapStateToProps = (state) => {
+  return {
+    categories: state.categories,
+    productsByCategory: state.productsByCategory,
+  };
+};
+
+const Home1 = connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default connect()(Home1);
