@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import HomeSearch from "./homeSearch";
 
 export class Home extends Component {
   constructor(props) {
@@ -59,7 +60,7 @@ export class Home extends Component {
       { label: "Under $10" },
     ];
 
-    this.onCategoryChange = this.onCategoryChange.bind(this);
+    //  this.onCategoryChange = this.onCategoryChange.bind(this);
     //this.itemTemplate = this.itemTemplate.bind(this);
     //  this.thumbnailTemplate = this.thumbnailTemplate.bind(this);
 
@@ -122,17 +123,6 @@ export class Home extends Component {
       }
     );
   };
-  onCategoryChange = (e) => {
-    this.setState({ selectedCategories: e.value.name });
-    console.log(e.value.name);
-  };
-
-  handleSearch = (e) => {
-    this.setState({
-      [e.target.search]: e.target.value,
-    });
-    console.log(this.state);
-  };
 
   handleClick = (e) => {
     const selectedCategory = e.target.innerText;
@@ -189,9 +179,9 @@ export class Home extends Component {
   };
 
   isCategoryPageByTab() {
-    console.log(this.props.productsByCategory.productsById);
+    //console.log(this.props.productsByCategory.productsById);
     if (this.state.isSuccessed) {
-      return <Redirect to="/dashboard/productByCategory" />;
+      return <Redirect push to="/dashboard/productByCategory" />;
     }
   }
   productTemplate(product) {
@@ -258,30 +248,7 @@ export class Home extends Component {
           <hr id="border1" align="right" />
         </div>
         {/*Home search input*/}
-        <span id="home_search" className="p-input-icon-left">
-          <i
-            id="icon_search"
-            className="pi pi-search"
-            style={{ fontSize: "1.2em" }}
-          />
-          <InputText
-            id="home_search1"
-            onChange={this.handleSearch}
-            placeholder="Search for anything"
-          ></InputText>
-          <Dropdown
-            id="selecet_category"
-            value={this.state.selectedCategories}
-            options={this.categories}
-            onChange={this.onCategoryChange}
-            optionLabel="name"
-            placeholder={this.state.selectedCategories}
-          />
-          <Button id="home_Search_button" label="Search" />
-          <Link to="/dashboard/advanced" id="advanced">
-            Advanced
-          </Link>
-        </span>
+        <HomeSearch />
         <hr id="border2" align="right" />
         {/*drop down menu for tabView menu*/}
         <TabView id="tab-view-0">

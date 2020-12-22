@@ -19,6 +19,8 @@ import SignInToAAPWithPassword from "./Dashboard/SignInToAAPWithPass";
 import ForgotPassword from "./Dashboard/forgotPassword";
 import AccountSetting from "./Dashboard/AccountSetting";
 import productByCategoryAAP from "./Dashboard/productByCategoryAAP";
+import HomeSearch from "./Dashboard/homeSearch";
+import Product from "./Dashboard/Product/Product";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
           <Route exact path="/signIn" component={SignIn} />
           <Route exact path="/dashboard/signInToAAP" component={SignInToAAP} />
           <Route exact path="navigationBarAAP" component={NavigationBarAAP} />
+          <Route exact path="product" component={Product} />
+          <Route exact path="homeSearch" component={HomeSearch} />
           <Route
             path="/dashboard/productByCategory"
             component={productByCategoryAAP}
