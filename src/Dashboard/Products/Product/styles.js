@@ -12,10 +12,16 @@ export default makeStyles(() => ({
   cardActions: {
     display: "flex",
     justifyContent: "flex-end",
+    marginTop: "-40px",
   },
   cardContent: {
     display: "flex",
     justifyContent: "space-between",
-    paddingRight: "2px",
+  },
+  link: {
+    color: "black",
+    "&:hover": {
+      color: "rgb(38, 38, 194)",
+    },
   },
 }));

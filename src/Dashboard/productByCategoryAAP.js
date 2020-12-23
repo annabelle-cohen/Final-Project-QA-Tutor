@@ -2,25 +2,11 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
-import Product from "./Product/Product";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
-import Grid from "@material-ui/core/Grid";
-import { withStyles } from "@material-ui/core/styles";
 import "./productByCategory.css";
-
-const styles = (theme) => ({
-  toolbar: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing(3),
-  },
-  root: {
-    flexGrow: 1,
-  },
-});
+import Products from "./Products/Products";
 
 export class productByCategoryAAP extends Component {
   constructor(props) {
@@ -82,12 +68,23 @@ export class productByCategoryAAP extends Component {
     this.products = this.props.productsByCategory.productsById;
   };
 
-  handleClick = (e) => {
-    console.log(e);
-  };
-
   render() {
-    const { classes } = this.props;
+    const handleAddToCart = async (productId, quantity) => {
+      var amount = quantity;
+      var productId = productId;
+
+      console.log(amount);
+      console.log(productId);
+    };
+
+    const handleItemClick = async (product) => {
+      this.props.savePassingProduct({
+        productToPass: product,
+      });
+
+      console.log(this.props.productToPass);
+    };
+
     return (
       <div>
         <NavigationBarAAP />
@@ -102,29 +99,11 @@ export class productByCategoryAAP extends Component {
             </li>
             <li>{this.state.categoryName}</li>
           </ul>
-        </div>
-        <div id="grid-container">
-          <Grid
-            container
-            justify="center"
-            item
-            xs={10}
-            sm={12}
-            md={10}
-            lg={12}
-            spacing={1}
-          >
-            {this.products.map((product) => (
-              <Grid
-                key={product.productID}
-                item
-                xs={4}
-                sm={4}
-                md={4}
-                lg={3}
-              ></Grid>
-            ))}
-          </Grid>
+          <Products
+            products={this.products}
+            onAddToCart={handleAddToCart}
+            onClickItem={handleItemClick}
+          />
         </div>
       </div>
     );
@@ -154,4 +133,4 @@ const productByCategoryAAP1 = connect(
   mapDispatchToProps
 )(productByCategoryAAP);
 
-export default connect()(withStyles(styles)(productByCategoryAAP1));
+export default connect()(productByCategoryAAP1);
