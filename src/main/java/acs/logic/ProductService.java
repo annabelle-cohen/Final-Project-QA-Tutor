@@ -284,7 +284,8 @@ public class ProductService {
 
 		if (cat != null) {
 
-			PagedListHolder<ProductEntity> productsPage = new PagedListHolder<ProductEntity>(cat.getProducts());
+			PagedListHolder<ProductEntity> productsPage = new PagedListHolder<ProductEntity>(new ArrayList<ProductEntity>(cat.getProducts()));
+
 			productsPage.setPageSize(size);
 			productsPage.setPage(page);
 

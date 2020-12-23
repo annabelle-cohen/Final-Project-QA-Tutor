@@ -1,7 +1,7 @@
 package acs.data.entity;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +16,7 @@ public class CategoryEntity {
 	private String thumbnail;
 
 	@ManyToMany(mappedBy = "categories", fetch = FetchType.EAGER)
-	private List<ProductEntity> products = new ArrayList<>();// = new ArrayList<ProductEntity>();
+	private Set<ProductEntity> products = new HashSet<ProductEntity>();// = new ArrayList<ProductEntity>();
 
 	public Long getCategoryID() {
 		return categoryID;
@@ -50,11 +50,13 @@ public class CategoryEntity {
 		this.thumbnail = thumbnail;
 	}
 
-	public List<ProductEntity> getProducts() {
+	
+
+	public Set<ProductEntity> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<ProductEntity> products) {
+	public void setProducts(Set<ProductEntity> products) {
 		this.products = products;
 	}
 
