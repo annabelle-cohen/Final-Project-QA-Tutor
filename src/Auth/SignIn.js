@@ -61,6 +61,7 @@ class SignIn extends Component {
     const isLoggedIn = this.state.isLoggedIn;
     const userRole = this.props.auth.user.roleEnum;
     const password = this.props.auth.password;
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       if (userRole === "ADMIN") {
         return <Redirect to="/admin" />;

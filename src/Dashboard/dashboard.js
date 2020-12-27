@@ -141,7 +141,7 @@ export class Home extends Component {
       const data = {
         categoryID: this.props.productsByCategory.categoryID,
         page: 0,
-        size: 5,
+        size: 100,
       };
 
       const main = "http://localhost:8092/";

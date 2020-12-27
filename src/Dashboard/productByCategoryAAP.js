@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useCallback } from "react";
 import { connect } from "react-redux";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
@@ -24,6 +24,7 @@ export class productByCategoryAAP extends Component {
     });
 
     const products = [];
+
     this.fillProductsArray = this.fillProductsArray.bind(this);
     this.fillCategoryName = this.fillCategoryName.bind(this);
     this.fillCategoryName();

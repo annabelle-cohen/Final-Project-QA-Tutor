@@ -37,19 +37,24 @@ const Product = ({ product, onAddToCart, onClickItem }) => {
               {product.title}{" "}
             </Link>
           </Typography>
+
+          <Typography
+            dangerouslySetInnerHTML={{ __html: product.subtitle }}
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            style={{
+              marginTop: -30 + "px",
+              marginLeft: -30 + "px",
+            }}
+          />
         </div>
-        <Typography
-          dangerouslySetInnerHTML={{ __html: product.subtitle }}
-          variant="body2"
-          color="textSecondary"
-          component="p"
-          style={{ marginTop: -25 + "px", marginLeft: -30 + "px" }}
-        />
       </CardContent>
       <div
         style={{
+          display: "inline-block",
           marginLeft: 20 + "px",
-          marginTop: -25 + "px",
+          marginTop: 15 + "px",
           position: "absolute",
         }}
       >
@@ -57,6 +62,7 @@ const Product = ({ product, onAddToCart, onClickItem }) => {
           ${product.unitPrice}
         </Typography>
       </div>
+
       <CardActions disableSpacing className={classes.cardActions}>
         <IconButton aria-label="Add to Cart" onClick={handleAddToCart}>
           <AddShoppingCart />
