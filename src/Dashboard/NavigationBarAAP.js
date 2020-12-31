@@ -31,16 +31,23 @@ export class NavigationBarAAP extends Component {
       isSignIn: this.props.authAAP.isSignIn,
     });
 
-    this.props.saveShoppingCart({
-      numberOfProduct: this.props.shoppingCart.numberOfProduct,
+    /*this.props.saveShoppingCart({
+      totalNumberOfProduct: this.props.shoppingCart.totalNumberOfProduct,
       products: this.props.shoppingCart.products,
+      cartList: this.props.shoppingCart.cartList,
       totalPrice: this.props.shoppingCart.totalPrice,
+      lastPosition: this.props.lastPosition,
+    });*/
+    this.props.saveShoppingCart({
+      totalNumberOfProduct: 0,
+      products: [],
+      cartList: [],
+      totalPrice: 0,
       lastPosition: this.props.lastPosition,
     });
 
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
-    console.log(this.props.shoppingCart.products);
   }
 
   handleSignOut = (e) => {
@@ -90,19 +97,6 @@ export class NavigationBarAAP extends Component {
   }
 
   render() {
-    const FilledCart = () => {
-      var numberOfElement = 0;
-      if (this.props.shoppingCart.numberOfProduct <= 5) {
-        numberOfElement = this.props.shoppingCart.numberOfProduct;
-      } else {
-        numberOfElement = 5;
-      }
-
-      const currentPruducts = this.props.shoppingCart.products.slice(
-        0,
-        numberOfElement
-      );
-    };
     return (
       <div id="first-row">
         {" "}
@@ -294,17 +288,41 @@ export class NavigationBarAAP extends Component {
             id="shopping-cart"
           >
             <Badge
-              badgeContent={this.props.shoppingCart.numberOfProduct}
+              badgeContent={this.props.shoppingCart.totalNumberOfProduct}
               color="secondary"
             >
               <ShoppingCart style={{ fontSize: 19 + "px" }} />
             </Badge>
           </IconButton>
           <div class="dropdown-content-shopping">
+            <div
+              style={{
+                display:
+                  this.props.shoppingCart.totalNumberOfProduct <= 0
+                    ? "none"
+                    : "block",
+                marginTop: -15 + "px",
+                position: "static",
+                zIndex: 3,
+              }}
+            >
+              <h6 style={{ top: -10 + "px", fontWeight: "bold" }}>
+                Shopping Cart
+              </h6>
+              <hr
+                style={{
+                  borderColor: "rgb(255, 255, 255)",
+                  borderWidth: 0.2,
+                  borderBottom: "thin",
+                  marginLeft: 1 + "px",
+                  marginRight: 25 + "px",
+                }}
+              ></hr>
+            </div>
             <div style={{ height: 300 + "px", overflowY: "scroll" }}>
-              {this.props.shoppingCart.numberOfProduct <= 0
+              {this.props.shoppingCart.totalNumberOfProduct <= 0
                 ? "your cart is empty start adding some!"
-                : this.productsDropDown(this.props.shoppingCart.products)}
+                : console.log(this.props.shoppingCart)}
             </div>
             <div style={{ textAlign: "center" }}>
               <Link

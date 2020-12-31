@@ -1,8 +1,9 @@
 import { SAVE_ADDING_PRODUCTS_CART } from "../Constant/action-types";
 
 const iniState = {
-  numberOfProduct: 0,
+  totalNumberOfProduct: 0,
   products: [],
+  cartList: [],
   totalPrice: 0,
   lastPosition: 0,
 };

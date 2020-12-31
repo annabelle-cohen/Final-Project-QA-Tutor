@@ -28,8 +28,9 @@ export class productByCategoryAAP extends Component {
     const products = [];
 
     this.props.saveShoppingCart({
-      numberOfProduct: this.props.shoppingCart.numberOfProduct,
+      totalNumberOfProduct: this.props.shoppingCart.totalNumberOfProduct,
       products: this.props.shoppingCart.products,
+      cartList: this.props.shoppingCart.cartList,
       totalPrice: this.props.shoppingCart.totalPrice,
       lastPosition: this.props.shoppingCart.lastPosition,
     });
@@ -86,20 +87,43 @@ export class productByCategoryAAP extends Component {
 
   render() {
     const handleAddToCart = async (product, quantity) => {
-      var numbers = this.props.shoppingCart.numberOfProduct + quantity;
-      var products = this.props.shoppingCart.products;
-      products.push(product);
+      var numbers = this.props.shoppingCart.totalNumberOfProduct + quantity;
       var price = this.props.shoppingCart.totalPrice + product.unitPrice;
+      var products = this.props.shoppingCart.products;
+      var cartList = [];
       var lastPosition = window.pageYOffset;
+      var isExist = products.some((item) => item.hasOwnProperty(product));
+
+      if (this.props.shoppingCart.cartList != "undefined") {
+        cartList = this.props.shoppingCart.cartList;
+      }
+
+      if (isExist) {
+        console.log("im here");
+        products[products.indexOf(product) + 1][
+          product.title
+        ].productQuantity += 1;
+      } else {
+        console.log("in else");
+        var existCart = {};
+
+        var element = {
+          productName: product.title,
+          productQuantity: quantity,
+          product: product,
+        };
+        existCart[product.title] = element;
+        products.push(element);
+        //  cartList.push(product);
+      }
 
       this.props.saveShoppingCart({
-        numberOfProduct: numbers,
+        totalNumberOfProduct: numbers,
         products: products,
+        cartList: cartList,
         totalPrice: price,
         lastPosition: lastPosition,
       });
-
-      console.log(this.props.shoppingCart.products);
     };
 
     const handleItemClick = async (product) => {
