@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import { saveShoppingCart } from "../Actions/cartShop";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import "./productByCategory.css";
@@ -13,6 +14,7 @@ export class productByCategoryAAP extends Component {
     super(props);
     this.state = {
       categoryName: "",
+      lastPosition: 0,
     };
 
     this.props.saveProductsByCategoryID({
@@ -25,10 +27,23 @@ export class productByCategoryAAP extends Component {
 
     const products = [];
 
+    this.props.saveShoppingCart({
+      numberOfProduct: this.props.shoppingCart.numberOfProduct,
+      products: this.props.shoppingCart.products,
+      totalPrice: this.props.shoppingCart.totalPrice,
+      lastPosition: this.props.shoppingCart.lastPosition,
+    });
+
     this.fillProductsArray = this.fillProductsArray.bind(this);
     this.fillCategoryName = this.fillCategoryName.bind(this);
     this.fillCategoryName();
     this.fillProductsArray();
+  }
+
+  componentDidUpdate(prevProps) {
+    window.scrollTo({
+      top: this.props.shoppingCart.lastPosition,
+    });
   }
 
   fillCategoryName = (e) => {
@@ -70,12 +85,21 @@ export class productByCategoryAAP extends Component {
   };
 
   render() {
-    const handleAddToCart = async (productId, quantity) => {
-      var amount = quantity;
-      var productId = productId;
+    const handleAddToCart = async (product, quantity) => {
+      var numbers = this.props.shoppingCart.numberOfProduct + quantity;
+      var products = this.props.shoppingCart.products;
+      products.push(product);
+      var price = this.props.shoppingCart.totalPrice + product.unitPrice;
+      var lastPosition = window.pageYOffset;
 
-      console.log(amount);
-      console.log(productId);
+      this.props.saveShoppingCart({
+        numberOfProduct: numbers,
+        products: products,
+        totalPrice: price,
+        lastPosition: lastPosition,
+      });
+
+      console.log(this.props.shoppingCart.products);
     };
 
     const handleItemClick = async (product) => {
@@ -118,6 +142,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(saveProductsByCategoryID(productsById)),
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
+    saveShoppingCart: (shoppingCart) =>
+      dispatch(saveShoppingCart(shoppingCart)),
   };
 }
 
@@ -126,6 +152,7 @@ const mapStateToProps = (state) => {
     categories: state.categories,
     productsByCategory: state.productsByCategory,
     productToPass: state.productToPass,
+    shoppingCart: state.shoppingCart,
   };
 };
 

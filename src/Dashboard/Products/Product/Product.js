@@ -15,7 +15,7 @@ import useStyles from "./styles";
 const Product = ({ product, onAddToCart, onClickItem }) => {
   const classes = useStyles();
 
-  const handleAddToCart = () => onAddToCart(product.productID, 1);
+  const handleAddToCart = () => onAddToCart(product, 1);
 
   const handleItemClick = () => onClickItem(product);
   return (

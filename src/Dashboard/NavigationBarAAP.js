@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveShoppingCart } from "../Actions/cartShop";
 import "./style.css";
 import "./DropdownDemo.css";
 import { Button } from "primereact/button";
@@ -8,6 +9,16 @@ import "./ButtonDemo.css";
 import "./CarouselDemo.css";
 import "./TabViewDemo.css";
 import { Redirect } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Badge,
+  MenuItem,
+  Menu,
+  Typography,
+} from "@material-ui/core";
+import { ShoppingCart } from "@material-ui/icons";
 import { Link, Route, NavLink } from "react-router-dom";
 
 export class NavigationBarAAP extends Component {
@@ -19,7 +30,17 @@ export class NavigationBarAAP extends Component {
       isLoggedIn: this.props.authAAP.isLoggedIn,
       isSignIn: this.props.authAAP.isSignIn,
     });
+
+    this.props.saveShoppingCart({
+      numberOfProduct: this.props.shoppingCart.numberOfProduct,
+      products: this.props.shoppingCart.products,
+      totalPrice: this.props.shoppingCart.totalPrice,
+      lastPosition: this.props.lastPosition,
+    });
+
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.productsDropDown = this.productsDropDown.bind(this);
+    console.log(this.props.shoppingCart.products);
   }
 
   handleSignOut = (e) => {
@@ -30,7 +51,58 @@ export class NavigationBarAAP extends Component {
     });
   };
 
+  productsDropDown(products) {
+    return products.map(function (product) {
+      return (
+        <div className="row">
+          <div
+            className="col-md-1"
+            style={{ display: "inline-block", position: "static", zIndex: 0 }}
+          >
+            <img
+              src={product.images[0].source}
+              style={{ width: 40 + "px", height: 40 + "px" }}
+            ></img>
+            <div
+              className="col-md-1"
+              style={{
+                display: "inline-block",
+                position: "static",
+                zIndex: 1,
+                marginTop: -70 + "px",
+                marginLeft: 50 + "px",
+              }}
+            >
+              {product.title}
+            </div>
+            <hr
+              style={{
+                borderColor: "rgb(255, 255, 255)",
+                borderWidth: 0.2,
+                borderBottom: "thin",
+                marginLeft: 5 + "px",
+              }}
+            ></hr>
+          </div>
+        </div>
+      );
+    });
+  }
+
   render() {
+    const FilledCart = () => {
+      var numberOfElement = 0;
+      if (this.props.shoppingCart.numberOfProduct <= 5) {
+        numberOfElement = this.props.shoppingCart.numberOfProduct;
+      } else {
+        numberOfElement = 5;
+      }
+
+      const currentPruducts = this.props.shoppingCart.products.slice(
+        0,
+        numberOfElement
+      );
+    };
     return (
       <div id="first-row">
         {" "}
@@ -214,6 +286,36 @@ export class NavigationBarAAP extends Component {
             </p>
           </div>
         </div>
+        {/*shopping cart*/}
+        <div className="drop-down-shop" style={{ display: "inline-block" }}>
+          <IconButton
+            aria-label="Show cart items"
+            color="inherit"
+            id="shopping-cart"
+          >
+            <Badge
+              badgeContent={this.props.shoppingCart.numberOfProduct}
+              color="secondary"
+            >
+              <ShoppingCart style={{ fontSize: 19 + "px" }} />
+            </Badge>
+          </IconButton>
+          <div class="dropdown-content-shopping">
+            <div style={{ height: 300 + "px", overflowY: "scroll" }}>
+              {this.props.shoppingCart.numberOfProduct <= 0
+                ? "your cart is empty start adding some!"
+                : this.productsDropDown(this.props.shoppingCart.products)}
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <Link
+                id="go-to-checkout"
+                style={{ position: "absulote", color: "blue" }}
+              >
+                Go to chekout
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -222,11 +324,13 @@ export class NavigationBarAAP extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
+    saveShoppingCart: (shoppingCart) =>
+      dispatch(saveShoppingCart(shoppingCart)),
   };
 }
 
 const mapStateToProps = (state) => {
-  return { authAAP: state.authAAP };
+  return { authAAP: state.authAAP, shoppingCart: state.shoppingCart };
 };
 
 const NavigationBarAAP1 = connect(

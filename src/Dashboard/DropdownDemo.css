@@ -37,6 +37,10 @@
     position: relative; 
 }
 
+.drop-down-shop{
+    position: relative; 
+}
+
 .dropDown3{
     display: inline-block;
     position: relative;
@@ -63,6 +67,32 @@
 
 .dropDown3:hover .dropdown_notofication{
     display: block;  
+}
+
+.drop-down-shop:hover .dropdown-content-shopping{
+    display: block;
+}
+
+.dropdown-content-shopping{
+    position: absolute;
+    background-color: white;
+    display: none;
+    color: black;
+    font-size: 14px;
+    z-index: 1;
+    margin-left:auto; margin-right:0;
+    border-style: ridge;
+    border-color:lightgray;
+    border-width: thin;
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    width: 300px;
+    height:fit-content;
+}
+
+#go-to-checkout:hover{
+    text-decoration: underline;
 }
 
 .dropdown_aap{
