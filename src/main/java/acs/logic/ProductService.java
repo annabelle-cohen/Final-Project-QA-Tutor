@@ -232,9 +232,12 @@ public class ProductService {
 
 		List<CategoryIO> cats = new ArrayList<ProductService.CategoryIO>();
 
-		CategoryIO cat = new CategoryIO();
+		
 
+		{	
 		List<String> files = new ArrayList<>();
+		
+		CategoryIO cat = new CategoryIO();
 		files.add("data/Cell Phones & Accessories-15032-Variations(0-20).json");
 		files.add("data/Cell Phones & Accessories-15032-Variations(20-40).json");
 		files.add("data/Cell Phones & Accessories-15032-Variations(40-60).json");
@@ -252,28 +255,130 @@ public class ProductService {
 		cat.variations = files;
 
 		cats.add(cat);
+		}
+		
+	
+		
+		{
+			List<String> files = new ArrayList<>();
+			files.add("data/Computers&Tablets & Networking-58058-Variations(0-20).json");
+			files.add("data/Computers&Tablets & Networking-58058-Variations(20-40).json");
+			files.add("data/Computers&Tablets & Networking-58058-Variations(40-60).json");
+			files.add("data/Computers&Tablets & Networking-58058-Variations(60-80).json");
+			files.add("data/Computers&Tablets & Networking-58058-Variations(80-100).json");
 
-		List<String> files2 = new ArrayList<>();
-		files.add("data/Computers&Tablets & Networking-58058-Variations(0-20).json");
-		files.add("data/Computers&Tablets & Networking-58058-Variations(20-40).json");
-		files.add("data/Computers&Tablets & Networking-58058-Variations(40-60).json");
-		files.add("data/Computers&Tablets & Networking-58058-Variations(60-80).json");
-		files.add("data/Computers&Tablets & Networking-58058-Variations(80-100).json");
+			String catPath2 = "data/Computers&Tablets & Networking-58058.json";
 
-		String catPath2 = "data/Computers&Tablets & Networking-58058.json";
+			String categoryId2 = "58058";
+			String categoryName2 = "Computers& Tablets & Networking";
 
-		String categoryId2 = "58058";
-		String categoryName2 = "Computers&Tablets & Networking";
+			CategoryIO cat2 = new CategoryIO();
 
-		CategoryIO cat2 = new CategoryIO();
+			cat2.CategoryPath = catPath2;
+			cat2.categoryID = categoryId2;
+			cat2.CategoryName = categoryName2;
+			cat2.variations = files;
 
-		cat2.CategoryPath = catPath2;
-		cat2.categoryID = categoryId2;
-		cat2.CategoryName = categoryName2;
-		cat2.variations = files2;
+			cats.add(cat2);
+		}
+		
+		
+		{
+			List<String> files = new ArrayList<>();
+			files.add("data/Camera Drones-179697-Variations(0-20).json");
+			files.add("data/Camera Drones-179697-Variations(20-40).json");
+			files.add("data/Camera Drones-179697-Variations(40-60).json");
+			files.add("data/Camera Drones-179697-Variations(60-80).json");
+			files.add("data/Camera Drones-179697-Variations(80-100).json");
 
-		cats.add(cat2);
+			String catPath2 = "data/Camera Drones-179697.json";
 
+			String categoryId2 = "179697";
+			String categoryName2 = "Camera Drones";
+
+			CategoryIO cat2 = new CategoryIO();
+
+			cat2.CategoryPath = catPath2;
+			cat2.categoryID = categoryId2;
+			cat2.CategoryName = categoryName2;
+			cat2.variations = files;
+
+			cats.add(cat2);
+		}
+			
+		
+		
+		{
+			List<String> files = new ArrayList<>();
+			files.add("data/Digital Cameras & Photo-31388-Variations(0-20).json");
+			files.add("data/Digital Cameras & Photo-31388-Variations(20-40).json");
+			files.add("data/Digital Cameras & Photo-31388-Variations(40-60).json");
+			files.add("data/Digital Cameras & Photo-31388-Variations(60-80).json");
+			files.add("data/Digital Cameras & Photo-31388-Variations(80-100).json");
+
+			String catPath2 = "data/Digital Cameras & Photo-31388.json";
+
+			String categoryId2 = "31388";
+			String categoryName2 = "Digital Cameras & Photo";
+
+			CategoryIO cat2 = new CategoryIO();
+
+			cat2.CategoryPath = catPath2;
+			cat2.categoryID = categoryId2;
+			cat2.CategoryName = categoryName2;
+			cat2.variations = files;
+
+			cats.add(cat2);
+		}
+		
+		
+		{
+			List<String> files = new ArrayList<>();
+			files.add("data/Smart Watches-178893-Variations(0-20).json");
+			files.add("data/Smart Watches-178893-Variations(20-40).json");
+			files.add("data/Smart Watches-178893-Variations(40-60).json");
+			files.add("data/Smart Watches-178893-Variations(60-80).json");
+			files.add("data/Smart Watches-178893-Variations(80-100).json");
+
+			String catPath2 = "data/Smart Watches-178893.json";
+
+			String categoryId2 = "178893";
+			String categoryName2 = "Smart Watches";
+
+			CategoryIO cat2 = new CategoryIO();
+
+			cat2.CategoryPath = catPath2;
+			cat2.categoryID = categoryId2;
+			cat2.CategoryName = categoryName2;
+			cat2.variations = files;
+
+			cats.add(cat2);
+		}
+		
+		{
+			List<String> files = new ArrayList<>();
+			files.add("data/Video Games & Consoles-1249-Variations(0-20).json");
+			files.add("data/Video Games & Consoles-1249-Variations(20-40).json");
+			files.add("data/Video Games & Consoles-1249-Variations(40-60).json");
+			files.add("data/Video Games & Consoles-1249-Variations(60-80).json");
+			files.add("data/Video Games & Consoles-1249-Variations(80-100).json");
+
+			String catPath2 = "data/Video Games & Consoles-1249.json";
+
+			String categoryId2 = "1249";
+			String categoryName2 = "Video Games & Consoles";
+
+			CategoryIO cat2 = new CategoryIO();
+
+			cat2.CategoryPath = catPath2;
+			cat2.categoryID = categoryId2;
+			cat2.CategoryName = categoryName2;
+			cat2.variations = files;
+
+			cats.add(cat2);
+		}
+		
+		
 		return cats;
 	}
 
