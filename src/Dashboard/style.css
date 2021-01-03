@@ -108,6 +108,15 @@
     margin-left: 16%;
   }
 
+  #link-title-product{
+    color: black;
+  }
+
+  #link-title-product:hover{
+    text-decoration: underline;
+    color: blue;
+  }
+
   #home_search1{
     width: 800px;
     border-style: groove;

@@ -88,7 +88,10 @@ export class productByCategoryAAP extends Component {
   render() {
     const handleAddToCart = async (product, quantity) => {
       var totalNum = this.props.cart.totalNumOfProducts + quantity;
-      var price = this.props.cart.totalPrice + product.unitPrice;
+      var price =
+        this.props.cart.totalPrice +
+        product.unitPrice +
+        product.shippingServiceCost;
       var cart = this.props.cart.cart;
       var amountOfproducts = this.props.cart.amountOfproducts;
       var lastPosition = window.pageYOffset;

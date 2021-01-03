@@ -19,11 +19,15 @@ import {
 } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
 import { saveCart } from "../Actions/shoppingCart";
+import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      index: 0,
+    };
 
     this.props.saveUserAAP({
       userAAP: this.props.authAAP.userAAP,
@@ -39,8 +43,13 @@ export class NavigationBarAAP extends Component {
       amountOfproducts: this.props.cart.amountOfproducts,
     });
 
+    this.props.savePassingProduct({
+      productToPass: this.props.productToPass.productToPass,
+    });
+
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
+
     console.log(this.props.cart);
   }
 
@@ -52,29 +61,107 @@ export class NavigationBarAAP extends Component {
     });
   };
 
-  productsDropDown(products) {
+  productsDropDown(products, amount) {
     return products.map(function (product) {
+      var index = products.findIndex(
+        (item) => item.productID === product.productID
+      );
       return (
-        <div className="row">
+        <div className="row" style={{ height: 140 + "px" }}>
           <div
             className="col-md-1"
-            style={{ display: "inline-block", position: "static", zIndex: 0 }}
+            style={{
+              display: "inline-block",
+              position: "static",
+              zIndex: 0,
+              height: "flex",
+            }}
           >
             <img
               src={product.images[0].source}
-              style={{ width: 40 + "px", height: 40 + "px" }}
-            ></img>
-            <div
-              className="col-md-1"
               style={{
-                display: "inline-block",
+                width: 40 + "px",
+                height: 40 + "px",
                 position: "static",
                 zIndex: 1,
-                marginTop: -70 + "px",
+              }}
+            ></img>
+            <div
+              style={{
+                position: "relative",
+                zIndex: 99,
+                top: -50,
                 marginLeft: 50 + "px",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                height: 20 + "px",
+                width: 200 + "px",
               }}
             >
-              {product.title}
+              <Link
+                id="link-title-product"
+                onClick={() => {
+                  this.props.savePassingProduct({ productToPass: product });
+                }}
+              >
+                {product.title}
+              </Link>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                zIndex: 99,
+                top: -30,
+                marginLeft: 50 + "px",
+                fontSize: 15 + "px",
+                color: "gray",
+              }}
+            >
+              Price: ${product.unitPrice}
+            </div>
+            <div
+              style={{
+                display: "inline-block",
+                position: "relative",
+                zIndex: 100,
+                top: -50,
+                marginLeft: 210 + "px",
+                fontSize: 13 + "px",
+                color: "gray",
+              }}
+            >
+              Qty.{amount[index]}
+            </div>
+
+            <div
+              style={{
+                position: "relative",
+                zIndex: 100,
+                top: -50,
+                marginLeft: 50 + "px",
+                fontSize: 13 + "px",
+                color: "gray",
+              }}
+            >
+              Shipping from:
+              {product.location}
+            </div>
+
+            <div
+              style={{
+                position: "relative",
+                zIndex: 100,
+                top: -50,
+                marginLeft: 50 + "px",
+                fontSize: 13 + "px",
+                color: "gray",
+              }}
+            >
+              Shipping:
+              {product.shippingServiceCost > 0
+                ? product.shippingServiceCost
+                : "FREE"}
             </div>
             <hr
               style={{
@@ -291,7 +378,8 @@ export class NavigationBarAAP extends Component {
           <div class="dropdown-content-shopping">
             <div
               style={{
-                display: -1 <= 0 ? "none" : "block",
+                display:
+                  this.props.cart.totalNumOfProducts <= 0 ? "none" : "block",
                 marginTop: -15 + "px",
                 position: "static",
                 zIndex: 3,
@@ -311,14 +399,30 @@ export class NavigationBarAAP extends Component {
               ></hr>
             </div>
             <div style={{ height: 300 + "px", overflowY: "scroll" }}>
-              {-1 <= 0
+              {this.props.cart.totalNumOfProducts <= 0
                 ? "your cart is empty start adding some!"
-                : console.log("hey")}
+                : this.productsDropDown(
+                    this.props.cart.cart,
+                    this.props.cart.amountOfproducts
+                  )}
+            </div>
+            <div
+              style={{
+                textAlign: "center",
+                color: "black",
+                fontWeight: "bold",
+              }}
+            >
+              Total: {this.props.cart.totalPrice}
             </div>
             <div style={{ textAlign: "center" }}>
               <Link
                 id="go-to-checkout"
-                style={{ position: "absulote", color: "blue" }}
+                style={{
+                  position: "absulote",
+                  color: "blue",
+                  fontWeight: "bold",
+                }}
               >
                 Go to chekout
               </Link>
@@ -334,11 +438,17 @@ function mapDispatchToProps(dispatch) {
   return {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveCart: (cart) => dispatch(saveCart(cart)),
+    savePassingProduct: (productToPass) =>
+      dispatch(savePassingProduct(productToPass)),
   };
 }
 
 const mapStateToProps = (state) => {
-  return { authAAP: state.authAAP, cart: state.cart };
+  return {
+    authAAP: state.authAAP,
+    cart: state.cart,
+    productToPass: state.productToPass,
+  };
 };
 
 const NavigationBarAAP1 = connect(
