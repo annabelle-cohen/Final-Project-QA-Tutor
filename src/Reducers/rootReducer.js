@@ -5,7 +5,7 @@ import allCategoriesReducer from "./allCategoriesReducer";
 import productByCategoryIDReducer from "./productsByCategoryIdReducer";
 import productSelectedReducer from "./productSelectedReducer";
 import productToPassReducer from "./passProductReducer";
-import shoppingCartReducer from "./shoppingCartReducer";
+import cartReducer from "./shoppingCartReducer";
 import { combineReducers } from "redux";
 // in future will be shopCartReducer
 
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
   productsByCategory: productByCategoryIDReducer,
   productSelected: productSelectedReducer,
   productToPass: productToPassReducer,
-  shoppingCart: shoppingCartReducer,
+  cart: cartReducer,
 });
 
 export default rootReducer;

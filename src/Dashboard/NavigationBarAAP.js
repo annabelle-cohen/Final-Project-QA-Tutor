@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { saveUserAAP } from "../Actions/authAAPActions";
-import { saveShoppingCart } from "../Actions/cartShop";
 import "./style.css";
 import "./DropdownDemo.css";
 import { Button } from "primereact/button";
@@ -19,6 +18,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ShoppingCart } from "@material-ui/icons";
+import { saveCart } from "../Actions/shoppingCart";
 import { Link, Route, NavLink } from "react-router-dom";
 
 export class NavigationBarAAP extends Component {
@@ -31,23 +31,17 @@ export class NavigationBarAAP extends Component {
       isSignIn: this.props.authAAP.isSignIn,
     });
 
-    /*this.props.saveShoppingCart({
-      totalNumberOfProduct: this.props.shoppingCart.totalNumberOfProduct,
-      products: this.props.shoppingCart.products,
-      cartList: this.props.shoppingCart.cartList,
-      totalPrice: this.props.shoppingCart.totalPrice,
-      lastPosition: this.props.lastPosition,
-    });*/
-    this.props.saveShoppingCart({
-      totalNumberOfProduct: 0,
-      products: [],
-      cartList: [],
-      totalPrice: 0,
-      lastPosition: this.props.lastPosition,
+    this.props.saveCart({
+      lastPosition: this.props.cart.lastPosition,
+      totalPrice: this.props.cart.totalPrice,
+      totalNumOfProducts: this.props.cart.totalNumOfProducts,
+      cart: this.props.cart.cart,
+      amountOfproducts: this.props.cart.amountOfproducts,
     });
 
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
+    console.log(this.props.cart);
   }
 
   handleSignOut = (e) => {
@@ -288,7 +282,7 @@ export class NavigationBarAAP extends Component {
             id="shopping-cart"
           >
             <Badge
-              badgeContent={this.props.shoppingCart.totalNumberOfProduct}
+              badgeContent={this.props.cart.totalNumOfProducts}
               color="secondary"
             >
               <ShoppingCart style={{ fontSize: 19 + "px" }} />
@@ -297,10 +291,7 @@ export class NavigationBarAAP extends Component {
           <div class="dropdown-content-shopping">
             <div
               style={{
-                display:
-                  this.props.shoppingCart.totalNumberOfProduct <= 0
-                    ? "none"
-                    : "block",
+                display: -1 <= 0 ? "none" : "block",
                 marginTop: -15 + "px",
                 position: "static",
                 zIndex: 3,
@@ -320,9 +311,9 @@ export class NavigationBarAAP extends Component {
               ></hr>
             </div>
             <div style={{ height: 300 + "px", overflowY: "scroll" }}>
-              {this.props.shoppingCart.totalNumberOfProduct <= 0
+              {-1 <= 0
                 ? "your cart is empty start adding some!"
-                : console.log(this.props.shoppingCart)}
+                : console.log("hey")}
             </div>
             <div style={{ textAlign: "center" }}>
               <Link
@@ -342,13 +333,12 @@ export class NavigationBarAAP extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
-    saveShoppingCart: (shoppingCart) =>
-      dispatch(saveShoppingCart(shoppingCart)),
+    saveCart: (cart) => dispatch(saveCart(cart)),
   };
 }
 
 const mapStateToProps = (state) => {
-  return { authAAP: state.authAAP, shoppingCart: state.shoppingCart };
+  return { authAAP: state.authAAP, cart: state.cart };
 };
 
 const NavigationBarAAP1 = connect(

@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
-import { saveShoppingCart } from "../Actions/cartShop";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import "./productByCategory.css";
 import Products from "./Products/Products";
+import { saveCart } from "../Actions/shoppingCart";
 
 export class productByCategoryAAP extends Component {
   constructor(props) {
@@ -25,15 +25,15 @@ export class productByCategoryAAP extends Component {
       productToPass: "",
     });
 
-    const products = [];
-
-    this.props.saveShoppingCart({
-      totalNumberOfProduct: this.props.shoppingCart.totalNumberOfProduct,
-      products: this.props.shoppingCart.products,
-      cartList: this.props.shoppingCart.cartList,
-      totalPrice: this.props.shoppingCart.totalPrice,
-      lastPosition: this.props.shoppingCart.lastPosition,
+    this.props.saveCart({
+      lastPosition: this.props.cart.lastPosition,
+      totalPrice: this.props.cart.totalPrice,
+      totalNumOfProducts: this.props.cart.totalNumOfProducts,
+      cart: this.props.cart.cart,
+      amountOfproducts: this.props.cart.amountOfproducts,
     });
+
+    const products = [];
 
     this.fillProductsArray = this.fillProductsArray.bind(this);
     this.fillCategoryName = this.fillCategoryName.bind(this);
@@ -43,7 +43,7 @@ export class productByCategoryAAP extends Component {
 
   componentDidUpdate(prevProps) {
     window.scrollTo({
-      top: this.props.shoppingCart.lastPosition,
+      top: this.props.cart.lastPosition,
     });
   }
 
@@ -87,42 +87,33 @@ export class productByCategoryAAP extends Component {
 
   render() {
     const handleAddToCart = async (product, quantity) => {
-      var numbers = this.props.shoppingCart.totalNumberOfProduct + quantity;
-      var price = this.props.shoppingCart.totalPrice + product.unitPrice;
-      var products = this.props.shoppingCart.products;
-      var cartList = [];
+      var totalNum = this.props.cart.totalNumOfProducts + quantity;
+      var price = this.props.cart.totalPrice + product.unitPrice;
+      var cart = this.props.cart.cart;
+      var amountOfproducts = this.props.cart.amountOfproducts;
       var lastPosition = window.pageYOffset;
-      var isExist = products.some((item) => item.hasOwnProperty(product));
+      var isExist = cart.some((item) => item.title === product.title);
 
-      if (this.props.shoppingCart.cartList != "undefined") {
-        cartList = this.props.shoppingCart.cartList;
-      }
-
+      console.log(isExist);
       if (isExist) {
-        console.log("im here");
-        products[products.indexOf(product) + 1][
-          product.title
-        ].productQuantity += 1;
+        var index = cart.findIndex(
+          (item) => item.productID === product.productID
+        );
+        console.log(index);
+        amountOfproducts[index] += 1;
       } else {
-        console.log("in else");
-        var existCart = {};
-
-        var element = {
-          productName: product.title,
-          productQuantity: quantity,
-          product: product,
-        };
-        existCart[product.title] = element;
-        products.push(element);
-        //  cartList.push(product);
+        cart.push(product);
+        var temp = {};
+        temp = quantity;
+        amountOfproducts.push(temp);
       }
 
-      this.props.saveShoppingCart({
-        totalNumberOfProduct: numbers,
-        products: products,
-        cartList: cartList,
-        totalPrice: price,
+      this.props.saveCart({
         lastPosition: lastPosition,
+        totalPrice: price,
+        totalNumOfProducts: totalNum,
+        cart: cart,
+        amountOfproducts: amountOfproducts,
       });
     };
 
@@ -166,8 +157,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(saveProductsByCategoryID(productsById)),
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
-    saveShoppingCart: (shoppingCart) =>
-      dispatch(saveShoppingCart(shoppingCart)),
+    saveCart: (cart) => dispatch(saveCart(cart)),
   };
 }
 
@@ -176,7 +166,7 @@ const mapStateToProps = (state) => {
     categories: state.categories,
     productsByCategory: state.productsByCategory,
     productToPass: state.productToPass,
-    shoppingCart: state.shoppingCart,
+    cart: state.cart,
   };
 };
 

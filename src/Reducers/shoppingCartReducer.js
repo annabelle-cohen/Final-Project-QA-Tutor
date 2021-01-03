@@ -1,18 +1,18 @@
-import { SAVE_ADDING_PRODUCTS_CART } from "../Constant/action-types";
+import { SAVE_SHOPPING_CART } from "../Constant/action-types";
 
-const iniState = {
-  totalNumberOfProduct: 0,
-  products: [],
-  cartList: [],
-  totalPrice: 0,
+const initState = {
   lastPosition: 0,
+  totalPrice: 0,
+  totalNumOfProducts: 0,
+  cart: [],
+  amountOfproducts: [],
 };
 
-const shoppingCartReducer = (state = iniState, action) => {
-  if (action.type === SAVE_ADDING_PRODUCTS_CART) {
+const cartReducer = (state = initState, action) => {
+  if (action.type === SAVE_SHOPPING_CART) {
     return Object.assign({}, state, action.payload);
   }
   return state;
 };
 
-export default shoppingCartReducer;
+export default cartReducer;
