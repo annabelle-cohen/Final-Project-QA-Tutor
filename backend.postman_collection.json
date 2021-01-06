@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "143f9132-5781-4cc9-ae1b-40c1c271020a",
+		"_postman_id": "bc791b06-7503-4515-964f-ef53025f7b6c",
 		"name": "backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -331,6 +331,89 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "addProductToCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3611\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/addProductToCart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"addProductToCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromCart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3611\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/removeProductFromCart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"removeProductFromCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/getCart/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"getCart",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
