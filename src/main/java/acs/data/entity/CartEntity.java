@@ -1,32 +1,29 @@
 package acs.data.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
 
-
 @Entity
 @Table(name = "Cart")
 public class CartEntity {
-	@Id
-	private Long cartID ; 
-	private Long totalPrice ;
-	
-	@ManyToMany(cascade = {
-		    CascadeType.PERSIST,
-		    CascadeType.MERGE
-		})
-		@JoinTable(name = "cart_product",
-		    joinColumns = @JoinColumn(name = "cart_id"),
-		    inverseJoinColumns = @JoinColumn(name = "product_id")
-		)
-	private Set<ProductEntity> products = new HashSet<>();
 
-	  @OneToOne(fetch = FetchType.LAZY)
-	  @JoinColumn(name = "user_email")
-	private UserEntity user ; 
-	
+	@Id
+	@GeneratedValue
+	private Long cartID;
+	private Double totalPrice;
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private List<ProductEntity> products = new ArrayList<ProductEntity>();
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_email")
+	private UserEntity user;
+
 	public Long getCartID() {
 		return cartID;
 	}
@@ -35,20 +32,56 @@ public class CartEntity {
 		this.cartID = cartID;
 	}
 
-	public Long getTotalPrice() {
+	public Double getTotalPrice() {
 		return totalPrice;
 	}
 
-	public void setTotalPrice(Long totalPrice) {
+	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 
-	public Set<ProductEntity> getProducts() {
+	public List<ProductEntity> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<ProductEntity> products) {
+	public void setProducts(List<ProductEntity> products) {
 		this.products = products;
+	}
+
+	public void addProduct(ProductEntity product) {
+
+		if (this.products == null) {
+			this.products = new ArrayList<ProductEntity>();
+		}
+
+		this.products.add(product);
+
+		product.addCart(this);
+		this.updatePrice();
+	}
+
+	public void removeProduct(ProductEntity product) {
+
+		if (this.products == null) {
+			return;
+		}
+
+		this.products.remove(product);
+
+		product.removeCart(this);
+		this.updatePrice();
+
+	}
+
+	private void updatePrice() {
+
+		Double price = 0.0;
+		for (ProductEntity product : this.products) {
+			price += product.getUnitPrice();
+
+		}
+
+		this.totalPrice = price;
 	}
 
 	public UserEntity getUser() {
@@ -58,6 +91,5 @@ public class CartEntity {
 	public void setUser(UserEntity user) {
 		this.user = user;
 	}
-	
-	
+
 }

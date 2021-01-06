@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import acs.boundaries.ProductBoundary;
+import acs.boundaries.ProductCartBoundary;
 import acs.boundaries.SearchBoundary;
 import acs.logic.ProductService;
 
@@ -51,6 +52,18 @@ public class ProductController {
 			newSize = input.getSize();
 		}
 		return this.productService.getProducstByKeyword(input.getKeyword(), newPage, newSize);
+	}
+
+	@RequestMapping(path = "/acs/products/addProductToCart", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void addProductToCart(@RequestBody ProductCartBoundary input) {
+
+		this.productService.addProductToCart(input.getProductID(), input.getCartID());
+	}
+
+	@RequestMapping(path = "/acs/products/removeProductFromCart", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void removeProductFromCart(@RequestBody ProductCartBoundary input) {
+
+		this.productService.removeProductFromCart(input.getProductID(), input.getCartID());
 	}
 
 }

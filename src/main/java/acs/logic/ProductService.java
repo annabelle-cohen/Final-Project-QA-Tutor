@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import acs.boundaries.ProductBoundary;
-
+import acs.boundaries.UserBoundary;
+import acs.dal.CartDao;
 import acs.dal.ProductDao;
+import acs.dal.UserDao;
 import acs.data.convertor.ProductConverter;
+import acs.data.entity.CartEntity;
 import acs.data.entity.CategoryEntity;
 import acs.data.entity.ImageEntity;
 import acs.data.entity.ProductEntity;
@@ -41,6 +44,12 @@ public class ProductService {
 
 	@Autowired
 	private ProductDao productDao;
+
+	@Autowired
+	private CartDao cartDao;
+
+	@Autowired
+	private UserDao userDao;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -232,33 +241,29 @@ public class ProductService {
 
 		List<CategoryIO> cats = new ArrayList<ProductService.CategoryIO>();
 
-		
+		{
+			List<String> files = new ArrayList<>();
 
-		{	
-		List<String> files = new ArrayList<>();
-		
-		CategoryIO cat = new CategoryIO();
-		files.add("data/Cell Phones & Accessories-15032-Variations(0-20).json");
-		files.add("data/Cell Phones & Accessories-15032-Variations(20-40).json");
-		files.add("data/Cell Phones & Accessories-15032-Variations(40-60).json");
-		files.add("data/Cell Phones & Accessories-15032-Variations(60-80).json");
-		files.add("data/Cell Phones & Accessories-15032-Variations(80-100).json");
+			CategoryIO cat = new CategoryIO();
+			files.add("data/Cell Phones & Accessories-15032-Variations(0-20).json");
+			files.add("data/Cell Phones & Accessories-15032-Variations(20-40).json");
+			files.add("data/Cell Phones & Accessories-15032-Variations(40-60).json");
+			files.add("data/Cell Phones & Accessories-15032-Variations(60-80).json");
+			files.add("data/Cell Phones & Accessories-15032-Variations(80-100).json");
 
-		String catPath = "data/Cell Phones & Accessories-15032.json";
+			String catPath = "data/Cell Phones & Accessories-15032.json";
 
-		String categoryId = "15032";
-		String categoryName = "Cell Phones & Accessories";
+			String categoryId = "15032";
+			String categoryName = "Cell Phones & Accessories";
 
-		cat.CategoryPath = catPath;
-		cat.categoryID = categoryId;
-		cat.CategoryName = categoryName;
-		cat.variations = files;
+			cat.CategoryPath = catPath;
+			cat.categoryID = categoryId;
+			cat.CategoryName = categoryName;
+			cat.variations = files;
 
-		cats.add(cat);
+			cats.add(cat);
 		}
-		
-	
-		
+
 		{
 			List<String> files = new ArrayList<>();
 			files.add("data/Computers&Tablets & Networking-58058-Variations(0-20).json");
@@ -281,8 +286,7 @@ public class ProductService {
 
 			cats.add(cat2);
 		}
-		
-		
+
 		{
 			List<String> files = new ArrayList<>();
 			files.add("data/Camera Drones-179697-Variations(0-20).json");
@@ -305,9 +309,7 @@ public class ProductService {
 
 			cats.add(cat2);
 		}
-			
-		
-		
+
 		{
 			List<String> files = new ArrayList<>();
 			files.add("data/Digital Cameras & Photo-31388-Variations(0-20).json");
@@ -330,8 +332,7 @@ public class ProductService {
 
 			cats.add(cat2);
 		}
-		
-		
+
 		{
 			List<String> files = new ArrayList<>();
 			files.add("data/Smart Watches-178893-Variations(0-20).json");
@@ -354,7 +355,7 @@ public class ProductService {
 
 			cats.add(cat2);
 		}
-		
+
 		{
 			List<String> files = new ArrayList<>();
 			files.add("data/Video Games & Consoles-1249-Variations(0-20).json");
@@ -377,8 +378,7 @@ public class ProductService {
 
 			cats.add(cat2);
 		}
-		
-		
+
 		return cats;
 	}
 
@@ -389,7 +389,8 @@ public class ProductService {
 
 		if (cat != null) {
 
-			PagedListHolder<ProductEntity> productsPage = new PagedListHolder<ProductEntity>(new ArrayList<ProductEntity>(cat.getProducts()));
+			PagedListHolder<ProductEntity> productsPage = new PagedListHolder<ProductEntity>(
+					new ArrayList<ProductEntity>(cat.getProducts()));
 
 			productsPage.setPageSize(size);
 			productsPage.setPage(page);
@@ -424,6 +425,60 @@ public class ProductService {
 		});
 
 		return boundary;
+
+	}
+
+	@Transactional
+	public void addProductToCart(Long productID, Long CartID) {
+
+		Optional<ProductEntity> results = this.productDao.findById(productID);
+
+		if (!results.isPresent()) {
+			throw new RuntimeException("product doesn't exist :" + productID);
+		}
+
+		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
+
+		if (!cartResult.isPresent()) {
+			throw new RuntimeException("cart doesn't exist :" + productID);
+		}
+
+		
+		ProductEntity product = results.get();
+
+		CartEntity cart = cartResult.get();
+
+		
+		cart.addProduct(product);
+		
+		
+		
+		this.cartDao.save(cart);
+
+	}
+
+	@Transactional
+	public void removeProductFromCart(Long productID, Long CartID) {
+
+		Optional<ProductEntity> results = this.productDao.findById(productID);
+
+		if (!results.isPresent()) {
+			throw new RuntimeException("product doesn't exist :" + productID);
+		}
+
+		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
+
+		if (!cartResult.isPresent()) {
+			throw new RuntimeException("cart doesn't exist :" + productID);
+		}
+
+		ProductEntity product = results.get();
+
+		CartEntity cart = cartResult.get();
+
+		cart.removeProduct(product);
+
+		this.cartDao.save(cart);
 
 	}
 

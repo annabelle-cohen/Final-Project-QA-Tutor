@@ -54,6 +54,8 @@ public class UserEntity  {
 
 	public void setCart(CartEntity cart) {
 		this.cart = cart;
+		
+		cart.setUser(this);
 	}
 	public List<OrderEntity> getOrders() {
 		return orders;

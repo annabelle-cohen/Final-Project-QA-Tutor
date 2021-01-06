@@ -28,7 +28,7 @@ public class ProductEntity {
 
 	private Double shippingServiceCost;
 
-	@OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL, orphanRemoval = true  )
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ImageEntity> images = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +41,7 @@ public class ProductEntity {
 	private List<CategoryEntity> categories = new ArrayList<>();
 
 	@ManyToMany(mappedBy = "products")
-	private Set<CartEntity> carts = new HashSet<>();
+	private List<CartEntity> carts = new ArrayList<>();
 
 	public List<ImageEntity> getImages() {
 		return images;
@@ -132,12 +132,28 @@ public class ProductEntity {
 		this.location = location;
 	}
 
-	public Set<CartEntity> getCarts() {
+	public List<CartEntity> getCarts() {
 		return carts;
 	}
 
-	public void setCarts(Set<CartEntity> carts) {
+	public void setCarts(List<CartEntity> carts) {
 		this.carts = carts;
+	}
+
+	public void addCart(CartEntity cart) {
+		if (this.carts == null) {
+			this.carts = new ArrayList<CartEntity>();
+		}
+
+		this.carts.add(cart);
+	}
+
+	public void removeCart(CartEntity cart) {
+		if (this.carts == null) {
+			return;
+		}
+
+		this.carts.remove(cart);
 	}
 
 	public List<CategoryEntity> getCategories() {
