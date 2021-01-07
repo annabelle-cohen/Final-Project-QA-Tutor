@@ -21,6 +21,7 @@ import { ShoppingCart } from "@material-ui/icons";
 import { saveCart } from "../Actions/shoppingCart";
 import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
+import Cart from "./checkout/Summary";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
@@ -418,6 +419,11 @@ export class NavigationBarAAP extends Component {
             <div style={{ textAlign: "center" }}>
               <Link
                 id="go-to-checkout"
+                to={
+                  !this.props.authAAP.isSignIn
+                    ? "/dashboard/signInToAAP"
+                    : "/checkout"
+                }
                 style={{
                   position: "absulote",
                   color: "blue",
