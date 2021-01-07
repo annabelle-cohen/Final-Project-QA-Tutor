@@ -21,7 +21,6 @@ import { ShoppingCart } from "@material-ui/icons";
 import { saveCart } from "../Actions/shoppingCart";
 import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
-import Cart from "./checkout/Summary";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
@@ -50,8 +49,6 @@ export class NavigationBarAAP extends Component {
 
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
-
-    console.log(this.props.cart);
   }
 
   handleSignOut = (e) => {
@@ -399,7 +396,14 @@ export class NavigationBarAAP extends Component {
                 }}
               ></hr>
             </div>
-            <div style={{ height: 300 + "px", overflowY: "scroll" }}>
+            <div
+              style={{
+                minHeight: 50 + "px",
+                maxHeight: 300 + "px",
+                height: "flex",
+                overflowY: "scroll",
+              }}
+            >
               {this.props.cart.totalNumOfProducts <= 0
                 ? "your cart is empty start adding some!"
                 : this.productsDropDown(
@@ -414,7 +418,7 @@ export class NavigationBarAAP extends Component {
                 fontWeight: "bold",
               }}
             >
-              Total: {this.props.cart.totalPrice}
+              Total: {this.props.cart.totalPrice.toFixed(2)}
             </div>
             <div style={{ textAlign: "center" }}>
               <Link

@@ -7,7 +7,7 @@ import {
   CardContent,
   CardMedia,
 } from "@material-ui/core";
-
+import { Link } from "react-router-dom";
 import useStyles from "./styles";
 
 const CartItem = ({
@@ -15,6 +15,7 @@ const CartItem = ({
   onUpdateCartQty,
   onRemoveFromCart,
   productsForIndex,
+  handleClick,
   amount,
 }) => {
   const classes = useStyles();
@@ -27,16 +28,21 @@ const CartItem = ({
   const index = productsForIndex.findIndex(
     (product) => item.productID === product.productID
   );
-  console.log(index);
+  const onItemClick = () => handleClick(item);
+
   return (
-    <Card className="cart-item">
+    <Card className="cart-item" style={{ height: 480 + "px" }}>
       <CardMedia
         image={item.images[0].source}
         alt={item.title}
         className={classes.media}
       />
       <CardContent className={classes.cardContent}>
-        <Typography variant="h6">{item.title}</Typography>
+        <Typography variant="h6">
+          <Link to="/dashboard" onClick={onItemClick} className={classes.link}>
+            {item.title}
+          </Link>
+        </Typography>
         <Typography variant="h5">${item.unitPrice}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>

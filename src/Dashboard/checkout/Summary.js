@@ -5,7 +5,13 @@ import { Link } from "react-router-dom";
 import CartItem from "./CartItem/CartItem";
 import useStyles from "./styles";
 
-const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
+const Cart = ({
+  cart,
+  onUpdateCartQty,
+  onRemoveFromCart,
+  onEmptyCart,
+  handleClick,
+}) => {
   const classes = useStyles();
 
   const handleEmptyCart = () => onEmptyCart();
@@ -30,6 +36,7 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
               onUpdateCartQty={onUpdateCartQty}
               onRemoveFromCart={onRemoveFromCart}
               productsForIndex={cart.cart}
+              handleClick={handleClick}
               amount={cart.amountOfproducts}
             />
           </Grid>
@@ -42,7 +49,7 @@ const Cart = ({ cart, onUpdateCartQty, onRemoveFromCart, onEmptyCart }) => {
             color: "black",
           }}
         >
-          Subtotal: ${cart.totalPrice}
+          Subtotal: ${cart.totalPrice.toFixed(2)}
         </Typography>
         <div style={{ position: "static", zIndex: 7, marginTop: 5 + "px" }}>
           <Button
