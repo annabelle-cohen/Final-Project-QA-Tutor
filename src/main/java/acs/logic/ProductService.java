@@ -445,6 +445,11 @@ public class ProductService {
 
 		
 		ProductEntity product = results.get();
+		
+		if (product.getUnitsInStock()<=0) {
+			throw new RuntimeException("product is not in stock:" + productID);
+		}
+		
 
 		CartEntity cart = cartResult.get();
 
@@ -469,7 +474,7 @@ public class ProductService {
 		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
 
 		if (!cartResult.isPresent()) {
-			throw new RuntimeException("cart doesn't exist :" + productID);
+			throw new RuntimeException("cart doesn't exist :" + CartID);
 		}
 
 		ProductEntity product = results.get();
@@ -481,5 +486,7 @@ public class ProductService {
 		this.cartDao.save(cart);
 
 	}
+	
+	
 
 }

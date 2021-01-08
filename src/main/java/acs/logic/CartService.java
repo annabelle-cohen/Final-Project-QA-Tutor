@@ -11,7 +11,7 @@ import acs.dal.CartDao;
 import acs.dal.UserDao;
 import acs.data.convertor.CartConverter;
 import acs.data.entity.CartEntity;
-
+import acs.data.entity.ProductEntity;
 import acs.data.entity.UserEntity;
 
 @Service
@@ -78,6 +78,26 @@ public class CartService {
 		CartBoundary b = this.cartConverter.toBounudary(user.getCart());
 
 		return b;
+	}
+	
+	
+	@Transactional
+	public void clearCart( Long CartID) {
+
+		
+		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
+
+		if (!cartResult.isPresent()) {
+			throw new RuntimeException("cart doesn't exist :" + CartID);
+		}
+		
+		CartEntity cart = cartResult.get();
+
+		cart.getProducts().clear();
+		cart.setTotalPrice(0.0);
+
+		this.cartDao.save(cart);
+
 	}
 
 }
