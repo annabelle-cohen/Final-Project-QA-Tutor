@@ -19,6 +19,8 @@
     "react-custom-flag-select": "^2.5.0",
     "react-dom": "^17.0.1",
     "react-history": "^0.18.2",
+    "react-hook-form": "^6.14.1",
+    "react-hooks-form": "^6.11.5",
     "react-phone-input": "^1.2.1",
     "react-phone-input-2": "^2.13.9",
     "react-recaptcha": "^2.3.10",

@@ -7,8 +7,7 @@ import {
   Grid,
   Typography,
 } from "@material-ui/core";
-import { useForm } from "react-hook-form";
-import FormProvider from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import FormInput from "./CustomTextField";
 
 const AddressForm = () => {
