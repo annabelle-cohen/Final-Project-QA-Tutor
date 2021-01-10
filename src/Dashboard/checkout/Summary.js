@@ -65,7 +65,7 @@ const Cart = ({
           <Button
             className={classes.checkoutButton}
             component={Link}
-            to="/checkout"
+            to="/checkout/checkoutform"
             size="large"
             type="button"
             variant="contained"

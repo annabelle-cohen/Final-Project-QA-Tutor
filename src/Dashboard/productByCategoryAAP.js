@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import { saveUserAAP } from "../Actions/authAAPActions";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import "./productByCategory.css";
@@ -26,11 +27,17 @@ export class productByCategoryAAP extends Component {
     });
 
     this.props.saveCart({
-      lastPosition: this.props.cart.lastPosition,
+      lastPosition: 0,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,
       cart: this.props.cart.cart,
       amountOfproducts: this.props.cart.amountOfproducts,
+    });
+
+    this.props.saveUserAAP({
+      userAAP: this.props.authAAP.userAAP,
+      isLoggedIn: this.props.authAAP.isLoggedIn,
+      isSignIn: this.props.authAAP.isSignIn,
     });
 
     const products = [];
@@ -161,6 +168,7 @@ function mapDispatchToProps(dispatch) {
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
     saveCart: (cart) => dispatch(saveCart(cart)),
+    saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
   };
 }
 
@@ -170,6 +178,7 @@ const mapStateToProps = (state) => {
     productsByCategory: state.productsByCategory,
     productToPass: state.productToPass,
     cart: state.cart,
+    authAAP: state.authAAP,
   };
 };
 

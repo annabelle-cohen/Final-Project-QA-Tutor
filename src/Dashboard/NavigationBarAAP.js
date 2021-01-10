@@ -49,6 +49,34 @@ export class NavigationBarAAP extends Component {
 
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
+    this.checkIfIsAlreadyExistCart = this.checkIfIsAlreadyExistCart.bind(this);
+
+    this.checkIfIsAlreadyExistCart();
+  }
+
+  checkIfIsAlreadyExistCart() {
+    //example for another file that will include all fetch to server.
+    if (this.props.authAAP.isSignIn) {
+      const main = "http://localhost:8092//";
+      const fetchCart = main + "acs/carts/getCart/";
+      fetch(fetchCart + this.props.authAAP.userAAP.email)
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ succeded: true });
+            response.json().then((d) => {
+              const data = d;
+            });
+          } else {
+            console.log("Error:", response);
+            response.json().then((d) => {
+              console.log("Errordata", d);
+            });
+          }
+        })
+        .catch((error) => {
+          console.log(error.data);
+        });
+    }
   }
 
   handleSignOut = (e) => {

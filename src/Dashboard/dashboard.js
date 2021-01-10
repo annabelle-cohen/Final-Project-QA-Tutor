@@ -159,11 +159,13 @@ export class Home extends Component {
           if (response.status === 200) {
             response.json().then((d) => {
               const productsArray = d;
-              this.setState({ isSuccessed: true });
               this.props.saveProductsByCategoryID({
                 categoryID: this.props.productsByCategory.categoryID,
                 productsById: productsArray,
               });
+              setTimeout(() => {
+                this.setState({ isSuccessed: true });
+              }, 500);
             });
           } else {
             response.json().then((x) => {
@@ -179,7 +181,6 @@ export class Home extends Component {
   };
 
   isCategoryPageByTab() {
-    //console.log(this.props.productsByCategory.productsById);
     if (this.state.isSuccessed) {
       return <Redirect push to="/dashboard/productByCategory" />;
     }

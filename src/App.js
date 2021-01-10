@@ -21,6 +21,7 @@ import AccountSetting from "./Dashboard/AccountSetting";
 import productByCategoryAAP from "./Dashboard/productByCategoryAAP";
 import HomeSearch from "./Dashboard/homeSearch";
 import checkout from "./Dashboard/checkOut";
+import CheckoutForm from "./Dashboard/checkOutForm";
 
 function App() {
   return (
@@ -35,6 +36,11 @@ function App() {
           <Route exact path="navigationBarAAP" component={NavigationBarAAP} />
           <Route exact path="homeSearch" component={HomeSearch} />
           <Route exact path="/checkout" component={checkout}></Route>
+          <Route
+            exact
+            path="/checkout/checkoutform"
+            component={CheckoutForm}
+          ></Route>
           <Route
             path="/dashboard/productByCategory"
             component={productByCategoryAAP}

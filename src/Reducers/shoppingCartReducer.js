@@ -1,6 +1,7 @@
 import { SAVE_SHOPPING_CART } from "../Constant/action-types";
 
 const initState = {
+  cartId: "",
   lastPosition: 0,
   totalPrice: 0,
   totalNumOfProducts: 0,
