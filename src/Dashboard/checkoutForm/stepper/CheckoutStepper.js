@@ -17,14 +17,26 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ["Shipping address", "Payment details"];
 
-const CheckoutStepper = () => {
+const CheckoutStepper = ({ shippingAddress }) => {
   const [activeStep, setActiveStep] = useState(0);
+  const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
+
+  const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
+
+  const test = (data) => {
+    shippingAddress(data);
+    setShippingData(data);
+
+    nextStep();
+  };
 
   const Confirmation = () => {
     return <div>Confirmation</div>;
   };
-  const Form = () => (activeStep == 0 ? <AddressForm /> : <PaymentForm />);
+  const Form = () =>
+    activeStep == 0 ? <AddressForm test={test} /> : <PaymentForm />;
 
   return (
     <>

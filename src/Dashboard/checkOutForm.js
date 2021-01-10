@@ -25,9 +25,15 @@ class CheckoutForm extends Component {
   }
 
   render() {
+    const handleShippingAddress = (data) => {
+      console.log(data);
+      //in the future need to send it to the server.
+    };
     return (
       <div>
-        <CheckoutStepper></CheckoutStepper>
+        <CheckoutStepper
+          shippingAddress={handleShippingAddress}
+        ></CheckoutStepper>
       </div>
     );
   }
