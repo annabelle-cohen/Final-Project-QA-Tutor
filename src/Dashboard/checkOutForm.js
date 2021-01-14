@@ -29,10 +29,23 @@ class CheckoutForm extends Component {
       console.log(data);
       //in the future need to send it to the server.
     };
+
+    const handleBillingInfo = (billingData) => {
+      console.log(billingData);
+
+      this.props.saveCart({
+        lastPosition: 0,
+        totalPrice: 0,
+        totalNumOfProducts: 0,
+        cart: [],
+        amountOfproducts: [],
+      });
+    };
     return (
       <div>
         <CheckoutStepper
           shippingAddress={handleShippingAddress}
+          billingInfo={handleBillingInfo}
           checkoutToken={this.props.cart}
         ></CheckoutStepper>
       </div>

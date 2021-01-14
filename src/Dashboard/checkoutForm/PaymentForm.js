@@ -7,13 +7,45 @@ import { InputMask } from "primereact/inputmask";
 import "./payment.css";
 import Review from "./Review";
 
-const PaymentForm = ({ shippingData, checkoutToken, backStep }) => {
+const PaymentForm = ({
+  shippingData,
+  billingInfo,
+  checkoutToken,
+  backStep,
+  nextStep,
+}) => {
   const [number, setNumber] = useState("");
   const [name, setName] = useState("");
   const [id, setId] = useState("");
   const [expiry, setExpiry] = useState("");
   const [cvc, setCvc] = useState("");
   const [Focus, setFocus] = useState("");
+  const [isValid, setValid] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (
+      number === "" ||
+      name === "" ||
+      id === "" ||
+      expiry === "" ||
+      cvc === ""
+    ) {
+      setValid(true);
+    } else {
+      setValid(false);
+      const billingInfObj = {
+        number: number,
+        name: name,
+        id: id,
+        expiry: expiry,
+        cvc: cvc,
+      };
+      billingInfo(billingInfObj);
+    }
+
+    nextStep();
+  };
 
   return (
     <>
@@ -23,7 +55,7 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep }) => {
         Payment method
       </Typography>
 
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <div
             style={{
@@ -67,7 +99,7 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep }) => {
                   mask="999999999"
                   value={id}
                   name="id"
-                  onValueChange={(e) => setId(e.value)}
+                  onChange={(e) => setId(e.value)}
                   mode="decimal"
                   useGrouping={false}
                   maxFractionDigits={9}
@@ -109,6 +141,16 @@ const PaymentForm = ({ shippingData, checkoutToken, backStep }) => {
                   onFocus={(e) => setFocus(e.target.name)}
                   maxLength={3}
                 />
+              </div>
+              <div
+                id="error"
+                style={{
+                  display: isValid ? "block" : "none",
+                  fontSize: 12 + "px",
+                  color: "red",
+                }}
+              >
+                Invalid information
               </div>
             </div>
           </div>

@@ -93,30 +93,32 @@ export class NavigationBarAAP extends Component {
         (item) => item.productID === product.productID
       );
       return (
-        <div className="row" style={{ height: 140 + "px" }}>
+        <div className="row" style={{ height: 153 + "px" }}>
           <div
             className="col-md-1"
             style={{
               display: "inline-block",
-              position: "static",
+              position: "relative",
               zIndex: 0,
               height: "flex",
             }}
           >
-            <img
-              src={product.images[0].source}
-              style={{
-                width: 40 + "px",
-                height: 40 + "px",
-                position: "static",
-                zIndex: 1,
-              }}
-            ></img>
+            <div style={{ display: "inline-block", top: 20 + "px" }}>
+              <img
+                src={product.images[0].source}
+                style={{
+                  width: 40 + "px",
+                  height: 40 + "px",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              ></img>
+            </div>
             <div
               style={{
                 position: "relative",
                 zIndex: 99,
-                top: -50,
+                top: -32,
                 marginLeft: 50 + "px",
                 overflow: "hidden",
                 whiteSpace: "nowrap",
@@ -189,15 +191,17 @@ export class NavigationBarAAP extends Component {
                 ? product.shippingServiceCost
                 : "FREE"}
             </div>
-            <hr
-              style={{
-                borderColor: "rgb(255, 255, 255)",
-                borderWidth: 0.2,
-                borderBottom: "thin",
-                marginLeft: 5 + "px",
-              }}
-            ></hr>
           </div>
+          <hr
+            style={{
+              borderColor: "rgb(255, 255, 255)",
+              borderWidth: 0.2,
+              borderBottom: "thin",
+              marginLeft: 5 + "px",
+              position: "relative",
+              zIndex: 4,
+            }}
+          ></hr>
         </div>
       );
     });

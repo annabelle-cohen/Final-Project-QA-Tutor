@@ -17,7 +17,7 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ["Shipping address", "Payment details"];
 
-const CheckoutStepper = ({ shippingAddress, checkoutToken }) => {
+const CheckoutStepper = ({ shippingAddress, billingInfo, checkoutToken }) => {
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
@@ -32,17 +32,44 @@ const CheckoutStepper = ({ shippingAddress, checkoutToken }) => {
     nextStep();
   };
 
-  const Confirmation = () => {
-    return <div>Confirmation</div>;
-  };
+  let Confirmation = () =>
+    shippingData ? (
+      <>
+        {console.log(shippingData)}
+        <div>
+          <Typography variant="h5">
+            Thank you for your purchase, {shippingData.firstName}{" "}
+            {shippingData.lastName}!
+          </Typography>
+          <Divider className={classes.divider} />
+          <Typography variant="subtitle2">Order ref: ref</Typography>
+        </div>
+        <br />
+        <Button
+          component={Link}
+          variant="outlined"
+          type="button"
+          to="/dashboard"
+        >
+          Back to home
+        </Button>
+      </>
+    ) : (
+      <div className={classes.spinner}>
+        <CircularProgress />
+      </div>
+    );
+
   const Form = () =>
     activeStep == 0 ? (
       <AddressForm test={test} />
     ) : (
       <PaymentForm
         shippingData={shippingData}
+        billingInfo={billingInfo}
         checkoutToken={checkoutToken}
         backStep={backStep}
+        nextStep={nextStep}
       />
     );
 
