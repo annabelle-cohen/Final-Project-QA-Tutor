@@ -1,0 +1,30 @@
+
+#creditNumberInput,#cvvInput{
+  border: 0.8px solid rgb(192, 191, 191);
+  border-radius: 2px;
+  height:25px;
+  width: 165px;
+}
+#ownerName{
+    width: 130px;
+}
+#ownerId{
+    width: 100px;
+    margin-left: 10px;
+}
+#cvc{
+    width: 55px;
+    margin-left: 10px; 
+}
+#ExpiryDate{
+    width: 55px;
+}
+
+#cvc{
+margin-left: 10px;
+}
+
+  #ownerName:focus,#ownerId:focus{
+    box-shadow: none !important;    
+  }
+

@@ -33,6 +33,7 @@ class CheckoutForm extends Component {
       <div>
         <CheckoutStepper
           shippingAddress={handleShippingAddress}
+          checkoutToken={this.props.cart}
         ></CheckoutStepper>
       </div>
     );
