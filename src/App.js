@@ -22,6 +22,7 @@ import productByCategoryAAP from "./Dashboard/productByCategoryAAP";
 import HomeSearch from "./Dashboard/homeSearch";
 import checkout from "./Dashboard/checkOut";
 import CheckoutForm from "./Dashboard/checkOutForm";
+import productPage from "./Dashboard/ProductPage/productPage";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           <Route exact path="/dashboard/signInToAAP" component={SignInToAAP} />
           <Route exact path="navigationBarAAP" component={NavigationBarAAP} />
           <Route exact path="homeSearch" component={HomeSearch} />
+          <Route exact path="/dashboard/productPage" component={productPage} />
           <Route exact path="/checkout" component={checkout}></Route>
           <Route
             exact

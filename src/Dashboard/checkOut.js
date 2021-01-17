@@ -103,7 +103,9 @@ class checkout1 extends Component {
     };
 
     const passingItem = (item) => {
-      console.log(item);
+      this.props.savePassingProduct({
+        productToPass: item,
+      });
     };
     return (
       <div id="checkout-container">

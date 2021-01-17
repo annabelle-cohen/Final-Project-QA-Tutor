@@ -39,7 +39,11 @@ const CartItem = ({
       />
       <CardContent className={classes.cardContent}>
         <Typography variant="h6">
-          <Link to="/dashboard" onClick={onItemClick} className={classes.link}>
+          <Link
+            to="/dashboard/productPage"
+            onClick={onItemClick}
+            className={classes.link}
+          >
             {item.title}
           </Link>
         </Typography>

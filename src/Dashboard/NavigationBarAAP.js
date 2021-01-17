@@ -27,6 +27,7 @@ export class NavigationBarAAP extends Component {
     super(props);
     this.state = {
       index: 0,
+      product: "",
     };
 
     this.props.saveUserAAP({
@@ -87,7 +88,7 @@ export class NavigationBarAAP extends Component {
     });
   };
 
-  productsDropDown(products, amount) {
+  productsDropDown(products, amount, savingProductToPass) {
     return products.map(function (product) {
       var index = products.findIndex(
         (item) => item.productID === product.productID
@@ -129,9 +130,12 @@ export class NavigationBarAAP extends Component {
             >
               <Link
                 id="link-title-product"
-                onClick={() => {
-                  this.props.savePassingProduct({ productToPass: product });
+                onClick={async (e) => {
+                  savingProductToPass({
+                    productToPass: product,
+                  });
                 }}
+                to="/dashboard/productPage"
               >
                 {product.title}
               </Link>
@@ -440,7 +444,8 @@ export class NavigationBarAAP extends Component {
                 ? "your cart is empty start adding some!"
                 : this.productsDropDown(
                     this.props.cart.cart,
-                    this.props.cart.amountOfproducts
+                    this.props.cart.amountOfproducts,
+                    this.props.savePassingProduct
                   )}
             </div>
             <div

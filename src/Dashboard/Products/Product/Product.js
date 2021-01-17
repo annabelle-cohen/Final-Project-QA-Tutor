@@ -29,7 +29,7 @@ const Product = ({ product, onAddToCart, onClickItem }) => {
         <div className={classes.cardContent}>
           <Typography gutterBottom variant="h6" component="h2">
             <Link
-              to="/dashboard"
+              to="/dashboard/productPage"
               onClick={handleItemClick}
               className={classes.link}
             >
