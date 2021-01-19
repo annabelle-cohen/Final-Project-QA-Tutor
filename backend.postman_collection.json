@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "bc791b06-7503-4515-964f-ef53025f7b6c",
+		"_postman_id": "42364118-2cb8-417e-93b7-c20078a690bb",
 		"name": "backend",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -439,6 +439,36 @@
 						"acs",
 						"carts",
 						"clearCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateCartQuantity",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"cartID\": 3611,\n    \"quantity\": [1,5,3,5]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/updateCartQuantity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"updateCartQuantity"
 					]
 				}
 			},

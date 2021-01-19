@@ -2,6 +2,7 @@ package acs.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import acs.boundaries.CartBoundary;
+import acs.boundaries.CartQuantityBoundary;
 import acs.boundaries.ProductCartBoundary;
+
 import acs.logic.CartService;
 
 @CrossOrigin("*")
@@ -20,7 +23,7 @@ public class CartController {
 	@Autowired
 	private CartService cartService;
 
-	@RequestMapping(path = "/acs/carts/getCart/{useremail}", method = RequestMethod.GET,  produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/acs/carts/getCart/{useremail}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public CartBoundary getCart(@PathVariable("useremail") String email) {
 
 		return this.cartService.getCart(email);
@@ -31,13 +34,17 @@ public class CartController {
 
 		return this.cartService.createCart(email);
 	}
-	
-	
-	
+
 	@RequestMapping(path = "/acs/carts/clearCart", method = RequestMethod.DELETE, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public void clearCart(@RequestBody ProductCartBoundary input) {
 
 		this.cartService.clearCart(input.getCartID());
+	}
+
+	@RequestMapping(path = "/acs/carts/updateCartQuantity", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void updateQuantity(@RequestBody CartQuantityBoundary input) {
+
+		this.cartService.updateQuantity(input.getCartID(), input.getQuantity());
 	}
 
 }

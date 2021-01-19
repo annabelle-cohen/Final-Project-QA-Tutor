@@ -1,5 +1,6 @@
 package acs.logic;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,9 @@ import acs.data.entity.UserEntity;
 @Service
 public class CartService {
 
-	
-
 	@Autowired
 	private UserDao userDao;
-	
+
 	@Autowired
 	private CartDao cartDao;
 
@@ -49,18 +48,19 @@ public class CartService {
 		CartEntity c = new CartEntity();
 
 		c.setTotalPrice(0.0);
-		
+		c.setQuantity(new ArrayList<Long>());
+
 		cartDao.save(c);
-		
+
 		userE.setCart(c);
 
 		this.userDao.save(userE);
-		
+
 		return cartConverter.toBounudary(c);
 
 	}
 
-	@Transactional(readOnly =true)
+	@Transactional(readOnly = true)
 	public CartBoundary getCart(String email) {
 
 		Optional<UserEntity> results = this.userDao.findById(email);
@@ -79,22 +79,37 @@ public class CartService {
 
 		return b;
 	}
-	
-	
-	@Transactional
-	public void clearCart( Long CartID) {
 
-		
+	@Transactional
+	public void clearCart(Long CartID) {
+
 		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
 
 		if (!cartResult.isPresent()) {
 			throw new RuntimeException("cart doesn't exist :" + CartID);
 		}
-		
+
 		CartEntity cart = cartResult.get();
 
 		cart.getProducts().clear();
 		cart.setTotalPrice(0.0);
+
+		this.cartDao.save(cart);
+
+	}
+
+	@Transactional
+	public void updateQuantity(Long CartID, ArrayList<Long> quantity) {
+
+		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
+
+		if (!cartResult.isPresent()) {
+			throw new RuntimeException("cart doesn't exist :" + CartID);
+		}
+
+		CartEntity cart = cartResult.get();
+
+		cart.setQuantity(quantity);
 
 		this.cartDao.save(cart);
 

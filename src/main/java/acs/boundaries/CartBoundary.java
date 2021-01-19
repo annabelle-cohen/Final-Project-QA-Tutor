@@ -9,7 +9,9 @@ public class CartBoundary {
 	private Double totalPrice ;
 	
 	private List<ProductBoundary> products = new ArrayList <ProductBoundary>();
-
+	
+	private List<Long> quantity = new ArrayList <Long>();
+	
 	public Long getCartID() {
 		return cartID;
 	}
@@ -42,5 +44,13 @@ public class CartBoundary {
 	}
 	
 	public CartBoundary() {}
+
+	public List<Long> getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(List<Long> quantity) {
+		this.quantity = quantity;
+	}
 
 }

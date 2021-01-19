@@ -24,6 +24,9 @@ public class CartEntity {
 	@JoinColumn(name = "user_email")
 	private UserEntity user;
 
+	@ElementCollection
+	private List<Long> quantity = new ArrayList<Long>();
+
 	public Long getCartID() {
 		return cartID;
 	}
@@ -90,6 +93,14 @@ public class CartEntity {
 
 	public void setUser(UserEntity user) {
 		this.user = user;
+	}
+
+	public List<Long> getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(List<Long> quantity) {
+		this.quantity = quantity;
 	}
 
 }

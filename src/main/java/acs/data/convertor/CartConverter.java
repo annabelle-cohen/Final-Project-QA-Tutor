@@ -25,7 +25,7 @@ public class CartConverter {
 		CartBoundary b = new CartBoundary();
 		b.setCartID(e.getCartID());
 		b.setTotalPrice(e.getTotalPrice());
-
+		b.setQuantity(e.getQuantity());
 		List<ProductBoundary> products = new ArrayList<ProductBoundary>();
 
 		for (ProductEntity p : e.getProducts()) {
