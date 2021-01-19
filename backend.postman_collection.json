@@ -473,6 +473,118 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "getwatchList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/getwatchList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"getwatchList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearwatchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"watchListID\" : 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/clearwatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"clearwatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductToWatchList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"watchListID\": 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/addProductToWatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"addProductToWatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromWatchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"watchListID\": 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/removeProductFromWatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"removeProductFromWatchList"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}
