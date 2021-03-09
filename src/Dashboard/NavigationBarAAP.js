@@ -21,6 +21,7 @@ import { ShoppingCart } from "@material-ui/icons";
 import { saveCart } from "../Actions/shoppingCart";
 import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
+import { saveWatchlist } from "../Actions/addToWatchlist";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
@@ -44,6 +45,20 @@ export class NavigationBarAAP extends Component {
       amountOfproducts: this.props.cart.amountOfproducts,
     });
 
+    this.props.saveWatchlist({
+      watchlist: this.props.watchlist.Watchlist,
+    });
+
+    /*
+    this.props.saveCart({
+      cartId: "",
+      lastPosition: 0,
+      totalPrice: 0,
+      totalNumOfProducts: 0,
+      cart: [],
+      amountOfproducts: [],
+    });
+*/
     this.props.savePassingProduct({
       productToPass: this.props.productToPass.productToPass,
     });
@@ -51,7 +66,7 @@ export class NavigationBarAAP extends Component {
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
     this.checkIfIsAlreadyExistCart = this.checkIfIsAlreadyExistCart.bind(this);
-
+    console.log(this.props.watchlist.Watchlist);
     this.checkIfIsAlreadyExistCart();
   }
 
@@ -88,6 +103,113 @@ export class NavigationBarAAP extends Component {
     });
   };
 
+  dropDownWatchList(productWatchList, savingProductToPass) {
+    console.log("in func");
+    return productWatchList.map(function (product) {
+      <div className="row" style={{ height: 153 + "px" }}>
+        {console.log(product)}
+        <div
+          className="col-md-1"
+          style={{
+            display: "inline-block",
+            position: "relative",
+            zIndex: 0,
+            height: "flex",
+          }}
+        >
+          <div style={{ display: "inline-block", top: 20 + "px" }}>
+            <img
+              src={product.images[0].source}
+              style={{
+                width: 40 + "px",
+                height: 40 + "px",
+                position: "relative",
+                zIndex: 1,
+              }}
+            ></img>
+          </div>
+          <div
+            style={{
+              position: "relative",
+              zIndex: 99,
+              top: -32,
+              marginLeft: 50 + "px",
+              overflow: "hidden",
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              height: 20 + "px",
+              width: 200 + "px",
+            }}
+          >
+            <Link
+              id="link-title-product"
+              onClick={async (e) => {
+                savingProductToPass({
+                  productToPass: product,
+                });
+              }}
+              to="/dashboard/productPage"
+            >
+              {product.title}
+            </Link>
+          </div>
+          <div
+            style={{
+              position: "relative",
+              zIndex: 99,
+              top: -30,
+              marginLeft: 50 + "px",
+              fontSize: 15 + "px",
+              color: "gray",
+            }}
+          >
+            Price: ${product.unitPrice}
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              zIndex: 100,
+              top: -50,
+              marginLeft: 50 + "px",
+              fontSize: 13 + "px",
+              color: "gray",
+            }}
+          >
+            Shipping from:
+            {product.location}
+          </div>
+
+          <div
+            style={{
+              position: "relative",
+              zIndex: 100,
+              top: -50,
+              marginLeft: 50 + "px",
+              fontSize: 13 + "px",
+              color: "gray",
+            }}
+          >
+            Shipping:
+            {product.shippingServiceCost > 0
+              ? product.shippingServiceCost
+              : "FREE"}
+          </div>
+        </div>
+        <hr
+          style={{
+            borderColor: "rgb(255, 255, 255)",
+            borderWidth: 0.2,
+            borderBottom: "thin",
+            marginLeft: 5 + "px",
+            position: "relative",
+            zIndex: 4,
+          }}
+        ></hr>
+      </div>;
+    });
+  }
+
   productsDropDown(products, amount, savingProductToPass) {
     return products.map(function (product) {
       var index = products.findIndex(
@@ -95,6 +217,7 @@ export class NavigationBarAAP extends Component {
       );
       return (
         <div className="row" style={{ height: 153 + "px" }}>
+          {console.log(product)}
           <div
             className="col-md-1"
             style={{
@@ -241,7 +364,6 @@ export class NavigationBarAAP extends Component {
         >
           register
         </a>
-        {/*watchlist drop down*/}
         <div
           id="profile-div-drop"
           className="dropDown1"
@@ -314,12 +436,21 @@ export class NavigationBarAAP extends Component {
             </div>
 
             <div
-              className="msg_watchlist2"
+              className="msg_watchlist3"
               style={{
-                display: this.props.authAAP.isSignIn ? "block" : "none",
+                minHeight: 50 + "px",
+                maxHeight: 300 + "px",
+                height: "flex",
+                overflowY: "scroll",
               }}
             >
-              Looks like you are not watching any items yet.
+              {this.props.authAAP.isSignIn &&
+              this.props.watchlist.Watchlist.length > 0
+                ? this.dropDownWatchList(
+                    this.props.watchlist.Watchlist,
+                    this.props.savePassingProduct
+                  )
+                : " Looks like you are not watching any items yet."}
             </div>
           </div>
         </div>
@@ -487,6 +618,7 @@ function mapDispatchToProps(dispatch) {
     saveCart: (cart) => dispatch(saveCart(cart)),
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
+    saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
   };
 }
 
@@ -495,6 +627,7 @@ const mapStateToProps = (state) => {
     authAAP: state.authAAP,
     cart: state.cart,
     productToPass: state.productToPass,
+    watchlist: state.watchlist,
   };
 };
 

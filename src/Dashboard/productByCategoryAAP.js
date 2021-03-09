@@ -94,15 +94,19 @@ export class productByCategoryAAP extends Component {
 
   render() {
     const handleAddToCart = async (product, quantity) => {
+      /*total number of all products in the cart*/
       var totalNum = this.props.cart.totalNumOfProducts + quantity;
       var price =
         this.props.cart.totalPrice +
         product.unitPrice +
         product.shippingServiceCost;
       var cart = this.props.cart.cart;
+      /**for the array of amount of each product */
       var amountOfproducts = this.props.cart.amountOfproducts;
       var lastPosition = window.pageYOffset;
       var isExist = cart.some((item) => item.title === product.title);
+      console.log(amountOfproducts);
+      console.log(totalNum);
 
       console.log(isExist);
       if (isExist) {

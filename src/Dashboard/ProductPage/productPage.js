@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { savePassingProduct } from "../../Actions/passProduct";
 import { saveCart } from "../../Actions/shoppingCart";
+import { saveWatchlist } from "../../Actions/addToWatchlist";
 import NavigationBarAAP from "../NavigationBarAAP";
 import HomeSearch from "../homeSearch";
 import { InputText } from "primereact/inputtext";
@@ -26,6 +27,7 @@ class productPage1 extends Component {
       unitsOnOrder: this.props.productToPass.productToPass.unitsOnOrder,
       quantity: 1,
       quantityError: "",
+      watchlistArray: [],
     };
 
     this.props.saveCart({
@@ -38,6 +40,10 @@ class productPage1 extends Component {
 
     this.props.savePassingProduct({
       productToPass: this.props.productToPass.productToPass,
+    });
+
+    this.props.saveWatchlist({
+      watchlist: this.props.watchlist.Watchlist,
     });
 
     this.responsiveOptions = [
@@ -54,8 +60,8 @@ class productPage1 extends Component {
         numVisible: 1,
       },
     ];
+    console.log(this.props.watchlist.Watchlist);
     this.updateState = this.updateState.bind(this);
-    console.log(this.state.unitsOnOrder);
     this.updateState();
   }
 
@@ -82,6 +88,85 @@ class productPage1 extends Component {
       this.setState({
         quantityError: "Invalid Quantity!",
       });
+    }
+  };
+
+  handleAddToCart = (e) => {
+    if (this.state.quantity <= this.state.unitInStock) {
+      var tempTotalPrice =
+        this.props.cart.totalPrice + this.state.unitPrice * this.state.quantity;
+      var tempTotalNum =
+        parseInt(this.props.cart.totalNumOfProducts) +
+        parseInt(this.state.quantity);
+      var tempCart = this.props.cart.cart;
+      var tempAmountOfproducts = this.props.cart.amountOfproducts;
+      var tempLastPosition = this.props.cart.lastPosition;
+      var isAlreadyExist = tempCart.some(
+        (item) => item.title === this.props.productToPass.productToPass.title
+      );
+      console.log(tempTotalNum);
+
+      if (isAlreadyExist) {
+        var index = tempCart.findIndex(
+          (item) =>
+            item.productID === this.props.productToPass.productToPass.productID
+        );
+        console.log(index);
+        var calc = tempAmountOfproducts[index];
+        tempAmountOfproducts[index] =
+          parseInt(this.state.quantity) + parseInt(calc);
+      } else {
+        tempCart.push(this.props.productToPass.productToPass);
+        tempAmountOfproducts.push(this.state.quantity);
+      }
+      console.log(this.state.quantity);
+
+      this.props.saveCart({
+        cartId: "",
+        lastPosition: tempLastPosition,
+        totalPrice: tempTotalPrice,
+        totalNumOfProducts: tempTotalNum,
+        cart: tempCart,
+        amountOfproducts: tempAmountOfproducts,
+      });
+      var updateUnitInStock = this.state.unitInStock - this.state.quantity;
+      this.setState({
+        unitInStock: updateUnitInStock,
+      });
+    } else {
+      console.log(
+        "the number of quantity is much bigger then what in the stock"
+      );
+    }
+
+    console.log(this.props.cart);
+  };
+
+  handleAddToWatchlist = (e) => {
+    var array = this.props.watchlist.Watchlist;
+    if (array.length != 0) {
+      var isExist = array.some(
+        (item) => item.title === this.props.productToPass.productToPass.title
+      );
+      if (isExist) {
+        console.log("the product already exist");
+      } else {
+        this.props.watchlist.Watchlist.push(
+          this.props.productToPass.productToPass
+        );
+        this.props.saveWatchlist({
+          watchlist: this.props.watchlist.Watchlist,
+        });
+        console.log(this.props.watchlist.Watchlist);
+      }
+    } else {
+      this.props.watchlist.Watchlist.push(
+        this.props.productToPass.productToPass
+      );
+      this.props.saveWatchlist({
+        watchlist: this.props.watchlist.Watchlist,
+      });
+      console.log(this.props.watchlist.Watchlist);
     }
   };
 
@@ -223,12 +308,16 @@ class productPage1 extends Component {
                     </p>
                   </div>
                   <div style={{ display: "inline-block" }}>
-                    <Button id="addToCart" label="Add To Cart" />
+                    <Button
+                      id="addToCart"
+                      onClick={this.handleAddToCart}
+                      label="Add To Cart"
+                    />
                   </div>
                   <div
                     style={{
                       marginTop: "-30px",
-                      marginLeft: "238px",
+                      marginLeft: "220px",
                       position: "relative",
                       zIndex: "2",
                     }}
@@ -237,6 +326,7 @@ class productPage1 extends Component {
                       id="add-to-watchlist"
                       label="Add to watchlist"
                       icon="pi pi-eye"
+                      onClick={this.handleAddToWatchlist}
                     ></Button>
                   </div>
                   <div
@@ -481,6 +571,7 @@ function mapDispatchToProps(dispatch) {
     saveCart: (cart) => dispatch(saveCart(cart)),
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
+    saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
   };
 }
 
@@ -488,6 +579,7 @@ const mapStateToProps = (state) => {
   return {
     cart: state.cart,
     productToPass: state.productToPass,
+    watchlist: state.watchlist,
   };
 };
 

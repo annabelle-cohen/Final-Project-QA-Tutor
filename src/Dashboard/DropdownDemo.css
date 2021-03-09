@@ -154,6 +154,10 @@
     height: 200px;
 }
 
+.dropDown-menu:hover .msg_watchlist3{
+    display: "block";
+}
+
 .msg_watchlist{
     color: gray;
     font-size: 20px;
@@ -175,6 +179,18 @@
     height: 110px;
     font-weight: bold;  
 }
+
+.msg_watchlist3{
+    color: gray;
+    font-size: 20px;
+    padding-top: 40px;
+    margin-right:30px;
+    padding-left: 20px;
+    width: 460px;
+    height: 110px;
+    font-weight: bold;  
+}
+
 
 
 
