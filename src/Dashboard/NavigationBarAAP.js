@@ -104,109 +104,109 @@ export class NavigationBarAAP extends Component {
   };
 
   dropDownWatchList(productWatchList, savingProductToPass) {
-    console.log("in func");
     return productWatchList.map(function (product) {
-      <div className="row" style={{ height: 153 + "px" }}>
-        {console.log(product)}
-        <div
-          className="col-md-1"
-          style={{
-            display: "inline-block",
-            position: "relative",
-            zIndex: 0,
-            height: "flex",
-          }}
-        >
-          <div style={{ display: "inline-block", top: 20 + "px" }}>
-            <img
-              src={product.images[0].source}
+      return (
+        <div className="row" style={{ height: 153 + "px" }}>
+          <div
+            className="col-md-1"
+            style={{
+              display: "inline-block",
+              position: "relative",
+              zIndex: 0,
+              height: "flex",
+            }}
+          >
+            <div style={{ display: "inline-block", top: 20 + "px" }}>
+              <img
+                src={product.images[0].source}
+                style={{
+                  width: 40 + "px",
+                  height: 40 + "px",
+                  position: "relative",
+                  zIndex: 1,
+                }}
+              ></img>
+            </div>
+            <div
               style={{
-                width: 40 + "px",
-                height: 40 + "px",
                 position: "relative",
-                zIndex: 1,
+                zIndex: 99,
+                top: -32,
+                marginLeft: 50 + "px",
+                overflow: "hidden",
+                whiteSpace: "nowrap",
+                textOverflow: "ellipsis",
+                height: 20 + "px",
+                width: 200 + "px",
               }}
-            ></img>
-          </div>
-          <div
-            style={{
-              position: "relative",
-              zIndex: 99,
-              top: -32,
-              marginLeft: 50 + "px",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              height: 20 + "px",
-              width: 200 + "px",
-            }}
-          >
-            <Link
-              id="link-title-product"
-              onClick={async (e) => {
-                savingProductToPass({
-                  productToPass: product,
-                });
-              }}
-              to="/dashboard/productPage"
             >
-              {product.title}
-            </Link>
-          </div>
-          <div
-            style={{
-              position: "relative",
-              zIndex: 99,
-              top: -30,
-              marginLeft: 50 + "px",
-              fontSize: 15 + "px",
-              color: "gray",
-            }}
-          >
-            Price: ${product.unitPrice}
-          </div>
+              <Link
+                id="link-title-product"
+                onClick={async (e) => {
+                  savingProductToPass({
+                    productToPass: product,
+                  });
+                }}
+                to="/dashboard/productPage"
+              >
+                {product.title}
+              </Link>
+            </div>
+            <div
+              style={{
+                position: "relative",
+                zIndex: 99,
+                top: -20,
+                marginLeft: 50 + "px",
+                fontSize: 15 + "px",
+                color: "gray",
+              }}
+            >
+              Price: ${product.unitPrice}
+            </div>
 
-          <div
-            style={{
-              position: "relative",
-              zIndex: 100,
-              top: -50,
-              marginLeft: 50 + "px",
-              fontSize: 13 + "px",
-              color: "gray",
-            }}
-          >
-            Shipping from:
-            {product.location}
-          </div>
+            <div
+              style={{
+                position: "relative",
+                zIndex: 100,
+                top: -25,
+                marginLeft: 50 + "px",
+                fontSize: 13 + "px",
+                color: "gray",
+              }}
+            >
+              Shipping from:
+              {product.location}
+            </div>
 
-          <div
-            style={{
-              position: "relative",
-              zIndex: 100,
-              top: -50,
-              marginLeft: 50 + "px",
-              fontSize: 13 + "px",
-              color: "gray",
-            }}
-          >
-            Shipping:
-            {product.shippingServiceCost > 0
-              ? product.shippingServiceCost
-              : "FREE"}
+            <div
+              style={{
+                position: "relative",
+                zIndex: 100,
+                top: -15,
+                marginLeft: 50 + "px",
+                fontSize: 13 + "px",
+                color: "gray",
+              }}
+            >
+              Shipping:
+              {product.shippingServiceCost > 0
+                ? product.shippingServiceCost
+                : "FREE"}
+            </div>
           </div>
+          <hr
+            style={{
+              borderColor: "rgb(255, 255, 255)",
+              borderWidth: 0.2,
+              borderBottom: "thin",
+              marginLeft: 5 + "px",
+              position: "relative",
+              zIndex: 4,
+            }}
+          ></hr>
         </div>
-        <hr
-          style={{
-            borderColor: "rgb(255, 255, 255)",
-            borderWidth: 0.2,
-            borderBottom: "thin",
-            marginLeft: 5 + "px",
-            position: "relative",
-            zIndex: 4,
-          }}
-        ></hr>
-      </div>;
+      );
     });
   }
 
@@ -217,7 +217,6 @@ export class NavigationBarAAP extends Component {
       );
       return (
         <div className="row" style={{ height: 153 + "px" }}>
-          {console.log(product)}
           <div
             className="col-md-1"
             style={{
@@ -412,8 +411,7 @@ export class NavigationBarAAP extends Component {
         <a id="home_ship" href="url" color="black">
           Ship to
         </a>
-        {/*watchlist drop down*/}
-        <div className="dropDown1">
+        <div className="Watchlist-dropDown">
           <Button
             id="watchlist"
             label="Watchlist"
@@ -434,26 +432,26 @@ export class NavigationBarAAP extends Component {
               </a>
               &nbsp;to view items you are watching.
             </div>
-
             <div
-              className="msg_watchlist3"
+              className="watchlist-content"
               style={{
                 minHeight: 50 + "px",
                 maxHeight: 300 + "px",
                 height: "flex",
                 overflowY: "scroll",
+                display: this.props.authAAP.isSignIn ? "block" : "none",
               }}
             >
-              {this.props.authAAP.isSignIn &&
-              this.props.watchlist.Watchlist.length > 0
+              {this.props.watchlist.Watchlist.length > 0
                 ? this.dropDownWatchList(
                     this.props.watchlist.Watchlist,
-                    this.props.savePassingProduct
+                    this.props.productToPass
                   )
-                : " Looks like you are not watching any items yet."}
+                : "you have nothing in your watchlist"}
             </div>
           </div>
         </div>
+        {/*watchlist drop down*/}
         {/*myAAP drop down*/}
         <div className="dropDown2">
           <Button
