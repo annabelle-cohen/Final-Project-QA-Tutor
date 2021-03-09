@@ -7,10 +7,8 @@ import HomeSearch from "../homeSearch";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import { safety } from "../../Asset/shield.svg";
 import GalleryPage from "./gallery";
 import "./productPage.css";
-import zIndex from "@material-ui/core/styles/zIndex";
 
 class productPage1 extends Component {
   constructor(props) {

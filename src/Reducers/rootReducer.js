@@ -6,6 +6,7 @@ import productByCategoryIDReducer from "./productsByCategoryIdReducer";
 import productSelectedReducer from "./productSelectedReducer";
 import productToPassReducer from "./passProductReducer";
 import cartReducer from "./shoppingCartReducer";
+import watchlistReducer from "./addToWatchlistReducer";
 import { combineReducers } from "redux";
 // in future will be shopCartReducer
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   productSelected: productSelectedReducer,
   productToPass: productToPassReducer,
   cart: cartReducer,
+  watchlist: watchlistReducer,
 });
 
 export default rootReducer;
