@@ -94,11 +94,11 @@ public class WatchListService {
 			throw new RuntimeException("watchList doesn't exist :" + watchListID);
 		}
 
-		WatchListEntity cart = ListResult.get();
+		WatchListEntity watchlist = ListResult.get();
 
-		cart.getProducts().clear();
+		watchlist.getProducts().clear();
 
-		this.watchListDao.save(cart);
+		this.watchListDao.save(watchlist);
 
 	}
 

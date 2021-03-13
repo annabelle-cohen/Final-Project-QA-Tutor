@@ -20,6 +20,12 @@ public class UserEntity {
 	private WatchListEntity watchList;
 
 	@OneToOne(mappedBy = "user")
+	private ViewedListEntity viewedList;
+
+	@OneToOne(mappedBy = "user")
+	private SearchListEntity searchList;
+
+	@OneToOne(mappedBy = "user")
 	private PersonalInfoEntity personalInfo;
 
 	public UserEntity() {
@@ -77,8 +83,25 @@ public class UserEntity {
 
 	public void setWatchList(WatchListEntity watchList) {
 		this.watchList = watchList;
-
 		watchList.setUser(this);
+	}
+
+	public ViewedListEntity getViewedList() {
+		return viewedList;
+	}
+
+	public void setViewedList(ViewedListEntity viewedList) {
+		this.viewedList = viewedList;
+		viewedList.setUser(this);
+	}
+
+	public SearchListEntity getSearchList() {
+		return searchList;
+	}
+
+	public void setSearchList(SearchListEntity searchList) {
+		this.searchList = searchList;
+		searchList.setUser(this);
 	}
 
 }

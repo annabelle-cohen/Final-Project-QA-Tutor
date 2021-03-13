@@ -1,6 +1,5 @@
 package acs.data.entity;
 
-
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -15,27 +14,27 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "WatchList")
-public class WatchListEntity {
+@Table(name = "ViewedProducts")
+public class ViewedListEntity {
 
 	@Id
 	@GeneratedValue
-	private Long WatchListID;
+	private Long viewedListID;
 
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_email")
 	private UserEntity user;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "watch_product", joinColumns = @JoinColumn(name = "watch_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
+	@JoinTable(name = "view_product", joinColumns = @JoinColumn(name = "view_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
-	public Long getWatchListID() {
-		return WatchListID;
+	public Long getViewedListID() {
+		return viewedListID;
 	}
 
-	public void setWatchListID(Long watchListID) {
-		WatchListID = watchListID;
+	public void setViewedListID(Long viewedListID) {
+		this.viewedListID = viewedListID;
 	}
 
 	public UserEntity getUser() {

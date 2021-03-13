@@ -533,7 +533,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"watchListID\": 3612\n}",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"watchListID\": 3612\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -581,6 +581,230 @@
 						"acs",
 						"watchlist",
 						"removeProductFromWatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getViewedList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/getViewedList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"getViewedList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearViewedList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"viewedListID\" : 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/clearViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"clearViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductToViewedList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"viewedListID\": 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/addProductToViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"addProductToViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromViewedList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"viewedListID\": 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/removeProductFromViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"removeProductFromViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSearchList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/getSearchList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"getSearchList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearSearchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/clearSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"clearSearchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addSearchToSearchList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614 ,\n    \"text\": \"iphone\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/addSearchToSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"addSearchToSearchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeSearchFromSearchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614 ,\n    \"text\": \"iphone\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/removeSearchFromSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"removeSearchFromSearchList"
 					]
 				}
 			},

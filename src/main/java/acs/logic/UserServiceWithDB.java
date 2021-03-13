@@ -25,10 +25,16 @@ public class UserServiceWithDB implements EnhanceUserService {
 	private UserDao usersDao;
 	private PersonalInfoDao personalInfoDao;
 	private AdminDao adminDao;
-	
+
 	@Autowired
 	private WatchListService watchListService;
-	
+
+	@Autowired
+	private SearchListService searchListService;
+
+	@Autowired
+	private ViewedListService viewedListService;
+
 	private UserConverter entityConverter;
 	private PersonalInfoConverter infoConverter;
 
@@ -104,8 +110,12 @@ public class UserServiceWithDB implements EnhanceUserService {
 			this.cartService.createCart(entity.getEmail());
 			// add watchList
 			this.watchListService.createWatchList(entity.getEmail());
-			
-			 this.usersDao.save(entity);
+			// add viewedList
+			this.viewedListService.createViewedList(entity.getEmail());
+			// add searchList
+			this.searchListService.createSearchList(entity.getEmail());
+
+			this.usersDao.save(entity);
 
 			return this.entityConverter.convertFromEntity(entity);
 		} else {
