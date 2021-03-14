@@ -12,7 +12,6 @@ import acs.dal.CartDao;
 import acs.dal.UserDao;
 import acs.data.convertor.CartConverter;
 import acs.data.entity.CartEntity;
-import acs.data.entity.ProductEntity;
 import acs.data.entity.UserEntity;
 
 @Service
@@ -93,6 +92,7 @@ public class CartService {
 
 		cart.getProducts().clear();
 		cart.setTotalPrice(0.0);
+		cart.getQuantity().clear();
 
 		this.cartDao.save(cart);
 
