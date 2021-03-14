@@ -10,6 +10,7 @@ class CheckoutForm extends Component {
     super(props);
 
     this.props.saveCart({
+      cartId: this.props.cart.cartID,
       lastPosition: this.props.cart.lastPosition,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,

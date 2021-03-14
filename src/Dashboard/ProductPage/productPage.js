@@ -4,6 +4,8 @@ import { savePassingProduct } from "../../Actions/passProduct";
 import { saveCart } from "../../Actions/shoppingCart";
 import { saveWatchlist } from "../../Actions/addToWatchlist";
 import NavigationBarAAP from "../NavigationBarAAP";
+import { saveCartID } from "../../Actions/savingCartId";
+import { saveUserAAP } from "../../Actions/authAAPActions";
 import HomeSearch from "../homeSearch";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -43,7 +45,17 @@ class productPage1 extends Component {
     });
 
     this.props.saveWatchlist({
-      watchlist: this.props.watchlist.Watchlist,
+      Watchlist: this.props.watchlist.Watchlist,
+    });
+
+    this.props.saveUserAAP({
+      userAAP: this.props.authAAP.userAAP,
+      isLoggedIn: this.props.authAAP.isLoggedIn,
+      isSignIn: this.props.authAAP.isSignIn,
+    });
+
+    this.props.saveCartID({
+      id: this.props.cartId.id,
     });
 
     this.responsiveOptions = [
@@ -63,11 +75,69 @@ class productPage1 extends Component {
     console.log(this.props.watchlist.Watchlist);
     this.updateState = this.updateState.bind(this);
     this.updateState();
+    this.saveToRecentlyViewed();
   }
 
   updateState() {
     this.setState({ images: this.props.productToPass.productToPass.images });
   }
+  saveToRecentlyViewed() {
+    if (this.props.authAAP.isSignIn) {
+      fetch(
+        "http://localhost:8092/acs/viewedlist/getViewedList/" +
+          this.props.authAAP.userAAP.email
+      )
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              const viewed = d;
+              this.addProductToRecentlyViewed(viewed);
+            });
+          } else {
+            console.log("Error:", response);
+            response.json().then((d) => {
+              console.log("Errordata", d);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.data);
+        });
+    }
+  }
+
+  addProductToRecentlyViewed = (product) => {
+    console.log(product);
+
+    const main = "http://localhost:8092//";
+    const recentlyViewdLink = main + "/acs/viewedlist/addProductToViewedList";
+
+    const viewedList = {
+      productID: this.props.productToPass.productToPass.productID,
+      viewedListID: product.viewedListID,
+    };
+
+    const dataJson = JSON.stringify(viewedList);
+
+    fetch(recentlyViewdLink, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          console.log("success");
+        } else {
+          console.log("failed to fetch server");
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -140,16 +210,85 @@ class productPage1 extends Component {
     }
 
     console.log(this.props.cart);
+    if (this.props.authAAP.isSignIn) {
+      const main = "http://localhost:8092//";
+      const addProductLink = main + "/acs/products/addProductToCart";
+
+      const addingProduct = {
+        productID: this.props.productToPass.productToPass.productID,
+        cartID: this.props.cartId.id,
+      };
+      console.log(addingProduct);
+      const dataJson = JSON.stringify(addingProduct);
+
+      fetch(addProductLink, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("success");
+          } else {
+            console.log("failed to fetch server");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      const addQuantity = main + "/acs/carts/updateCartQuantity";
+
+      const addingQuantity = {
+        cartID: this.props.cartId.id,
+        quantity: this.props.cart.amountOfproducts,
+      };
+
+      console.log(addingQuantity);
+      const dataJson2 = JSON.stringify(addingQuantity);
+
+      fetch(addQuantity, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson2,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("success");
+          } else {
+            console.log("failed to fetch server");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
   };
 
   handleAddToWatchlist = (e) => {
-    var array = this.props.watchlist.Watchlist;
-    if (array.length != 0) {
-      var isExist = array.some(
-        (item) => item.title === this.props.productToPass.productToPass.title
-      );
-      if (isExist) {
-        console.log("the product already exist");
+    if (this.props.authAAP.isSignIn) {
+      var array = this.props.watchlist.Watchlist;
+      if (array.length != 0) {
+        var isExist = array.some(
+          (item) => item.title === this.props.productToPass.productToPass.title
+        );
+        if (isExist) {
+          console.log("the product already exist");
+        } else {
+          this.props.watchlist.Watchlist.push(
+            this.props.productToPass.productToPass
+          );
+          this.props.saveWatchlist({
+            Watchlist: this.props.watchlist.Watchlist,
+          });
+          console.log(this.props.watchlist.Watchlist);
+        }
       } else {
         this.props.watchlist.Watchlist.push(
           this.props.productToPass.productToPass
@@ -159,14 +298,59 @@ class productPage1 extends Component {
         });
         console.log(this.props.watchlist.Watchlist);
       }
-    } else {
-      this.props.watchlist.Watchlist.push(
-        this.props.productToPass.productToPass
-      );
-      this.props.saveWatchlist({
-        watchlist: this.props.watchlist.Watchlist,
-      });
-      console.log(this.props.watchlist.Watchlist);
+      if (!isExist) {
+        fetch(
+          "http://localhost:8092/acs/watchlist/getwatchList/" +
+            this.props.authAAP.userAAP.email
+        )
+          .then((response) => {
+            if (response.status === 200) {
+              response.json().then((d) => {
+                const watchlist = d;
+
+                const main = "http://localhost:8092//";
+                const addToWatchListLink =
+                  main + "/acs/watchlist/addProductToWatchList";
+
+                const watchListUpdated = {
+                  productID: this.props.productToPass.productToPass.productID,
+                  watchListID: watchlist.watchListID,
+                };
+
+                console.log(watchListUpdated);
+
+                const dataJson = JSON.stringify(watchListUpdated);
+
+                fetch(addToWatchListLink, {
+                  method: "POST", // or 'PUT'
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: dataJson,
+                }).then(
+                  (response) => {
+                    if (response.status === 200) {
+                      console.log("success adding Watchlist");
+                    } else {
+                      console.log("failed to fetch server watchlist");
+                    }
+                  },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+              });
+            } else {
+              console.log("Error:", response);
+              response.json().then((d) => {
+                console.log("Errordata", d);
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error:", error.data);
+          });
+      }
     }
   };
 
@@ -572,6 +756,8 @@ function mapDispatchToProps(dispatch) {
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
     saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
+    saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
+    saveCartID: (cartId) => dispatch(saveCartID(cartId)),
   };
 }
 
@@ -580,6 +766,8 @@ const mapStateToProps = (state) => {
     cart: state.cart,
     productToPass: state.productToPass,
     watchlist: state.watchlist,
+    authAAP: state.authAAP,
+    cartId: state.cartId,
   };
 };
 

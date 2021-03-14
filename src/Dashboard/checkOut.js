@@ -6,12 +6,14 @@ import NavigationBarAAP from "./NavigationBarAAP";
 import { saveUserAAP } from "../Actions/authAAPActions";
 import { Redirect } from "react-router-dom";
 import { savePassingProduct } from "../Actions/passProduct";
+import { saveCartID } from "../Actions/savingCartId";
 
 class checkout1 extends Component {
   constructor(props) {
     super(props);
 
     this.props.saveCart({
+      cartId: this.props.cart.cartID,
       lastPosition: this.props.cart.lastPosition,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,
@@ -27,6 +29,10 @@ class checkout1 extends Component {
 
     this.props.savePassingProduct({
       productToPass: this.props.productToPass.productToPass,
+    });
+
+    this.props.saveCartID({
+      id: this.props.cartId.id,
     });
   }
 
@@ -64,6 +70,39 @@ class checkout1 extends Component {
         cart: this.props.cart.cart,
         amountOfproducts: amount,
       });
+
+      if (this.props.authAAP.isSignIn) {
+        const addQuantity =
+          "http://localhost:8092//acs/carts/updateCartQuantity";
+
+        const addingQuantity = {
+          cartID: this.props.cartId.id,
+          quantity: this.props.cart.amountOfproducts,
+        };
+
+        console.log(addingQuantity);
+        const dataJson2 = JSON.stringify(addingQuantity);
+
+        fetch(addQuantity, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson2,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("success");
+            } else {
+              console.log("failed to fetch server");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+        //maybe put for total price in the server
+      }
     };
 
     const onRemoveFromCart = (item) => {
@@ -90,6 +129,62 @@ class checkout1 extends Component {
         cart: cartProducts,
         amountOfproducts: amount,
       });
+
+      if (this.props.authAAP.isSignIn) {
+        const data = {
+          productID: item.productID,
+          cartID: this.props.cartId.id,
+        };
+        const dataJson = JSON.stringify(data);
+        fetch("http://localhost:8092/acs/products/removeProductFromCart", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("Deleted!");
+            } else {
+              console.log("failed delete");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+        const addQuantity =
+          "http://localhost:8092//acs/carts/updateCartQuantity";
+
+        const addingQuantity = {
+          cartID: this.props.cartId.id,
+          quantity: this.props.cart.amountOfproducts,
+        };
+
+        console.log(addingQuantity);
+        const dataJson2 = JSON.stringify(addingQuantity);
+
+        fetch(addQuantity, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson2,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("success");
+            } else {
+              console.log("failed to fetch server");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     };
 
     const onEmptyCart = () => {
@@ -100,6 +195,31 @@ class checkout1 extends Component {
         cart: [],
         amountOfproducts: [],
       });
+
+      if (this.props.authAAP.isSignIn) {
+        const data = {
+          cartID: this.props.cartId.id,
+        };
+        const dataJson = JSON.stringify(data);
+        fetch("http://localhost:8092/acs/carts/clearCart", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("Deleted!");
+            } else {
+              console.log("failed delete");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     };
 
     const passingItem = (item) => {
@@ -159,6 +279,7 @@ function mapDispatchToProps(dispatch) {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
+    saveCartID: (cartId) => dispatch(saveCartID(cartId)),
   };
 }
 
@@ -167,6 +288,7 @@ const mapStateToProps = (state) => {
     cart: state.cart,
     authAAP: state.authAAP,
     productToPass: state.productToPass,
+    cartId: state.cartId,
   };
 };
 

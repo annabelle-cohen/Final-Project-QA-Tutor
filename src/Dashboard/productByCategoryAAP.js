@@ -9,6 +9,7 @@ import HomeSearch from "./homeSearch";
 import "./productByCategory.css";
 import Products from "./Products/Products";
 import { saveCart } from "../Actions/shoppingCart";
+import { saveCartID } from "../Actions/savingCartId";
 
 export class productByCategoryAAP extends Component {
   constructor(props) {
@@ -27,12 +28,19 @@ export class productByCategoryAAP extends Component {
     });
 
     this.props.saveCart({
+      cartId: this.props.cart.cartID,
       lastPosition: 0,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,
       cart: this.props.cart.cart,
       amountOfproducts: this.props.cart.amountOfproducts,
     });
+
+    this.props.saveCartID({
+      cartId: this.props.cartId.id,
+    });
+
+    console.log(this.props.cartId.id);
 
     this.props.saveUserAAP({
       userAAP: this.props.authAAP.userAAP,
@@ -129,6 +137,67 @@ export class productByCategoryAAP extends Component {
         cart: cart,
         amountOfproducts: amountOfproducts,
       });
+
+      if (this.props.authAAP.isSignIn) {
+        const main = "http://localhost:8092//";
+        const addProductLink = main + "/acs/products/addProductToCart";
+
+        const addingProduct = {
+          productID: product.productID,
+          cartID: this.props.cartId.id,
+        };
+
+        console.log(addingProduct);
+        const dataJson = JSON.stringify(addingProduct);
+
+        fetch(addProductLink, {
+          method: "POST", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("success");
+            } else {
+              console.log("failed to fetch server");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+
+        const addQuantity = main + "/acs/carts/updateCartQuantity";
+
+        const addingQuantity = {
+          cartID: this.props.cartId.id,
+          quantity: this.props.cart.amountOfproducts,
+        };
+
+        console.log(addingQuantity);
+        const dataJson2 = JSON.stringify(addingQuantity);
+
+        fetch(addQuantity, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson2,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("success");
+            } else {
+              console.log("failed to fetch server");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }
     };
 
     const handleItemClick = async (product) => {
@@ -173,6 +242,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(savePassingProduct(productToPass)),
     saveCart: (cart) => dispatch(saveCart(cart)),
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
+    saveCartID: (cartId) => dispatch(saveCartID(cartId)),
   };
 }
 
@@ -183,6 +253,7 @@ const mapStateToProps = (state) => {
     productToPass: state.productToPass,
     cart: state.cart,
     authAAP: state.authAAP,
+    cartId: state.cartId,
   };
 };
 

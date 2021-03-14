@@ -38,6 +38,7 @@ export class NavigationBarAAP extends Component {
     });
 
     this.props.saveCart({
+      cartId: this.props.cart.cartID,
       lastPosition: this.props.cart.lastPosition,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,
@@ -46,19 +47,10 @@ export class NavigationBarAAP extends Component {
     });
 
     this.props.saveWatchlist({
-      watchlist: this.props.watchlist.Watchlist,
+      Watchlist: this.props.watchlist.Watchlist,
     });
+    console.log(this.props.watchlist.Watchlist);
 
-    /*
-    this.props.saveCart({
-      cartId: "",
-      lastPosition: 0,
-      totalPrice: 0,
-      totalNumOfProducts: 0,
-      cart: [],
-      amountOfproducts: [],
-    });
-*/
     this.props.savePassingProduct({
       productToPass: this.props.productToPass.productToPass,
     });
