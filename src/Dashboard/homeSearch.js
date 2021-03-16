@@ -17,6 +17,7 @@ import NavigationBarAAP from "./NavigationBarAAP";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import logo from "./img/logo_transparent2.png";
 
 class HomeSearch1 extends Component {
   constructor(props) {
@@ -201,6 +202,19 @@ class HomeSearch1 extends Component {
   render() {
     return (
       <div>
+        <Link to="/dashboard">
+          <img
+            src={logo}
+            style={{
+              width: "170px",
+              height: "170px",
+              position: "absolute",
+              zIndex: 2,
+              marginTop: "-61px",
+              marginLeft: "100px",
+            }}
+          ></img>
+        </Link>
         <span id="home_search" className="p-input-icon-left">
           <i
             id="icon_search"
