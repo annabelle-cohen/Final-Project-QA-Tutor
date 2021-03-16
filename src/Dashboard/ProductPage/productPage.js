@@ -368,7 +368,7 @@ class productPage1 extends Component {
               display: "inline-block",
               position: "relative",
               zIndex: "2",
-              top: -190,
+              top: -195,
             }}
           >
             <GalleryPage

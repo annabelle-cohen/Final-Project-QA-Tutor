@@ -187,7 +187,6 @@ export class SignInToAAPWithPassword extends Component {
             this.props.saveWatchlist({
               Watchlist: watchList.products,
             });
-            console.log(this.props.watchList);
           });
         } else {
           console.log("Error:", response);
@@ -217,7 +216,9 @@ export class SignInToAAPWithPassword extends Component {
       });
 
       console.log("im in log in success");
-      this.setState({ isSucced: true });
+      setTimeout(() => {
+        this.setState({ isSucced: true });
+      }, 500);
     } else {
       this.setState({ succededLog: true });
 
