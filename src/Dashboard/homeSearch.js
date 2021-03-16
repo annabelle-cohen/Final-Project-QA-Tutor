@@ -192,7 +192,10 @@ class HomeSearch1 extends Component {
 
   isMoveToProductPage() {
     if (this.state.isSearchClicked) {
-      return <Redirect push to="/dashboard/productByCategory" />;
+      this.setState({
+        isSearchClicked: false,
+      });
+      return <Redirect to="/dashboard/productByCategory" />;
     }
   }
   render() {

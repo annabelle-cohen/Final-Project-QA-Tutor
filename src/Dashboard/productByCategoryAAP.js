@@ -15,8 +15,9 @@ export class productByCategoryAAP extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryName: "",
+      categoryName: this.props.productsByCategory.categoryID,
       lastPosition: 0,
+      categoryId: this.props.productsByCategory.categoryID,
     };
 
     this.props.saveProductsByCategoryID({
@@ -60,6 +61,12 @@ export class productByCategoryAAP extends Component {
     window.scrollTo({
       top: this.props.cart.lastPosition,
     });
+  }
+
+  handleChanges() {
+    if (this.state.categoryId !== this.props.productsByCategory.categoryID) {
+      window.location.reload();
+    }
   }
 
   fillCategoryName = (e) => {
@@ -227,7 +234,24 @@ export class productByCategoryAAP extends Component {
             onAddToCart={handleAddToCart}
             onClickItem={handleItemClick}
           />
+
+          <div
+            style={{
+              display: this.products.length == 0 ? "block" : "none",
+              position: "relative",
+              textAlign: "center",
+              zIndex: 3,
+              marginLeft: "30px",
+              marginTop: "-100px",
+              width: "1000px",
+            }}
+          >
+            <h5 style={{ color: "gray", fontWeight: "bold" }}>
+              There is no result for your search!
+            </h5>
+          </div>
         </div>
+        {this.handleChanges()}
       </div>
     );
   }
