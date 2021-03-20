@@ -110,6 +110,8 @@ public class CartService {
 		CartEntity cart = cartResult.get();
 
 		cart.setQuantity(quantity);
+		
+		cart.updateTotalPrice();
 
 		this.cartDao.save(cart);
 

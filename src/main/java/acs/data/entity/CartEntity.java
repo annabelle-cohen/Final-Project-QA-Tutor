@@ -60,7 +60,7 @@ public class CartEntity {
 		this.products.add(product);
 
 		product.addCart(this);
-		this.updatePrice();
+		this.updateTotalPrice();
 	}
 
 	public void removeProduct(ProductEntity product) {
@@ -72,19 +72,22 @@ public class CartEntity {
 		this.products.remove(product);
 
 		product.removeCart(this);
-		this.updatePrice();
+		this.updateTotalPrice();
 
 	}
 
-	private void updatePrice() {
+	public void updateTotalPrice() {
 
-		Double price = 0.0;
-		for (ProductEntity product : this.products) {
-			price += product.getUnitPrice();
+		Double totalPrice = 0.0;
 
+		for (int i = 0; i < this.quantity.size(); i++) {
+			Long q = this.quantity.get(i);
+
+			if (this.products.get(i) != null) {
+				totalPrice += q * this.products.get(i).getUnitPrice();
+			}
 		}
-
-		this.totalPrice = price;
+		this.totalPrice = totalPrice;
 	}
 
 	public UserEntity getUser() {
