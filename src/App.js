@@ -23,6 +23,7 @@ import HomeSearch from "./Dashboard/homeSearch";
 import checkout from "./Dashboard/checkOut";
 import CheckoutForm from "./Dashboard/checkOutForm";
 import productPage from "./Dashboard/ProductPage/productPage";
+import genericList from "./Dashboard/genericListForProducts";
 
 function App() {
   return (
@@ -38,6 +39,12 @@ function App() {
           <Route exact path="homeSearch" component={HomeSearch} />
           <Route exact path="/dashboard/productPage" component={productPage} />
           <Route exact path="/checkout" component={checkout}></Route>
+          <Route
+            exact
+            path="/dashboard/productsList"
+            component={genericList}
+          ></Route>
+
           <Route
             exact
             path="/checkout/checkoutform"

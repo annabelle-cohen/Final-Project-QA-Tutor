@@ -14,6 +14,7 @@ class SignIn extends Component {
       isLoggedIn: false,
       succeded: false,
       submitted: false,
+      error: "",
     };
 
     this.props.saveUser({ user: {}, isLoggedIn: false });
@@ -40,14 +41,14 @@ class SignIn extends Component {
             //this.displayNotifaction(true, "login succeeded!")
             if (user.password === this.state.password) {
               this.props.saveUser({ user, isLoggedIn: true });
-              this.setState({ isLoggedIn: true });
+              this.setState({ isLoggedIn: true, error: "" });
             }
           });
         } else {
           console.log("Error:", response);
           response.json().then((d) => {
-            this.displayNotifaction(false, d.message);
             console.log("Errordata", d);
+            this.setState({ error: "email or password incorrect!" });
           });
         }
         this.setState({ submitted: true });
@@ -113,6 +114,7 @@ class SignIn extends Component {
                     >
                       Login
                     </button>
+                    <div style={{ color: "red" }}>{this.state.error}</div>
                   </div>
                   {this.loggedIn()}
                 </form>

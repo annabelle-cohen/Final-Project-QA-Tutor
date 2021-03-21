@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import logo from "./img/logo_transparent2.png";
+import zIndex from "@material-ui/core/styles/zIndex";
 
 class HomeSearch1 extends Component {
   constructor(props) {
@@ -202,19 +203,27 @@ class HomeSearch1 extends Component {
   render() {
     return (
       <div>
-        <Link to="/dashboard">
-          <img
-            src={logo}
-            style={{
-              width: "170px",
-              height: "170px",
-              position: "absolute",
-              zIndex: 2,
-              marginTop: "-61px",
-              marginLeft: "100px",
-            }}
-          ></img>
-        </Link>
+        <div
+          style={{
+            height: "5px",
+            position: "absolute",
+            top: 117,
+            zIndex: 0,
+          }}
+        >
+          <Link to="/dashboard">
+            <img
+              src={logo}
+              style={{
+                width: "100px",
+                height: "60px",
+                marginBottom: "20px",
+                marginLeft: "140px",
+              }}
+            ></img>
+          </Link>
+        </div>
+
         <span id="home_search" className="p-input-icon-left">
           <i
             id="icon_search"

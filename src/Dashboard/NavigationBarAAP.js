@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveLastChoice } from "../Actions/saveLastChoice";
 import "./style.css";
 import "./DropdownDemo.css";
 import { Button } from "primereact/button";
@@ -54,7 +55,10 @@ export class NavigationBarAAP extends Component {
     this.props.savePassingProduct({
       productToPass: this.props.productToPass.productToPass,
     });
-
+    this.props.saveLastChoice({
+      choice: this.props.choice.choice,
+    });
+    console.log(this.props.choice.choice);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
     this.checkIfIsAlreadyExistCart = this.checkIfIsAlreadyExistCart.bind(this);
@@ -92,6 +96,24 @@ export class NavigationBarAAP extends Component {
       userAAP: {},
       isLoggedIn: this.props.authAAP.isLoggedIn,
       isSignIn: false,
+    });
+  };
+
+  handleWatchlist = (e) => {
+    this.props.saveLastChoice({
+      choice: "watchlist",
+    });
+  };
+
+  handleRecentleyViewed = (e) => {
+    this.props.saveLastChoice({
+      choice: "viewed",
+    });
+  };
+
+  handlePurchaseHistory = (e) => {
+    this.props.saveLastChoice({
+      choice: "history",
     });
   };
 
@@ -342,6 +364,8 @@ export class NavigationBarAAP extends Component {
         <div
           style={{
             display: this.props.authAAP.isSignIn ? "none" : "inline-block",
+            position: "relative",
+            zIndex: 2,
           }}
         >
           or
@@ -457,18 +481,42 @@ export class NavigationBarAAP extends Component {
             <a className="dropdown_aap_content" href="url">
               Summary
             </a>
-            <a className="dropdown_aap_content" href="url">
+            <Link
+              className="dropdown_aap_content"
+              onClick={this.handleRecentleyViewed}
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/productsList"
+                  : "/dashboard/signInToAAP"
+              }
+            >
               Recently Viewed
-            </a>
+            </Link>
             <a className="dropdown_aap_content" href="url">
               Bids/offers
             </a>
-            <a className="dropdown_aap_content" href="url">
+            <Link
+              className="dropdown_aap_content"
+              onClick={this.handleWatchlist}
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/productsList"
+                  : "/dashboard/signInToAAP"
+              }
+            >
               Watchlist
-            </a>
-            <a className="dropdown_aap_content" href="url">
+            </Link>
+            <Link
+              className="dropdown_aap_content"
+              onClick={this.handlePurchaseHistory}
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/productsList"
+                  : "/dashboard/signInToAAP"
+              }
+            >
               Purchase History
-            </a>
+            </Link>
             <a className="dropdown_aap_content" href="url">
               Buy again
             </a>
@@ -609,6 +657,7 @@ function mapDispatchToProps(dispatch) {
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
     saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
+    saveLastChoice: (choice) => dispatch(saveLastChoice(choice)),
   };
 }
 
@@ -618,6 +667,7 @@ const mapStateToProps = (state) => {
     cart: state.cart,
     productToPass: state.productToPass,
     watchlist: state.watchlist,
+    choice: state.choice,
   };
 };
 
