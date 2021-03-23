@@ -523,9 +523,16 @@ export class NavigationBarAAP extends Component {
             <a className="dropdown_aap_content" href="url">
               Selling
             </a>
-            <a className="dropdown_aap_content" href="url">
+            <Link
+              className="dropdown_aap_content"
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/savedSearches"
+                  : "/dashboard/signInToAAP"
+              }
+            >
               Saved Searches
-            </a>
+            </Link>
             <a className="dropdown_aap_content" href="url">
               Save sellers
             </a>

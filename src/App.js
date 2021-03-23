@@ -24,6 +24,7 @@ import checkout from "./Dashboard/checkOut";
 import CheckoutForm from "./Dashboard/checkOutForm";
 import productPage from "./Dashboard/ProductPage/productPage";
 import genericList from "./Dashboard/genericListForProducts";
+import savedSearchList from "./Dashboard/savedSearchPage";
 
 function App() {
   return (
@@ -44,7 +45,11 @@ function App() {
             path="/dashboard/productsList"
             component={genericList}
           ></Route>
-
+          <Route
+            exact
+            path="/dashboard/savedSearches"
+            component={savedSearchList}
+          ></Route>
           <Route
             exact
             path="/checkout/checkoutform"

@@ -12,6 +12,7 @@ class genericList1 extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: this.props.choice.choice,
       products: [],
       id: "",
     };
@@ -35,6 +36,14 @@ class genericList1 extends Component {
     this.loadProductByChoice();
   }
 
+  handleChanges() {
+    if (this.state.title !== this.props.choice.choice) {
+      setTimeout(() => {
+        this.loadProductByChoice();
+      }, 500);
+    }
+  }
+
   loadProductByChoice() {
     console.log("im here in load product by choice");
     if (this.props.choice.choice === "watchlist") {
@@ -48,6 +57,7 @@ class genericList1 extends Component {
               const watchList = d;
               console.log(watchList.products);
               this.setState({
+                title: this.props.choice.choice,
                 products: watchList.products,
                 id: watchList.watchListID,
               });
@@ -81,6 +91,7 @@ class genericList1 extends Component {
               const recentleyViewed = d;
               console.log(recentleyViewed.products);
               this.setState({
+                title: this.props.choice.choice,
                 products: recentleyViewed.products,
                 id: recentleyViewed.viewedListID,
               });
@@ -260,7 +271,7 @@ class genericList1 extends Component {
         <HomeSearch />
         <hr id="border3" align="right" style={{ marginTop: "0px" }} />
         <Listing
-          choice={this.props.choice.choice}
+          choice={this.state.title}
           token={this.state.products}
           onClickItem={handleItemClick}
           onRemoveProduct={handleDeleteClick}
@@ -292,6 +303,7 @@ class genericList1 extends Component {
           </a>
           <i id="info_circle" className="pi pi-info-circle"></i>
         </div>
+        {this.handleChanges()}
       </div>
     );
   }

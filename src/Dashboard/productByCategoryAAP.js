@@ -65,7 +65,9 @@ export class productByCategoryAAP extends Component {
 
   handleChanges() {
     if (this.state.categoryId !== this.props.productsByCategory.categoryID) {
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }
   }
 

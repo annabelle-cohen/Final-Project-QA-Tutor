@@ -84,7 +84,6 @@ class HomeSearch1 extends Component {
           if (response.status === 200) {
             response.json().then((d) => {
               const historySearch = d;
-              console.log(historySearch.searchListID);
               var data = {
                 searchListID: historySearch.searchListID,
                 text: this.state.search,
@@ -125,6 +124,13 @@ class HomeSearch1 extends Component {
           console.error("Error:", error.data);
         });
     }
+
+    setTimeout(() => {
+      console.log(this.props.productsByCategory);
+      this.setState({
+        isSearchClicked: true,
+      });
+    }, 600);
   }
 
   handleClick = (e) => {
@@ -169,9 +175,6 @@ class HomeSearch1 extends Component {
                   productsById: productsArray,
                 });
               }
-              setTimeout(() => {
-                this.saveSearchKeywordWithServer();
-              }, 500);
             });
           } else {
             response.json().then((x) => {
@@ -184,11 +187,9 @@ class HomeSearch1 extends Component {
         }
       );
     }
+
     setTimeout(() => {
-      console.log(this.props.productsByCategory);
-      this.setState({
-        isSearchClicked: true,
-      });
+      this.saveSearchKeywordWithServer();
     }, 500);
   };
 
