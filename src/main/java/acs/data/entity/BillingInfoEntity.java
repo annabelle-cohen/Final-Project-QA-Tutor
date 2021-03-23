@@ -1,6 +1,6 @@
 package acs.data.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -10,14 +10,12 @@ public class BillingInfoEntity {
 
 	@Id
 	@GeneratedValue
-	private Long billingInfoID; 
-	private String billingAdress ;
-	private String creditCardID;
-	private Date billDate ;
+	private Long billingInfoID;
+	private String billingAdress;
 	private Date creditCardEXPDate;
 	private String creditCardPIN;
-	private String creditCardNo ;
-	
+	private String creditCardNo;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private PersonalInfoEntity personalInfo;
 
@@ -37,28 +35,12 @@ public class BillingInfoEntity {
 		this.billingAdress = billingAdress;
 	}
 
-	public String getCreditCardID() {
-		return creditCardID;
-	}
-
-	public void setCreditCardID(String creditCardID) {
-		this.creditCardID = creditCardID;
-	}
-
-	public Date getBillDate() {
-		return billDate;
-	}
-
-	public void setBillDate(Date billDate) {
-		this.billDate = billDate;
-	}
-
 	public Date getCreditCardEXPDate() {
 		return creditCardEXPDate;
 	}
 
-	public void setCreditCardEXPDate(Date creditCardEXPDate) {
-		this.creditCardEXPDate = creditCardEXPDate;
+	public void setCreditCardEXPDate(Date creditCardEXPDate2) {
+		this.creditCardEXPDate = creditCardEXPDate2;
 	}
 
 	public String getCreditCardPIN() {
@@ -84,6 +66,5 @@ public class BillingInfoEntity {
 	public void setPersonalInfo(PersonalInfoEntity personalInfo) {
 		this.personalInfo = personalInfo;
 	}
-	
-	
+
 }

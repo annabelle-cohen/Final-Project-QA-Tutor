@@ -26,10 +26,9 @@ public class PersonalInfoConverter {
 			BillingInfoBoundary infoBound = new BillingInfoBoundary();
 			
 			
-			infoBound.setBillDate(entity.getBillDate());
+			
 			infoBound.setBillingAdress(entity.getBillingAdress());
 			infoBound.setCreditCardEXPDate(entity.getCreditCardEXPDate());
-			infoBound.setCreditCardID(entity.getCreditCardID());
 			infoBound.setCreditCardNo(entity.getCreditCardNo());
 			infoBound.setCreditCardPIN(entity.getCreditCardPIN());
 				
@@ -39,10 +38,9 @@ public class PersonalInfoConverter {
 		private BillingInfoEntity convertToEntity(BillingInfoBoundary bound ) {
 			BillingInfoEntity entity = new BillingInfoEntity();
 		
-			entity.setBillDate(bound.getBillDate());
+		
 			entity.setBillingAdress(bound.getBillingAdress());
 			entity.setCreditCardEXPDate(bound.getCreditCardEXPDate());
-			entity.setCreditCardID(bound.getCreditCardID());
 			entity.setCreditCardNo(bound.getCreditCardNo());
 			entity.setCreditCardPIN(bound.getCreditCardPIN());
 				

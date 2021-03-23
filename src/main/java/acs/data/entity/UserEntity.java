@@ -27,12 +27,12 @@ public class UserEntity {
 	@OneToOne(mappedBy = "user")
 	private PersonalInfoEntity personalInfo;
 
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<OrderEntity> orders = new ArrayList<>();
+
 	public UserEntity() {
 		super();
 	}
-
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<OrderEntity> orders = new ArrayList<>();
 
 	public String getEmail() {
 		return email;

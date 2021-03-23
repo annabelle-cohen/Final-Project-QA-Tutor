@@ -1,8 +1,12 @@
 package acs.logic;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +23,7 @@ import acs.data.entity.AdminEntity;
 import acs.data.entity.BillingInfoEntity;
 import acs.data.entity.PersonalInfoEntity;
 import acs.data.entity.UserEntity;
+import net.andreinc.mockneat.MockNeat;
 
 @Service
 public class UserServiceWithDB implements EnhanceUserService {
@@ -71,6 +76,28 @@ public class UserServiceWithDB implements EnhanceUserService {
 		}
 	}
 
+	private BillingInfoEntity createBillingInfo() {
+		BillingInfoEntity b = new BillingInfoEntity();
+		MockNeat mock = MockNeat.threadLocal();
+
+		b.setBillingAdress("");
+
+		String cvv = mock.cvvs().get();
+		String amex = mock.creditCards().get();
+
+		b.setCreditCardPIN(cvv);
+		b.setCreditCardNo(amex);
+
+		long aDay = TimeUnit.DAYS.toMillis(1);
+		long now = new Date().getTime();
+		Date tenYears = new Date(now + aDay * 365 * 10);
+		Date twoYears = new Date(now + aDay * 365 * 2);
+		Date creditCardEXPDate = Helper.between(twoYears, tenYears);
+		b.setCreditCardEXPDate(creditCardEXPDate);
+
+		return b;
+	}
+
 	@Override
 	@Transactional
 	public UserBoundary createUser(UserBoundary newUser) {
@@ -100,6 +127,7 @@ public class UserServiceWithDB implements EnhanceUserService {
 			info.setFirstName(newUser.getFirstName());
 			info.setUser(entity);
 
+			info.addBillingInfo(this.createBillingInfo());
 			entity.setPersonalInfo(info);
 
 			// save them to database
