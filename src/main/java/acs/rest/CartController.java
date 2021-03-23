@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import acs.boundaries.CartBoundary;
 import acs.boundaries.CartQuantityBoundary;
+import acs.boundaries.OrderBoundary;
 import acs.boundaries.ProductCartBoundary;
 
 import acs.logic.CartService;
@@ -45,6 +46,12 @@ public class CartController {
 	public void updateQuantity(@RequestBody CartQuantityBoundary input) {
 
 		this.cartService.updateQuantity(input.getCartID(), input.getQuantity());
+	}
+
+	@RequestMapping(path = "/acs/carts/checkout", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public OrderBoundary submit(@RequestBody CartQuantityBoundary input) {
+
+		return this.cartService.checkout(input.getCartID());
 	}
 
 }

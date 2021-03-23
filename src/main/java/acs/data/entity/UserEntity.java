@@ -2,7 +2,6 @@ package acs.data.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.*;
 
 @Entity
@@ -75,6 +74,11 @@ public class UserEntity {
 
 	public void setOrders(List<OrderEntity> orders) {
 		this.orders = orders;
+	}
+
+	public void addOrder(OrderEntity order) {
+		this.orders.add(order);
+		order.setUser(this);
 	}
 
 	public WatchListEntity getWatchList() {

@@ -1,10 +1,7 @@
 package acs.data.entity;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +13,7 @@ public class CartEntity {
 	private Long cartID;
 	private Double totalPrice;
 
+	// this is a set
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "cart_product", joinColumns = @JoinColumn(name = "cart_id"), inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private List<ProductEntity> products = new ArrayList<ProductEntity>();
@@ -104,6 +102,13 @@ public class CartEntity {
 
 	public void setQuantity(List<Long> quantity) {
 		this.quantity = quantity;
+	}
+
+	public void clear() {
+		this.quantity.clear();
+		this.products.clear();
+		this.totalPrice = 0.0;
+
 	}
 
 }
