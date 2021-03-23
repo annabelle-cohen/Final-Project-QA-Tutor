@@ -141,6 +141,22 @@ public class CartService {
 
 		CartEntity cart = cartResult.get();
 
+		// decrement units in stock
+		for (int i = 0; i < cart.getProducts().size(); i++) {
+			ProductEntity p = cart.getProducts().get(i);
+
+			Long productQuantity = cart.getQuantity().get(i);
+			if (p.getUnitsInStock() < 0) {
+				throw new RuntimeException("product is not in stock:" + p.getProductID());
+			}
+			p.setUnitsInStock(p.getUnitsInStock() - productQuantity);
+			p.setUnitsOnOrder(p.getUnitsOnOrder() + productQuantity);
+
+			if (p.getUnitsInStock() < 0) {
+				throw new RuntimeException("product is not in stock:" + p.getProductID());
+			}
+		}
+
 		OrderEntity order = new OrderEntity();
 
 		order.setOrderDate(new Date());

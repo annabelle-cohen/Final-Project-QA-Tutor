@@ -339,7 +339,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3611\"\n}",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3612\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -451,7 +451,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"cartID\": 3611,\n    \"quantity\": [1,5,3,5]\n}",
+					"raw": "{\n     \"cartID\": 3612,\n    \"quantity\": [2]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -839,7 +839,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"cartID\": 3611\n}",
+					"raw": "{\n     \"cartID\": 3612\n}",
 					"options": {
 						"raw": {
 							"language": "json"

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import acs.boundaries.ProductBoundary;
-import acs.boundaries.UserBoundary;
 import acs.dal.CartDao;
 import acs.dal.ProductDao;
 import acs.dal.UserDao;
