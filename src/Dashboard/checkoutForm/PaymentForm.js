@@ -11,29 +11,38 @@ const PaymentForm = ({
   shippingData,
   billingInfo,
   checkoutToken,
+  personalInfo,
   backStep,
   nextStep,
 }) => {
-  const [number, setNumber] = useState("");
-  const [name, setName] = useState("");
+  console.log(personalInfo);
+  const [number, setNumber] = useState(personalInfo.billingInfos.creditCardNo);
+  const [name, setName] = useState(
+    personalInfo.personalInfo.firstName +
+      " " +
+      personalInfo.personalInfo.lastName
+  );
   const [id, setId] = useState("");
   const [expiry, setExpiry] = useState("");
-  const [cvc, setCvc] = useState("");
+  const [cvc, setCvc] = useState(personalInfo.billingInfos.creditCardPIN);
   const [Focus, setFocus] = useState("");
   const [isValid, setValid] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    var nameToCheck =
+      personalInfo.personalInfo.firstName +
+      " " +
+      personalInfo.personalInfo.lastName;
+
+    var isValid2 = true;
     if (
-      number === "" ||
-      name === "" ||
-      id === "" ||
-      expiry === "" ||
-      cvc === ""
+      (number !== "") &
+      (name !== "") &
+      (id !== "") &
+      (expiry !== "") &
+      (cvc !== "")
     ) {
-      setValid(true);
-    } else {
-      setValid(false);
       const billingInfObj = {
         number: number,
         name: name,
@@ -41,10 +50,28 @@ const PaymentForm = ({
         expiry: expiry,
         cvc: cvc,
       };
-      billingInfo(billingInfObj);
-    }
 
-    nextStep();
+      if (number !== personalInfo.billingInfos.creditCardNo) {
+        isValid2 = false;
+      }
+
+      if (name !== nameToCheck) {
+        isValid2 = false;
+      }
+
+      if (cvc !== personalInfo.billingInfos.creditCardPIN) {
+        isValid2 = false;
+      }
+
+      //need to check id and expiry date
+      if (isValid2) {
+        billingInfo(billingInfObj);
+        setValid(true);
+        nextStep();
+      }
+    } else {
+      setValid(false);
+    }
   };
 
   return (
@@ -113,8 +140,8 @@ const PaymentForm = ({
                 mask="9999999999999999"
                 value={number}
                 name="number"
-                placeholder="9999 9999 9999 9999"
-                onChange={(e) => setNumber(e.value)}
+                placeholder={number}
+                onChange={(e) => setNumber(number)}
                 onFocus={(e) => setFocus(e.target.name)}
               ></InputMask>
             </div>

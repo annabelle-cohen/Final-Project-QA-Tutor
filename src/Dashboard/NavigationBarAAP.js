@@ -461,7 +461,7 @@ export class NavigationBarAAP extends Component {
               {this.props.watchlist.Watchlist.length > 0
                 ? this.dropDownWatchList(
                     this.props.watchlist.Watchlist,
-                    this.props.productToPass
+                    this.props.savePassingProduct
                   )
                 : "you have nothing in your watchlist"}
             </div>

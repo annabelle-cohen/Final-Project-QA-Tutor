@@ -17,7 +17,12 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ["Shipping address", "Payment details"];
 
-const CheckoutStepper = ({ shippingAddress, billingInfo, checkoutToken }) => {
+const CheckoutStepper = ({
+  shippingAddress,
+  billingInfo,
+  checkoutToken,
+  personalInfo,
+}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState({});
   const classes = useStyles();
@@ -68,6 +73,7 @@ const CheckoutStepper = ({ shippingAddress, billingInfo, checkoutToken }) => {
         shippingData={shippingData}
         billingInfo={billingInfo}
         checkoutToken={checkoutToken}
+        personalInfo={personalInfo}
         backStep={backStep}
         nextStep={nextStep}
       />

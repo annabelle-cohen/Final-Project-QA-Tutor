@@ -13,7 +13,7 @@ class checkout1 extends Component {
     super(props);
 
     this.props.saveCart({
-      cartId: this.props.cart.cartID,
+      cartId: this.props.cart.cartId,
       lastPosition: this.props.cart.lastPosition,
       totalPrice: this.props.cart.totalPrice,
       totalNumOfProducts: this.props.cart.totalNumOfProducts,
@@ -227,6 +227,10 @@ class checkout1 extends Component {
         productToPass: item,
       });
     };
+
+    const onCheckout = () => {
+      console.log("in on checkout");
+    };
     return (
       <div id="checkout-container">
         <NavigationBarAAP />
@@ -239,6 +243,7 @@ class checkout1 extends Component {
           onRemoveFromCart={onRemoveFromCart}
           onEmptyCart={onEmptyCart}
           handleClick={passingItem}
+          handleCheck={onCheckout}
         ></Cart>
         {this.isSignOut()}
         <div>

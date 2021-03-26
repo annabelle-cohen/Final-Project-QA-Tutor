@@ -11,6 +11,10 @@ import "./TabViewDemo.css";
 import { Carousel } from "primereact/carousel";
 import clothes2 from "./img/clothes2.jpg";
 import Sony from "./img/sony.jpg";
+import electronic from "./img/ele.jpg";
+import smartPhone from "./img/smartp.jpg";
+import accossorize from "./img/acces.jpg";
+import smartWatch from "./img/smartWatch.jpg";
 import { Link, Route, NavLink } from "react-router-dom";
 import NavigationBarAAP from "./NavigationBarAAP";
 import { connect } from "react-redux";
@@ -26,7 +30,6 @@ export class Home extends Component {
       search: null,
       selectedCategories: "All Categories",
       isSuccessed: false,
-      images: require("./img/makeup.jpg"),
     };
 
     this.categories = [
@@ -60,17 +63,19 @@ export class Home extends Component {
       { label: "Under $10" },
     ];
 
+    this.Images = [electronic, smartPhone, accossorize, smartWatch];
+
     //  this.onCategoryChange = this.onCategoryChange.bind(this);
     //this.itemTemplate = this.itemTemplate.bind(this);
     //  this.thumbnailTemplate = this.thumbnailTemplate.bind(this);
 
-    this.responsiveOptions = [
+    /*this.responsiveOptions = [
       {
-        breakpoint: "560px",
+        breakpoint: "0px",
         numVisible: 1,
+        numScroll: 1,
       },
-    ];
-
+    ];*/
     this.props.saveAllCategories({
       categories: [],
     });
@@ -191,37 +196,20 @@ export class Home extends Component {
         <div className="product-item-content">
           <div className="p-mb-3">
             <img
-              src={`showcase/demo/images/product/${product.image}`}
+              src={product}
               onError={(e) =>
                 (e.target.src =
                   "https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png")
               }
               alt={product.name}
               className="product-image"
+              style={{
+                height: "280px",
+                width: "890px",
+                marginLeft: "20px",
+                marginTop: "8px",
+              }}
             />
-          </div>
-          <div>
-            <h4 className="p-mb-1">{product.name}</h4>
-            <h6 className="p-mt-0 p-mb-3">${product.price}</h6>
-            <span
-              className={`product-badge status-${product.inventoryStatus.toLowerCase()}`}
-            >
-              {product.inventoryStatus}
-            </span>
-            <div className="car-buttons p-mt-5">
-              <Button
-                icon="pi pi-search"
-                className="p-button p-button-rounded p-mr-2"
-              />
-              <Button
-                icon="pi pi-star"
-                className="p-button-success p-button-rounded p-mr-2"
-              />
-              <Button
-                icon="pi pi-cog"
-                className="p-button-help p-button-rounded"
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -1024,13 +1012,13 @@ export class Home extends Component {
         <div id="div_carousel-item" className="card">
           <Carousel
             id="carousel-item"
-            value={this.state.images}
-            numVisible={3}
+            value={this.Images}
+            numVisible={1}
             numScroll={1}
             responsiveOptions={this.responsiveOptions}
             className="custom-carousel"
             circular
-            autoplayInterval={3000}
+            autoplayInterval={5000}
             itemTemplate={this.productTemplate}
             header={""}
           />

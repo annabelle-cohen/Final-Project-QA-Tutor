@@ -32,6 +32,8 @@ class productPage1 extends Component {
       watchlistArray: [],
     };
 
+    console.log(this.state);
+
     this.props.saveCart({
       lastPosition: this.props.cart.lastPosition,
       totalPrice: this.props.cart.totalPrice,
