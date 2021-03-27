@@ -58,7 +58,7 @@ public class CartEntity {
 		this.products.add(product);
 
 		product.addCart(this);
-		this.updateTotalPrice();
+		// this.updateTotalPrice();
 	}
 
 	public void removeProduct(ProductEntity product) {
@@ -70,7 +70,7 @@ public class CartEntity {
 		this.products.remove(product);
 
 		product.removeCart(this);
-		this.updateTotalPrice();
+		// this.updateTotalPrice();
 
 	}
 
@@ -81,7 +81,7 @@ public class CartEntity {
 		for (int i = 0; i < this.quantity.size(); i++) {
 			Long q = this.quantity.get(i);
 
-			if (this.products.get(i) != null) {
+			if (i < this.products.size()) {
 				totalPrice += q * this.products.get(i).getUnitPrice();
 			}
 		}

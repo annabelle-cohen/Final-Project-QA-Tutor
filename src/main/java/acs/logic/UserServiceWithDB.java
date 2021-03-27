@@ -1,6 +1,7 @@
 package acs.logic;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -93,7 +94,14 @@ public class UserServiceWithDB implements EnhanceUserService {
 		Date tenYears = new Date(now + aDay * 365 * 10);
 		Date twoYears = new Date(now + aDay * 365 * 2);
 		Date creditCardEXPDate = Helper.between(twoYears, tenYears);
-		b.setCreditCardEXPDate(creditCardEXPDate);
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(creditCardEXPDate);
+		int month = cal.get(Calendar.MONTH);
+		int year = cal.get(Calendar.YEAR);
+		String d = month + "/" + year;
+
+		b.setCreditCardEXPDate(d);
 
 		return b;
 	}

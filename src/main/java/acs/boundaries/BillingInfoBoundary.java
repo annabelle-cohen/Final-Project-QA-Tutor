@@ -1,26 +1,30 @@
 package acs.boundaries;
 
-import java.util.Date;
-
 public class BillingInfoBoundary {
 
 	private String billingAdress;
-
-	private Date creditCardEXPDate;
+	private Long billingInfoID;
+	private String creditCardEXPDate;
 	private String creditCardPIN;
 	private String creditCardNo;
 
-	public BillingInfoBoundary(String billingAdress, String creditCardID, Date billDate, Date creditCardEXPDate,
-			String creditCardPIN, String creditCardNo) {
-		super();
-		this.billingAdress = billingAdress;
-		this.creditCardEXPDate = creditCardEXPDate;
-		this.creditCardPIN = creditCardPIN;
-		this.creditCardNo = creditCardNo;
-
+	public BillingInfoBoundary() {
 	}
 
-	public BillingInfoBoundary() {
+	public Long getBillingInfoID() {
+		return billingInfoID;
+	}
+
+	public void setBillingInfoID(Long billingInfoID) {
+		this.billingInfoID = billingInfoID;
+	}
+
+	public String getCreditCardEXPDate() {
+		return creditCardEXPDate;
+	}
+
+	public void setCreditCardEXPDate(String creditCardEXPDate) {
+		this.creditCardEXPDate = creditCardEXPDate;
 	}
 
 	public String getBillingAdress() {
@@ -29,14 +33,6 @@ public class BillingInfoBoundary {
 
 	public void setBillingAdress(String billingAdress) {
 		this.billingAdress = billingAdress;
-	}
-
-	public Date getCreditCardEXPDate() {
-		return creditCardEXPDate;
-	}
-
-	public void setCreditCardEXPDate(Date creditCardEXPDate) {
-		this.creditCardEXPDate = creditCardEXPDate;
 	}
 
 	public String getCreditCardPIN() {

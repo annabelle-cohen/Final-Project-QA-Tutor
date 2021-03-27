@@ -12,7 +12,7 @@ public class BillingInfoEntity {
 	@GeneratedValue
 	private Long billingInfoID;
 	private String billingAdress;
-	private Date creditCardEXPDate;
+	private String creditCardEXPDate;
 	private String creditCardPIN;
 	private String creditCardNo;
 
@@ -35,12 +35,12 @@ public class BillingInfoEntity {
 		this.billingAdress = billingAdress;
 	}
 
-	public Date getCreditCardEXPDate() {
+	public String getCreditCardEXPDate() {
 		return creditCardEXPDate;
 	}
 
-	public void setCreditCardEXPDate(Date creditCardEXPDate2) {
-		this.creditCardEXPDate = creditCardEXPDate2;
+	public void setCreditCardEXPDate(String creditCardEXPDate) {
+		this.creditCardEXPDate = creditCardEXPDate;
 	}
 
 	public String getCreditCardPIN() {
