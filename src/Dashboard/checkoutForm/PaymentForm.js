@@ -187,7 +187,7 @@ const PaymentForm = ({
           <Button variant="outlined" onClick={backStep}>
             Back
           </Button>
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="primary" onClick={(e) => handleSubmit(e)}>
             Pay ${checkoutToken.totalPrice.toFixed(2)}
           </Button>
         </div>

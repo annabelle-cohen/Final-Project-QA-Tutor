@@ -163,7 +163,7 @@ class productPage1 extends Component {
     }
   };
 
-  handleAddToCart = (e) => {
+   handleAddToCart =async (e) => {
     if (this.state.quantity <= this.state.unitInStock) {
       var tempTotalPrice =
         this.props.cart.totalPrice + this.state.unitPrice * this.state.quantity;
@@ -213,7 +213,11 @@ class productPage1 extends Component {
 
     console.log(this.props.cart);
     if (this.props.authAAP.isSignIn) {
+
       const main = "http://localhost:8092//";
+      
+      if (!isAlreadyExist){
+
       const addProductLink = main + "/acs/products/addProductToCart";
 
       const addingProduct = {
@@ -223,7 +227,7 @@ class productPage1 extends Component {
       console.log(addingProduct);
       const dataJson = JSON.stringify(addingProduct);
 
-      fetch(addProductLink, {
+    await  fetch(addProductLink, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -241,6 +245,7 @@ class productPage1 extends Component {
           console.log(error);
         }
       );
+    }
 
       const addQuantity = main + "/acs/carts/updateCartQuantity";
 
@@ -252,7 +257,7 @@ class productPage1 extends Component {
       console.log(addingQuantity);
       const dataJson2 = JSON.stringify(addingQuantity);
 
-      fetch(addQuantity, {
+     await fetch(addQuantity, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

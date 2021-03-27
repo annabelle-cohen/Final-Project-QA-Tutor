@@ -88,12 +88,12 @@ export class SignInToAAPWithPassword extends Component {
         console.error("Error:", error.data);
       });
   }
-  addProductToCart = (id) => {
+  addProductToCart =async (id) => {
     const data = {
       cartID: id,
     };
     const dataJson = JSON.stringify(data);
-    fetch("http://localhost:8092/acs/carts/clearCart", {
+  await  fetch("http://localhost:8092/acs/carts/clearCart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export class SignInToAAPWithPassword extends Component {
       }
     );
 
-    this.props.cart.cart.map(function (product) {
+    this.props.cart.cart.map(async function (product) {
       const main = "http://localhost:8092//";
       const addProductLink = main + "/acs/products/addProductToCart";
 
@@ -123,7 +123,7 @@ export class SignInToAAPWithPassword extends Component {
       console.log(addingProduct);
       const dataJson = JSON.stringify(addingProduct);
 
-      fetch(addProductLink, {
+    await  fetch(addProductLink, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export class SignInToAAPWithPassword extends Component {
     console.log(addingQuantity);
     const dataJson2 = JSON.stringify(addingQuantity);
 
-    fetch(addQuantity, {
+   await fetch(addQuantity, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -124,7 +124,6 @@ export class productByCategoryAAP extends Component {
       var isExist = cart.some((item) => item.title === product.title);
       console.log(amountOfproducts);
       console.log(totalNum);
-
       console.log(isExist);
       if (isExist) {
         var index = cart.findIndex(
@@ -148,7 +147,10 @@ export class productByCategoryAAP extends Component {
       });
 
       if (this.props.authAAP.isSignIn) {
+       
         const main = "http://localhost:8092//";
+       
+        if (!isExist){
         const addProductLink = main + "/acs/products/addProductToCart";
 
         const addingProduct = {
@@ -159,7 +161,7 @@ export class productByCategoryAAP extends Component {
         console.log(addingProduct);
         const dataJson = JSON.stringify(addingProduct);
 
-        fetch(addProductLink, {
+      await  fetch(addProductLink, {
           method: "POST", // or 'PUT'
           headers: {
             "Content-Type": "application/json",
@@ -177,7 +179,7 @@ export class productByCategoryAAP extends Component {
             console.log(error);
           }
         );
-
+      }
         const addQuantity = main + "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
