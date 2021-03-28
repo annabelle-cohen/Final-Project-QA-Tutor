@@ -38,14 +38,14 @@ export class SignInToAAP extends Component {
     }
   };
 
-  handleContinue = (e) => {
+  handleContinue = async (e) => {
     e.preventDefault();
 
     //example for another file that will include all fetch to server.
 
     const main = "http://localhost:8092//";
     const login = main + "//acs/users/login/";
-    fetch(login + this.state.userName)
+    await fetch(login + this.state.userName)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ succeded: true });

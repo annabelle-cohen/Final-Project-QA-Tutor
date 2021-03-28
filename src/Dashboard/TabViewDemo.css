@@ -93,11 +93,12 @@
     padding-top: 22px;
     vertical-align: top;
     display: inline-block;
-    position: static;
+    position: absolute;
     background-image: url("./img/electronics.jpg");
     background-repeat: no-repeat;
     width: 530px;
     height: 296px;
+    z-index: -2;
 
 }
 

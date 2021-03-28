@@ -31,8 +31,8 @@ class savedSearchList1 extends Component {
     this.fillSearchesArray();
   }
 
-  fillSearchesArray() {
-    fetch(
+  fillSearchesArray = async () => {
+    await fetch(
       "http://localhost:8092/acs/searchList/getSearchList/" +
         this.props.authAAP.userAAP.email
     )
@@ -55,7 +55,7 @@ class savedSearchList1 extends Component {
       .catch((error) => {
         console.error("Error:", error.data);
       });
-  }
+  };
 
   handleMoveToProductPage() {
     if (this.state.isMoveToProductPage) {
@@ -72,7 +72,7 @@ class savedSearchList1 extends Component {
         searchListID: this.state.id,
       };
       const dataJson = JSON.stringify(data);
-      fetch("http://localhost:8092/acs/searchList/clearSearchList", {
+      await fetch("http://localhost:8092/acs/searchList/clearSearchList", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -100,13 +100,16 @@ class savedSearchList1 extends Component {
         text: search,
       };
       const dataJson = JSON.stringify(data);
-      fetch("http://localhost:8092/acs/searchList/removeSearchFromSearchList", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: dataJson,
-      }).then(
+      await fetch(
+        "http://localhost:8092/acs/searchList/removeSearchFromSearchList",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson,
+        }
+      ).then(
         (response) => {
           if (response.status === 200) {
             console.log("Deleted!");
@@ -133,7 +136,7 @@ class savedSearchList1 extends Component {
       const dataJson = JSON.stringify(data);
       const searchByKeyWordLink =
         "http://localhost:8092/acs/products/getByKeyword";
-      fetch(searchByKeyWordLink, {
+      await fetch(searchByKeyWordLink, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

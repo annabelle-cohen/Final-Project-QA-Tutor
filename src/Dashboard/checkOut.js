@@ -83,7 +83,7 @@ class checkout1 extends Component {
         console.log(addingQuantity);
         const dataJson2 = JSON.stringify(addingQuantity);
 
-        fetch(addQuantity, {
+        await fetch(addQuantity, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -105,7 +105,7 @@ class checkout1 extends Component {
       }
     };
 
-    const onRemoveFromCart = (item) => {
+    const onRemoveFromCart = async (item) => {
       var price = this.props.cart.totalPrice;
       var amount = this.props.cart.amountOfproducts;
       var totalItems = this.props.cart.totalNumOfProducts;
@@ -136,13 +136,16 @@ class checkout1 extends Component {
           cartID: this.props.cartId.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch("http://localhost:8092/acs/products/removeProductFromCart", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson,
-        }).then(
+        await fetch(
+          "http://localhost:8092/acs/products/removeProductFromCart",
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: dataJson,
+          }
+        ).then(
           (response) => {
             if (response.status === 200) {
               console.log("Deleted!");
@@ -166,7 +169,7 @@ class checkout1 extends Component {
         console.log(addingQuantity);
         const dataJson2 = JSON.stringify(addingQuantity);
 
-        fetch(addQuantity, {
+        await fetch(addQuantity, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -187,7 +190,7 @@ class checkout1 extends Component {
       }
     };
 
-    const onEmptyCart = () => {
+    const onEmptyCart = async () => {
       this.props.saveCart({
         lastPosition: 0,
         totalPrice: 0,
@@ -201,7 +204,7 @@ class checkout1 extends Component {
           cartID: this.props.cartId.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch("http://localhost:8092/acs/carts/clearCart", {
+        await fetch("http://localhost:8092/acs/carts/clearCart", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

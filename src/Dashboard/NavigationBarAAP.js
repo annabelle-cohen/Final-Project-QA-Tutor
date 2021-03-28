@@ -22,6 +22,7 @@ import { ShoppingCart } from "@material-ui/icons";
 import { saveCart } from "../Actions/shoppingCart";
 import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
+import { avatar } from "../Asset/default_profile_pic";
 import { saveWatchlist } from "../Actions/addToWatchlist";
 
 export class NavigationBarAAP extends Component {
@@ -66,12 +67,12 @@ export class NavigationBarAAP extends Component {
     this.checkIfIsAlreadyExistCart();
   }
 
-  checkIfIsAlreadyExistCart() {
+  checkIfIsAlreadyExistCart = async () => {
     //example for another file that will include all fetch to server.
     if (this.props.authAAP.isSignIn) {
       const main = "http://localhost:8092//";
       const fetchCart = main + "acs/carts/getCart/";
-      fetch(fetchCart + this.props.authAAP.userAAP.email)
+      await fetch(fetchCart + this.props.authAAP.userAAP.email)
         .then((response) => {
           if (response.status === 200) {
             this.setState({ succeded: true });
@@ -89,7 +90,7 @@ export class NavigationBarAAP extends Component {
           console.log(error.data);
         });
     }
-  }
+  };
 
   handleSignOut = (e) => {
     this.props.saveUserAAP({
@@ -393,15 +394,54 @@ export class NavigationBarAAP extends Component {
             iconPos="right"
             className="p-button-secondary p-button-text"
           />
-          <div className="dropDown-menu">
-            <div className="profile-option">
-              {this.props.authAAP.userAAP.firstName}&nbsp;
-              {this.props.authAAP.userAAP.lastName}
-              <div>
-                {this.props.authAAP.userAAP.firstName}
-                {this.props.authAAP.userAAP.lastName}'(rating)'
+          <div className="dropDown-menu" style={{ height: "200px" }}>
+            <div>
+              <div
+                style={{
+                  display: "inline-block",
+                  position: "absolute",
+                  marginTop: "5px",
+                }}
+              >
+                <img
+                  src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg"
+                  id="image-default"
+                  style={{ height: "100px", width: "100px" }}
+                ></img>
               </div>
-              <div id="profile-buttons-nav">
+              <div
+                style={{
+                  display: "inline-block",
+                  position: "relative",
+                  marginLeft: "120px",
+                  marginTop: "10px",
+                }}
+              >
+                {this.props.authAAP.userAAP.firstName}&nbsp;
+                {this.props.authAAP.userAAP.lastName}
+              </div>
+            </div>
+
+            <div
+              className="profile-option"
+              style={{ marginTop: "-10px", marginLeft: "-10px" }}
+            >
+              <hr
+                style={{
+                  position: "relative",
+                  borderColor: "rgb(255, 255, 255)",
+                  borderWidth: 0.2,
+                  borderBottom: "thin",
+                  marginLeft: 1 + "px",
+                  marginRight: 25 + "px",
+                  marginTop: "55px",
+                  zIndex: -2,
+                }}
+              ></hr>
+              <div
+                id="profile-buttons-nav"
+                style={{ position: "absolute", zIndex: 1, marginTop: "2px" }}
+              >
                 <Link id="account-setting" to="/dashboard/accountsetting">
                   Account Setting
                 </Link>
@@ -508,10 +548,9 @@ export class NavigationBarAAP extends Component {
             </Link>
             <Link
               className="dropdown_aap_content"
-              onClick={this.handlePurchaseHistory}
               to={
                 this.props.authAAP.isSignIn
-                  ? "/dashboard/productsList"
+                  ? "/dashboard/history"
                   : "/dashboard/signInToAAP"
               }
             >

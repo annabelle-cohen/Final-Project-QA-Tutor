@@ -34,7 +34,7 @@ export class RegisterToAAP extends Component {
     this.setState({ isFill: false });
   };
 
-  handleCreateAccount = (e) => {
+  handleCreateAccount = async (e) => {
     //initialize for new checking
 
     var letterNumber = /^[0-9a-zA-Z]+$/;
@@ -121,7 +121,7 @@ export class RegisterToAAP extends Component {
 
       const dataJson = JSON.stringify(user);
 
-      fetch(register, {
+      await fetch(register, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

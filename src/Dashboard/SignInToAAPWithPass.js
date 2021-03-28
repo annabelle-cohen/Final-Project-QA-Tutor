@@ -48,8 +48,8 @@ export class SignInToAAPWithPassword extends Component {
     this.signInContinue = this.signInContinue.bind(this);
   }
 
-  checkCartAccordingServer() {
-    fetch(
+  checkCartAccordingServer = async () => {
+    await fetch(
       "http://localhost:8092/acs/carts/getCart/" +
         this.props.authAAP.userAAP.email
     )
@@ -87,13 +87,13 @@ export class SignInToAAPWithPassword extends Component {
       .catch((error) => {
         console.error("Error:", error.data);
       });
-  }
-  addProductToCart =async (id) => {
+  };
+  addProductToCart = async (id) => {
     const data = {
       cartID: id,
     };
     const dataJson = JSON.stringify(data);
-  await  fetch("http://localhost:8092/acs/carts/clearCart", {
+    await fetch("http://localhost:8092/acs/carts/clearCart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +123,7 @@ export class SignInToAAPWithPassword extends Component {
       console.log(addingProduct);
       const dataJson = JSON.stringify(addingProduct);
 
-    await  fetch(addProductLink, {
+      await fetch(addProductLink, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export class SignInToAAPWithPassword extends Component {
     console.log(addingQuantity);
     const dataJson2 = JSON.stringify(addingQuantity);
 
-   await fetch(addQuantity, {
+    await fetch(addQuantity, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -173,8 +173,8 @@ export class SignInToAAPWithPassword extends Component {
     );
   };
 
-  checkWatchListAccoridingServer() {
-    fetch(
+  checkWatchListAccoridingServer = async () => {
+    await fetch(
       "http://localhost:8092/acs/watchlist/getwatchList/" +
         this.props.authAAP.userAAP.email
     )
@@ -198,7 +198,7 @@ export class SignInToAAPWithPassword extends Component {
       .catch((error) => {
         console.error("Error:", error.data);
       });
-  }
+  };
 
   signInContinue = (e) => {
     if (this.props.authAAP.userAAP.password === this.state.password) {

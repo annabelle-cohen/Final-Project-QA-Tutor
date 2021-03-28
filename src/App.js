@@ -25,6 +25,7 @@ import CheckoutForm from "./Dashboard/checkOutForm";
 import productPage from "./Dashboard/ProductPage/productPage";
 import genericList from "./Dashboard/genericListForProducts";
 import savedSearchList from "./Dashboard/savedSearchPage";
+import purchaseHistory from "./Dashboard/purchaseHistoryPage";
 
 function App() {
   return (
@@ -44,6 +45,11 @@ function App() {
             exact
             path="/dashboard/productsList"
             component={genericList}
+          ></Route>
+          <Route
+            exact
+            path="/dashboard/history"
+            component={purchaseHistory}
           ></Route>
           <Route
             exact

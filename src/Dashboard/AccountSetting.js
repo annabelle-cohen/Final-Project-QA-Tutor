@@ -8,6 +8,7 @@ import { avatar } from "../Asset/default_profile_pic";
 import { InputText } from "primereact/inputtext";
 import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
+import { Redirect } from "react-router-dom";
 import "./accountsetting.css";
 
 class AccountSetting extends Component {
@@ -58,6 +59,7 @@ class AccountSetting extends Component {
     this.fileChangedHandler = this.fileChangedHandler.bind(this);
     this.checkIfIsPersonalInfo = this.checkIfIsPersonalInfo.bind(this);
     this.uploadHandler = this.uploadHandler.bind(this);
+    this.billingInfoFromServer();
     this.checkIfIsPersonalInfo();
   }
 
@@ -70,7 +72,74 @@ class AccountSetting extends Component {
     //send to the server
   };
 
-  handleSubmitPersonalInfo = (e) => {
+  billingInfoFromServer = async () => {
+    await fetch(
+      "http://localhost:8092/acs/users/detail/" +
+        this.props.authAAP.userAAP.email
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const personalInfo = d;
+            this.props.savePersonalInfo({
+              isPersonalInfoExist: this.props.personalInfo.isPersonalInfoExist,
+              personalInfo: {
+                address: this.props.authAAP.userAAP.email,
+                country: "null",
+                city: "null",
+                phone: "null",
+                avatar: "null",
+                firstName: this.props.authAAP.userAAP.firstName,
+                lastName: this.props.authAAP.userAAP.lastName,
+              },
+              billingInfos: {
+                billingAdress: this.props.personalInfo.billingInfos
+                  .billingAdress,
+                creditCardID: this.props.personalInfo.billingInfos.creditCardID,
+                billDate: this.props.personalInfo.billingInfos.billDate,
+                creditCardEXPDate:
+                  personalInfo.billingInfos[0].creditCardEXPDate,
+                creditCardPIN: personalInfo.billingInfos[0].creditCardPIN,
+                creditCardNo: personalInfo.billingInfos[0].creditCardNo,
+              },
+            });
+
+            var res = personalInfo.billingInfos[0].creditCardEXPDate.split("/");
+            var str1_month = "";
+            var str2_month = "";
+            var final_month = "";
+            var final_year = "";
+            if (res[0] < 10) {
+              str1_month = "0";
+              str2_month = res[0];
+              final_month = str1_month.concat(str2_month);
+              console.log(final_month);
+            } else {
+              final_month = res[0];
+            }
+
+            var temp = res[1].split("");
+            var final_year = temp[2].concat(temp[3]);
+
+            this.setState({
+              expDate: final_month.concat(final_year),
+              creditNumber: personalInfo.billingInfos[0].creditCardNo,
+              cvv: personalInfo.billingInfos[0].creditCardPIN,
+            });
+          });
+        } else {
+          console.log("Error:", response);
+          response.json().then((d) => {
+            console.log("Errordata", d);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error.data);
+      });
+  };
+
+  handleSubmitPersonalInfo = async (e) => {
     const updateForUserAccount = {
       firstName: null,
       lastName: null,
@@ -137,7 +206,7 @@ class AccountSetting extends Component {
     const PersonalInfo = main + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
-    fetch(PersonalInfo + user.email, {
+    await fetch(PersonalInfo + user.email, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -163,7 +232,7 @@ class AccountSetting extends Component {
     console.log(this.props.personalInfo);
   };
 
-  handleSubmitBillingInfo = (e) => {
+  handleSubmitBillingInfo = async (e) => {
     const billingInfoUpdate = {
       billingInfos: [
         {
@@ -230,7 +299,7 @@ class AccountSetting extends Component {
     const PersonalInfo = main + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
-    fetch(PersonalInfo + user.email, {
+    await fetch(PersonalInfo + user.email, {
       method: "PUT", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -254,12 +323,12 @@ class AccountSetting extends Component {
     );
   };
 
-  checkIfIsPersonalInfo = (e) => {
+  checkIfIsPersonalInfo = async (e) => {
     const main = "http://localhost:8092//";
     const PersonalInfo = main + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
-    fetch(PersonalInfo + user.email)
+    await fetch(PersonalInfo + user.email)
       .then((response) => {
         if (response.status === 200) {
           response.json().then((d) => {
@@ -330,9 +399,15 @@ class AccountSetting extends Component {
         console.log(error.data);
       });
   };
+  checkIfSignOut() {
+    if (!this.props.authAAP.isSignIn) {
+      return <Redirect push="/dashboard" to="/dashboard"></Redirect>;
+    }
+  }
   render() {
     return (
       <div>
+        {this.checkIfSignOut()}
         <div>
           {/**Nav bar */}
           <NavigationBarAAP />
@@ -354,7 +429,10 @@ class AccountSetting extends Component {
               <hr id="border10" align="right" />
               <div className="container-personal">
                 <div id="imgPersonal">
-                  <img src={this.state.avatar} id="image-default"></img>
+                  <img
+                    src="https://icon-library.com/images/default-profile-icon/default-profile-icon-16.jpg"
+                    id="image-default"
+                  ></img>
                 </div>
                 <div id="firstNameDiv">
                   <label>First Name:</label>
@@ -514,11 +592,12 @@ class AccountSetting extends Component {
                     <label htmlFor="dateInput">Expiry Date</label>
                   </div>
                   <InputMask
+                    disabled={true}
                     id="dateInput"
-                    mask="99/99/9999"
+                    mask="99/99"
                     value={this.state.expDate}
-                    placeholder="dd/mm/yyyy"
-                    slotChar="mm/dd/yyyy"
+                    placeholder={this.state.expDate}
+                    slotChar="dd/yy"
                     onChange={(e) => this.setState({ expDate: e.value })}
                   ></InputMask>
                   <small id="exp-date-help" className="p-invalid p-d-block">
@@ -531,10 +610,11 @@ class AccountSetting extends Component {
                     <label htmlFor="creditNumberInput">Card Number</label>
                   </div>
                   <InputMask
+                    disabled={true}
                     id="creditNumberInput"
                     mask="9999-9999-9999-9999"
                     value={this.state.creditNumber}
-                    placeholder="9999-9999-9999-9999"
+                    placeholder={this.state.creditNumber}
                     onChange={(e) => this.setState({ creditNumber: e.value })}
                   ></InputMask>
                   <small id="card-number-help" className="p-invalid p-d-block">
@@ -547,6 +627,7 @@ class AccountSetting extends Component {
                     <label htmlFor="cvvNumberInput">CVV Number</label>
                   </div>
                   <InputMask
+                    disabled={true}
                     id="cvvInput"
                     mask="999"
                     value={this.state.cvv}

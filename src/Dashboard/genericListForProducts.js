@@ -38,16 +38,14 @@ class genericList1 extends Component {
 
   handleChanges() {
     if (this.state.title !== this.props.choice.choice) {
-      setTimeout(() => {
-        this.loadProductByChoice();
-      }, 500);
+      this.loadProductByChoice();
     }
   }
 
-  loadProductByChoice() {
+  loadProductByChoice = async () => {
     console.log("im here in load product by choice");
     if (this.props.choice.choice === "watchlist") {
-      fetch(
+      await fetch(
         "http://localhost:8092/acs/watchlist/getwatchList/" +
           this.props.authAAP.userAAP.email
       )
@@ -81,7 +79,7 @@ class genericList1 extends Component {
     }
 
     if (this.props.choice.choice === "viewed") {
-      fetch(
+      await fetch(
         "http://localhost:8092/acs/viewedlist/getViewedList/" +
           this.props.authAAP.userAAP.email
       )
@@ -107,34 +105,7 @@ class genericList1 extends Component {
           console.error("Error:", error.data);
         });
     }
-
-    if (this.props.choice.choice === "history") {
-      //need change to history link when ali will acomplish the task
-      fetch(
-        "http://localhost:8092/acs/viewedlist/getViewedList/" +
-          this.props.authAAP.userAAP.email
-      )
-        .then((response) => {
-          if (response.status === 200) {
-            response.json().then((d) => {
-              const recentleyViewed = d;
-              console.log(recentleyViewed.products);
-              this.setState({
-                products: recentleyViewed.products,
-              });
-            });
-          } else {
-            console.log("Error:", response);
-            response.json().then((d) => {
-              console.log("Errordata", d);
-            });
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error.data);
-        });
-    }
-  }
+  };
 
   render() {
     const handleItemClick = async (product) => {
@@ -151,7 +122,7 @@ class genericList1 extends Component {
           watchListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch(
+        await fetch(
           "http://localhost:8092/acs/watchlist/removeProductFromWatchList",
           {
             method: "DELETE",
@@ -180,7 +151,7 @@ class genericList1 extends Component {
           viewedListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch(
+        await fetch(
           "http://localhost:8092/acs/viewedlist/removeProductFromViewedList",
           {
             method: "DELETE",
@@ -203,7 +174,6 @@ class genericList1 extends Component {
         );
       }
 
-      //do the same for purchase history
       window.location.reload();
     };
 
@@ -213,7 +183,7 @@ class genericList1 extends Component {
           watchListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch("http://localhost:8092/acs/watchlist/clearwatchList", {
+        await fetch("http://localhost:8092/acs/watchlist/clearwatchList", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -238,7 +208,7 @@ class genericList1 extends Component {
           viewedListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        fetch("http://localhost:8092/acs/viewedlist/clearViewedList", {
+        await fetch("http://localhost:8092/acs/viewedlist/clearViewedList", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -258,7 +228,6 @@ class genericList1 extends Component {
         );
       }
 
-      //do the same for purchase history
       window.location.reload();
     };
     return (

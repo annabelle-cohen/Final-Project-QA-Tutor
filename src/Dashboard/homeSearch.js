@@ -74,9 +74,9 @@ class HomeSearch1 extends Component {
     });
   };
 
-  saveSearchKeywordWithServer() {
+  saveSearchKeywordWithServer = async () => {
     if (this.props.authAAP.isSignIn) {
-      fetch(
+      await fetch(
         "http://localhost:8092/acs/searchList/getSearchList/" +
           this.props.authAAP.userAAP.email
       )
@@ -131,9 +131,9 @@ class HomeSearch1 extends Component {
         isSearchClicked: true,
       });
     }, 600);
-  }
+  };
 
-  handleClick = (e) => {
+  handleClick = async (e) => {
     if (this.state.search != null && this.state.search != "") {
       var data = {
         keyword: this.state.search,
@@ -144,7 +144,7 @@ class HomeSearch1 extends Component {
       const dataJson = JSON.stringify(data);
       const searchByKeyWordLink =
         "http://localhost:8092/acs/products/getByKeyword";
-      fetch(searchByKeyWordLink, {
+      await fetch(searchByKeyWordLink, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

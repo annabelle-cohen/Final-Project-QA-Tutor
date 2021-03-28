@@ -1,26 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Typography,
   List,
   ListItem,
   ListItemText,
   Divider,
-  Grid,
   ListItemAvatar,
   CardMedia,
 } from "@material-ui/core";
 import useStyles from "./styles";
 import { Link } from "react-router-dom";
-import DeleteIcon from "@material-ui/icons/Delete";
 
-const List1 = ({ product, onClickItem, onRemoveProduct }) => {
+const ProductList = ({ product, quantity, productsArray, onItemClick }) => {
+  console.log(quantity);
   console.log(product);
   const classes = useStyles();
-  const handleItemClick = () => onClickItem(product);
-  const handleDeleteClick = () => onRemoveProduct(product);
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    var index = productsArray.findIndex(
+      (item) => item.productID === product.productID
+    );
+    setIndex(index);
+  });
+
+  const handleClickOnItem = () => onItemClick(product);
+
   return (
     <div>
-      <List disablePadding>
+      <List disablePadding style={{ marginLeft: "-345px" }}>
         <ListItem style={{ padding: "10px 0" }} key={product.title}>
           <ListItemAvatar style={{ marginLeft: "350px" }}>
             <CardMedia
@@ -32,8 +40,8 @@ const List1 = ({ product, onClickItem, onRemoveProduct }) => {
             primary={
               <React.Fragment>
                 <Link
-                  className={classes.title}
-                  onClick={handleItemClick}
+                  className={classes.title2}
+                  onClick={handleClickOnItem}
                   to="/dashboard/productPage"
                 >
                   {product.title}
@@ -56,7 +64,10 @@ const List1 = ({ product, onClickItem, onRemoveProduct }) => {
           ></ListItemText>
           <br></br>
 
-          <Typography variant="body2" style={{ marginRight: "300px" }}>
+          <Typography
+            variant="body2"
+            style={{ marginRight: "300px", color: "gray" }}
+          >
             ${product.unitPrice.toFixed(2)}
             <div style={{ fontSize: 10 + "px", color: "gray" }}>
               +
@@ -64,17 +75,20 @@ const List1 = ({ product, onClickItem, onRemoveProduct }) => {
                 ? product.shippingServiceCost
                 : "FREE"}
             </div>
+            <div
+              style={{ fontSize: 10 + "px", color: "gray", marginLeft: "5px" }}
+            >
+              Qty. {quantity[index]}
+            </div>
           </Typography>
         </ListItem>
 
         <ListItem style={{ padding: "10px 0" }}></ListItem>
       </List>
-      <Grid item xs={8}>
-        <DeleteIcon className={classes.delete} onClick={handleDeleteClick} />
-      </Grid>
-      <Divider></Divider>
+
+      <Divider style={{ width: "700px" }}></Divider>
     </div>
   );
 };
 
-export default List1;
+export default ProductList;

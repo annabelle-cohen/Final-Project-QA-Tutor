@@ -11,10 +11,10 @@ import "./TabViewDemo.css";
 import { Carousel } from "primereact/carousel";
 import clothes2 from "./img/clothes2.jpg";
 import Sony from "./img/sony.jpg";
-import electronic from "./img/ele.jpg";
-import smartPhone from "./img/smartp.jpg";
-import accossorize from "./img/acces.jpg";
-import smartWatch from "./img/smartWatch.jpg";
+import electronic from "./img/example1.png";
+import smartPhone from "./img/example2.png";
+import accossorize from "./img/exmaple3.png";
+import smartWatch from "./img/example4.png";
 import { Link, Route, NavLink } from "react-router-dom";
 import NavigationBarAAP from "./NavigationBarAAP";
 import { connect } from "react-redux";
@@ -65,24 +65,13 @@ export class Home extends Component {
 
     this.Images = [electronic, smartPhone, accossorize, smartWatch];
 
-    //  this.onCategoryChange = this.onCategoryChange.bind(this);
-    //this.itemTemplate = this.itemTemplate.bind(this);
-    //  this.thumbnailTemplate = this.thumbnailTemplate.bind(this);
-
-    /*this.responsiveOptions = [
-      {
-        breakpoint: "0px",
-        numVisible: 1,
-        numScroll: 1,
-      },
-    ];*/
     this.props.saveAllCategories({
       categories: [],
     });
 
     this.props.saveProductsByCategoryID({
-      categoryID: this.props.productsByCategory.categoryID,
-      productsById: this.props.productsByCategory.productsById,
+      categoryID: "",
+      productsById: [],
     });
 
     this.fillCategories = this.fillCategories.bind(this);
@@ -92,7 +81,7 @@ export class Home extends Component {
     this.fillCategories();
   }
 
-  fillCategories = (e) => {
+  fillCategories = async (e) => {
     const data = {
       page: 0,
       size: 5,
@@ -102,7 +91,7 @@ export class Home extends Component {
     const getAllCategories = main + "/acs/category/all";
     const dataJson = JSON.stringify(data);
 
-    fetch(getAllCategories, {
+    await fetch(getAllCategories, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -142,7 +131,7 @@ export class Home extends Component {
         });
       }
     }
-    setTimeout(() => {
+    setTimeout(async () => {
       const data = {
         categoryID: this.props.productsByCategory.categoryID,
         page: 0,
@@ -153,7 +142,7 @@ export class Home extends Component {
       const getproductsByCategoryId = main + "/acs/products/getByCategory";
       const dataJson = JSON.stringify(data);
 
-      fetch(getproductsByCategoryId, {
+      await fetch(getproductsByCategoryId, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",
@@ -273,7 +262,7 @@ export class Home extends Component {
                 <div>
                   <Button
                     id="Video-Games-link"
-                    label="Video Games & Accessories"
+                    label="Video Games & Consoles"
                     onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
@@ -281,7 +270,7 @@ export class Home extends Component {
                 <div>
                   <Button
                     id="Computers-Tablets-link"
-                    label="Computers & Tablets"
+                    label="Computers& Tablets & Networking"
                     onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}

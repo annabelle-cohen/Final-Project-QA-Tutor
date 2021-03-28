@@ -23,8 +23,10 @@ const CheckoutStepper = ({
   checkoutToken,
   personalInfo,
 }) => {
+  console.log(personalInfo);
   const [activeStep, setActiveStep] = useState(0);
   const [shippingData, setShippingData] = useState({});
+  const [orderId, setOrderId] = useState("");
   const classes = useStyles();
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -37,17 +39,47 @@ const CheckoutStepper = ({
     nextStep();
   };
 
+  useEffect(() => {
+    if (activeStep === steps.length) {
+      getOrderId();
+    }
+  });
+
+  const getOrderId = async () => {
+    await fetch(
+      "http://localhost:8092/acs/orders/getOrderHistroy/" +
+        personalInfo.personalInfo.address
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const orderInfo = d;
+            var length = orderInfo.length;
+            //console.log(orderInfo[length - 1].orderID);
+            setOrderId(orderInfo[length - 1].orderID);
+          });
+        } else {
+          console.log("Error:", response);
+          response.json().then((d) => {
+            console.log("Errordata", d);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error.data);
+      });
+  };
+
   let Confirmation = () =>
     shippingData ? (
       <>
-        {console.log(shippingData)}
         <div>
           <Typography variant="h5">
             Thank you for your purchase, {shippingData.firstName}{" "}
             {shippingData.lastName}!
           </Typography>
           <Divider className={classes.divider} />
-          <Typography variant="subtitle2">Order ref: ref</Typography>
+          <Typography variant="subtitle2">Order No.{orderId}</Typography>
         </div>
         <br />
         <Button

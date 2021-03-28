@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Typography, Button, Divider } from "@material-ui/core";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
@@ -15,7 +15,6 @@ const PaymentForm = ({
   backStep,
   nextStep,
 }) => {
-  console.log(personalInfo);
   const [number, setNumber] = useState(personalInfo.billingInfos.creditCardNo);
   const [name, setName] = useState(
     personalInfo.personalInfo.firstName +
@@ -24,9 +23,32 @@ const PaymentForm = ({
   );
   const [id, setId] = useState("");
   const [expiry, setExpiry] = useState("");
+  const [expiryForCheck, setExpiryForCheck] = useState("");
   const [cvc, setCvc] = useState(personalInfo.billingInfos.creditCardPIN);
   const [Focus, setFocus] = useState("");
   const [isValid, setValid] = useState("");
+
+  useEffect(() => {
+    var res = personalInfo.billingInfos.creditCardEXPDate.split("/");
+    var str1_month = "";
+    var str2_month = "";
+    var final_month = "";
+    var final_year = "";
+    if (res[0] < 10) {
+      str1_month = "0";
+      str2_month = res[0];
+      final_month = str1_month.concat(str2_month);
+      console.log(final_month);
+    } else {
+      final_month = res[0];
+    }
+
+    var temp = res[1].split("");
+    var final_year = temp[2].concat(temp[3]);
+
+    setExpiry(final_month.concat(final_year));
+    setExpiryForCheck(final_month.concat(final_year));
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +82,14 @@ const PaymentForm = ({
       }
 
       if (cvc !== personalInfo.billingInfos.creditCardPIN) {
+        isValid2 = false;
+      }
+
+      if (expiry !== expiryForCheck) {
+        isValid2 = false;
+      }
+
+      if (id.length !== 9) {
         isValid2 = false;
       }
 
@@ -152,7 +182,7 @@ const PaymentForm = ({
                   mask="99/99"
                   value={expiry}
                   name="expiry"
-                  placeholder="mm/yy"
+                  placeholder={expiry}
                   onChange={(e) => setExpiry(e.value)}
                   onFocus={(e) => setFocus(e.target.name)}
                 ></InputMask>
@@ -187,7 +217,12 @@ const PaymentForm = ({
           <Button variant="outlined" onClick={backStep}>
             Back
           </Button>
-          <Button type="submit" variant="contained" color="primary" onClick={(e) => handleSubmit(e)}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            onClick={(e) => handleSubmit(e)}
+          >
             Pay ${checkoutToken.totalPrice.toFixed(2)}
           </Button>
         </div>

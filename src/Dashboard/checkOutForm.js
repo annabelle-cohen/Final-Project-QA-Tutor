@@ -48,8 +48,8 @@ class CheckoutForm extends Component {
     this.fillPersonalInfo();
   }
 
-  fillPersonalInfo() {
-    fetch(
+  fillPersonalInfo = async () => {
+    await fetch(
       "http://localhost:8092/acs/users/detail/" +
         this.props.authAAP.userAAP.email
     )
@@ -61,7 +61,7 @@ class CheckoutForm extends Component {
             this.props.savePersonalInfo({
               isPersonalInfoExist: this.props.personalInfo.isPersonalInfoExist,
               personalInfo: {
-                address: "null",
+                address: this.props.authAAP.userAAP.email,
                 country: "null",
                 city: "null",
                 phone: "null",
@@ -91,7 +91,7 @@ class CheckoutForm extends Component {
       .catch((error) => {
         console.error("Error:", error.data);
       });
-  }
+  };
 
   render() {
     const handleShippingAddress = (data) => {
@@ -99,7 +99,7 @@ class CheckoutForm extends Component {
       //in the future need to send it to the server.
     };
 
-    const handleBillingInfo = (billingData) => {
+    const handleBillingInfo = async (billingData) => {
       console.log(this.props.cartId.id);
 
       //send to server
@@ -113,7 +113,7 @@ class CheckoutForm extends Component {
 
       const dataJson = JSON.stringify(cartInfo);
 
-      fetch(checkoutLink, {
+      await fetch(checkoutLink, {
         method: "PUT", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

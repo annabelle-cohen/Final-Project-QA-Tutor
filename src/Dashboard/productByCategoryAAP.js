@@ -71,7 +71,7 @@ export class productByCategoryAAP extends Component {
     }
   }
 
-  fillCategoryName = (e) => {
+  fillCategoryName = async (e) => {
     const data = {
       categoryID: this.props.productsByCategory.categoryID,
     };
@@ -80,7 +80,7 @@ export class productByCategoryAAP extends Component {
     const getCategoryById = main + "/acs/category";
     const dataJson = JSON.stringify(data);
 
-    fetch(getCategoryById, {
+    await fetch(getCategoryById, {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
@@ -147,39 +147,38 @@ export class productByCategoryAAP extends Component {
       });
 
       if (this.props.authAAP.isSignIn) {
-       
         const main = "http://localhost:8092//";
-       
-        if (!isExist){
-        const addProductLink = main + "/acs/products/addProductToCart";
 
-        const addingProduct = {
-          productID: product.productID,
-          cartID: this.props.cartId.id,
-        };
+        if (!isExist) {
+          const addProductLink = main + "/acs/products/addProductToCart";
 
-        console.log(addingProduct);
-        const dataJson = JSON.stringify(addingProduct);
+          const addingProduct = {
+            productID: product.productID,
+            cartID: this.props.cartId.id,
+          };
 
-      await  fetch(addProductLink, {
-          method: "POST", // or 'PUT'
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson,
-        }).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("success");
-            } else {
-              console.log("failed to fetch server");
+          console.log(addingProduct);
+          const dataJson = JSON.stringify(addingProduct);
+
+          await fetch(addProductLink, {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: dataJson,
+          }).then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("success");
+              } else {
+                console.log("failed to fetch server");
+              }
+            },
+            (error) => {
+              console.log(error);
             }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }
+          );
+        }
         const addQuantity = main + "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
