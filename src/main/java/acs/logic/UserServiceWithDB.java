@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
+
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,6 +110,8 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Transactional
 	public UserBoundary createUser(UserBoundary newUser) {
 
+		
+		
 		Optional<UserEntity> userEntity = this.usersDao.findById(newUser.getEmail());
 		if (!userEntity.isPresent()) {
 			if (!isValidEmail(newUser.getEmail())) {
@@ -153,6 +155,10 @@ public class UserServiceWithDB implements EnhanceUserService {
 
 			this.usersDao.save(entity);
 
+			String  content ="<h1> Thank you </h1> <p> you're all set ! , now you can start browsing the site and start the bug hunt. </p> <footer> QA Tutor team . </footer>" ; 
+			String subject  = "Welcome to QA Tutor";
+			Helper.sendMsg(entity.getEmail(),subject, content );
+			
 			return this.entityConverter.convertFromEntity(entity);
 		} else {
 			throw new UserNotFoundException("this e-mail adress is already exist in the system!");
