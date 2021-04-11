@@ -174,8 +174,73 @@ public class CartService {
 		this.cartDao.save(cart);
 		this.orderDao.save(order);
 		this.userDao.save(cart.getUser());
+		
+		
+		//send message 
+		sendOrderMessage(cart, order);
 
 		return this.orderConverter.toBounudary(order);
+	}
+	
+	void sendOrderMessage(CartEntity cart, OrderEntity order) {
+		String email = cart.getUser().getEmail();
+		String subject = "Thank you for order";
+		String content ="<!DOCTYPE html>\n"
+				+ "<html>\n"
+				+ "<head>\n"
+				+ "<style>\n"
+				+ "table, th, td {\n"
+				+ "  border: 1px solid black;\n"
+				+ "}\n"
+				+ "</style>\n"
+				+ "</head>\n"
+				+ "<body>\n"
+				+ "\n"
+				+ "<h2>Your order has been dispatched</h2>\n"
+				+ "\n"
+				+ "<p style=\"text-align: center;\"> your order</p>\n"
+				+ "<p style=\"text-align: center;\">"+order.getOrderID()+"</p>\n"
+				+ "\n"
+				+ "<p style=\"text-align: center;\"> placed on "+order.getOrderDate()+"</p>\n"
+				+ "\n"
+				+ "<p style=\"text-align: center;\"> has been dispatched to</p>\n"
+				+ " \n"
+//				+ "<p style=\"text-align: center;\">delivery address</p>\n"
+//				+ "\n"
+//				+ "<p style=\"text-align: center;\">"+order.get+"</p>\n"
+				+ "\n"
+				+ "<table style=\"width:100%\">\n"
+				+ "  <tr>\n"
+				+ "    <th>PRODUCT</th>\n"
+				+ "    <th>QTY</th> \n"
+				+ "    <th>TOTAL</th>\n"
+				+ "  </tr>\n" ;
+			
+		int i=0;
+			for (ProductEntity product : order.getProducts()) {
+				
+				try {
+					double qty = order.getQuantity().get(i);
+					double total = qty * product.getUnitPrice();
+					content += "  <tr>\n"
+							+ "    <td>"+product.getTitle()+"</td>\n"
+							+ "    <td>"+qty+"</td>\n"
+							+ "    <td>"+total+"</td>\n"
+							+ "  </tr>\n" ;	
+				}catch(IndexOutOfBoundsException e) {}
+				
+		
+				i++;
+			}
+				
+			content+=	 "  \n"
+				+ "</table>\n"
+				+ "\n"
+				+ "</body>\n"
+				+ "</html>\n"
+				+ "";
+				 
+		Helper.sendMsg(email,subject , content);
 	}
 
 	@Transactional(readOnly = true)
