@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   CardMedia,
@@ -13,6 +13,9 @@ import { Link } from "react-router-dom";
 import useStyles from "./styles";
 
 const Product = ({ product, onAddToCart, onClickItem }) => {
+  const [imgSource, setimgSource] = useState(
+    console.log(product.images[0].source)
+  );
   const classes = useStyles();
 
   const handleAddToCart = () => onAddToCart(product, 1);

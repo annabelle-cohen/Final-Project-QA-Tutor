@@ -10,11 +10,27 @@ import { TabView, TabPanel } from "primereact/tabview";
 import "./TabViewDemo.css";
 import { Carousel } from "primereact/carousel";
 import clothes2 from "./img/clothes2.jpg";
+import sneakers from "./img/sneakers.PNG";
+import beauty from "./img/beauty.PNG";
 import Sony from "./img/sony.jpg";
 import electronic from "./img/example1.png";
 import smartPhone from "./img/example2.png";
 import accossorize from "./img/exmaple3.png";
 import smartWatch from "./img/example4.png";
+import bestOfMarch from "./img/example7.png";
+import accos from "./img/accoss.PNG";
+import fishing from "./img/fishing.PNG";
+import apple from "./img/apple.PNG";
+import samsung from "./img/samsung.PNG";
+import sony from "./img/sony.PNG";
+import xiaomi from "./img/xiaomi.PNG";
+import nike from "./img/nike.PNG";
+import nails from "./img/nails.PNG";
+import AutoLovers from "./img/example6.png";
+import SmartPhone from "./img/smartphone.PNG";
+import Collectibles from "./img/collect.PNG";
+import skinCar from "./img/example8.PNG";
+import balm from "./img/example9.PNG";
 import { Link, Route, NavLink } from "react-router-dom";
 import NavigationBarAAP from "./NavigationBarAAP";
 import { connect } from "react-redux";
@@ -22,6 +38,7 @@ import { Redirect } from "react-router-dom";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import HomeSearch from "./homeSearch";
+import { saveUserAAP } from "../Actions/authAAPActions";
 
 export class Home extends Component {
   constructor(props) {
@@ -30,6 +47,7 @@ export class Home extends Component {
       search: null,
       selectedCategories: "All Categories",
       isSuccessed: false,
+      isMoveToWatchlist: false,
     };
 
     this.categories = [
@@ -64,6 +82,7 @@ export class Home extends Component {
     ];
 
     this.Images = [electronic, smartPhone, accossorize, smartWatch];
+    this.Images2 = [skinCar, bestOfMarch, balm, AutoLovers];
 
     this.props.saveAllCategories({
       categories: [],
@@ -72,6 +91,12 @@ export class Home extends Component {
     this.props.saveProductsByCategoryID({
       categoryID: "",
       productsById: [],
+    });
+
+    this.props.saveUserAAP({
+      userAAP: this.props.authAAP.userAAP,
+      isLoggedIn: this.props.authAAP.isLoggedIn,
+      isSignIn: this.props.authAAP.isSignIn,
     });
 
     this.fillCategories = this.fillCategories.bind(this);
@@ -84,7 +109,7 @@ export class Home extends Component {
   fillCategories = async (e) => {
     const data = {
       page: 0,
-      size: 5,
+      size: 30,
     };
 
     const main = "http://localhost:8092//";
@@ -104,6 +129,83 @@ export class Home extends Component {
             const categoriesArray = d;
             this.props.saveAllCategories({
               categories: categoriesArray,
+            });
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
+  handleClickOnSpecificCategory = async (e) => {
+    var selectedCategory = e.target.innerText;
+
+    if (selectedCategory === "Smartphones") {
+      selectedCategory = "smartphone";
+    }
+
+    if (selectedCategory === "Collectibles") {
+      selectedCategory = "Collectible";
+    }
+
+    if (selectedCategory === "Fragrances") {
+      selectedCategory = "Fragrance";
+    }
+
+    if (selectedCategory === "Portable Audio & Headphones") {
+      selectedCategory = "Headphones";
+    }
+
+    if (selectedCategory === "Vehicle Electronics & GPS") {
+      selectedCategory = "GPS";
+    }
+
+    if (selectedCategory === "Shaving & Hair Removal") {
+      selectedCategory = "shave";
+    }
+
+    if (selectedCategory === "Home Décor") {
+      selectedCategory = "Home Decor";
+    }
+
+    if (selectedCategory === "Art & Craft Supplies") {
+      selectedCategory = "Art";
+    }
+
+    if (selectedCategory === "Pets Supplies") {
+      selectedCategory = "Pets";
+    }
+
+    var data = {
+      keyword: selectedCategory,
+      page: 0,
+      size: 500,
+    };
+
+    const dataJson = JSON.stringify(data);
+    const searchByKeyWordLink =
+      "http://localhost:8092/acs/products/getByKeyword";
+    await fetch(searchByKeyWordLink, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const productsArray = d;
+
+            this.props.saveProductsByCategoryID({
+              categoryID: selectedCategory,
+              productsById: productsArray,
             });
           });
         } else {
@@ -177,6 +279,28 @@ export class Home extends Component {
   isCategoryPageByTab() {
     if (this.state.isSuccessed) {
       return <Redirect push to="/dashboard/productByCategory" />;
+    }
+  }
+
+  handlecLickSave = () => {
+    console.log("in funccccccccccccccccccccccccccccccccccccccccccc");
+    this.setState({
+      isMoveToWatchlist: true,
+    });
+  };
+
+  handleSave() {
+    if (this.state.isMoveToWatchlist) {
+      return (
+        <Redirect
+          push
+          to={
+            this.props.authAAP.isSignIn
+              ? "/dashboard/productsList"
+              : "/dashboard/signInToAAP"
+          }
+        />
+      );
     }
   }
   productTemplate(product) {
@@ -308,52 +432,64 @@ export class Home extends Component {
                   <hr id="border-categories-div" align="left" />
                 </div>
                 <div>
-                  <Button
-                    id="iPhone-link"
-                    label="iPhone"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="iPhone-link"
+                      label="iPhone"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Samsung-link"
-                    label="Samsung"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Samsung-link"
+                      label="Samsung"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Portable-Audio-link"
-                    label="Portable Audio & Headphones"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Portable-Audio-link"
+                      label="Portable Audio & Headphones"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="TV-Video-link"
-                    label="TV, Video & Home Audio"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="TV-Video-link"
+                      label="TV"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Vehicle-Electronics-link"
-                    label="Vehicle Electronics & GPS"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Vehicle-Electronics-link"
+                      label="Vehicle Electronics & GPS"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Smart-Home-link"
-                    label="Smart Home"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Smart-Home-link"
+                      label="Video"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
               </div>
 
@@ -402,12 +538,14 @@ export class Home extends Component {
                   />{" "}
                 </div>
                 <div>
-                  <Button
-                    id="Watches-Parts-Accessories-link"
-                    label="Watches, Parts & Accessories"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Watches-Parts-Accessories-link"
+                      label="Accessories"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
                   <Button
@@ -426,20 +564,14 @@ export class Home extends Component {
                   <hr id="border-categories-div" align="left" />
                 </div>
                 <div>
-                  <Button
-                    id="Fine-Jewelry-link"
-                    label="Fine Jewelry"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Fashion-Jewelry-link"
-                    label="Fashion Jewelry"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Fine-Jewelry-link"
+                      label="Jewelry"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
                   <Button
@@ -452,26 +584,20 @@ export class Home extends Component {
                 <div>
                   <Button
                     id="Womens-Handbags-Bags-link"
-                    label="Women's Handbags & Bags"
+                    label="Women's Accessories"
                     onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}
                 </div>
                 <div>
-                  <Button
-                    id="Kids-Clothing-Shoes-Accs-link"
-                    label="Kids' Clothing, Shoes & Accs"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Smart-Home-link"
-                    label="Smart Home"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Kids-Clothing-Shoes-Accs-link"
+                      label="Kids"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
               </div>
 
@@ -504,12 +630,14 @@ export class Home extends Component {
                   />{" "}
                 </div>
                 <div>
-                  <Button
-                    id="Fragrances-link"
-                    label="Fragrances"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Fragrances-link"
+                      label="Fragrances"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
                   <Button
@@ -551,45 +679,26 @@ export class Home extends Component {
                     className="p-button-link"
                   />{" "}
                 </div>
+
                 <div>
-                  <Button
-                    id="Vitamins-Dietary-Supplements-link"
-                    label="Vitamins & Dietary Supplements"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Shaving-Hair-Removal-link"
+                      label="Shaving & Hair Removal"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Shaving-Hair-Removal-link"
-                    label="Shaving & Hair Removal"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Vision-Care-link"
-                    label="Vision Care"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Bath-Body-link"
-                    label="Bath & Body"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Oral-Care-link"
-                    label="Oral Care"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Vision-Care-link"
+                      label="Bath"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
               </div>
 
@@ -662,52 +771,34 @@ export class Home extends Component {
                   <hr id="border-categories-div" align="left" />
                 </div>
                 <div>
-                  <Button
-                    id="Tennis-link"
-                    label="Tennis"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Tennis-link"
+                      label="Tennis"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Swimming-link"
-                    label="Swimming"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Swimming-link"
+                      label="Swimming"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Water-Sports-link"
-                    label="Water Sports"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Winter-Sports-link"
-                    label="Winter Sports"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Team-Sports-link"
-                    label="Team Sports"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Fitness-Technology-link"
-                    label="Fitness Technology"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Water-Sports-link"
+                      label="Water Sports"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
               </div>
 
@@ -765,14 +856,6 @@ export class Home extends Component {
                 </div>
                 <div>
                   <Button
-                    id="Lamps-Lighting-Ceiling-Fans-link"
-                    label="Lamps, Lighting & Ceiling Fans"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
                     id="Deals-link5"
                     label="Deals"
                     onClick={(e) => console.log("top categories - Deals")}
@@ -788,60 +871,34 @@ export class Home extends Component {
                   <hr id="border-categories-div" align="left" />
                 </div>
                 <div>
-                  <Button
-                    id="Home-Decor-link"
-                    label="Home Décor"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Home-Decor-link"
+                      label="Home Décor"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Home-Organization-Supplies-link"
-                    label="Home Organization Supplies"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Art-Craft-Supplies-link"
+                      label="Art & Craft Supplies"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
                 <div>
-                  <Button
-                    id="Art-Craft-Supplies-link"
-                    label="Art & Craft Supplies"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Beads-Jewelry-Making-Supplies-link"
-                    label="Beads & Jewelry Making Supplies"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Art-Supplies-link"
-                    label="Art Supplies"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Scrapbooking-Paper-Crafts-link"
-                    label="Scrapbooking & Paper Crafts"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
-                </div>
-                <div>
-                  <Button
-                    id="Pets-Supplies-link"
-                    label="Pets Supplies"
-                    onClick={this.handleClick}
-                    className="p-button-link"
-                  />{" "}
+                  <Link to="/dashboard/productByCategory">
+                    <Button
+                      id="Pets-Supplies-link"
+                      label="Pets Supplies"
+                      onClick={this.handleClickOnSpecificCategory}
+                      className="p-button-link"
+                    />{" "}
+                  </Link>
                 </div>
               </div>
 
@@ -997,6 +1054,7 @@ export class Home extends Component {
           <TabPanel header="Under $10"></TabPanel>
         </TabView>
         {this.isCategoryPageByTab()}
+        {this.handleSave()}
         {/*first carousel for images soon will be read from server right now static*/}
         <div id="div_carousel-item" className="card">
           <Carousel
@@ -1017,34 +1075,70 @@ export class Home extends Component {
           <h5>Explore Popular Categories</h5>
           <br></br>
           <br></br>
-          <div className="overlay1" onClick={(e) => console.log("Clicked 1")}>
-            <img className="img1" alt="Card" src={clothes2} />
-            <div id="p_img1">Clothes</div>
+          <div className="overlay1">
+            <img className="img1" alt="Card" src={sneakers} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img1">Sneakers</div>
+            </Link>
           </div>
 
-          <div className="overlay2" onClick={(e) => console.log("Clicked 2")}>
-            <img className="img2" alt="Card" src={clothes2} />
-            <div id="p_img2">Clothes</div>
+          <div className="overlay2">
+            <img className="img2" alt="Card" src={beauty} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img2">Beauty</div>
+            </Link>
           </div>
 
-          <div className="overlay3" onClick={(e) => console.log("Clicked 3")}>
-            <img className="img3" alt="Card" src={clothes2} />
-            <div id="p_img3">Clothes</div>
+          <div className="overlay3">
+            <img className="img3" alt="Card" src={fishing} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img3">Fishing</div>
+            </Link>
           </div>
 
-          <div className="overlay4" onClick={(e) => console.log("Clicked 4")}>
-            <img className="img4" alt="Card" src={clothes2} />
-            <div id="p_img4">Clothes</div>
+          <div className="overlay4">
+            <img className="img4" alt="Card" src={SmartPhone} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img4">Smartphones</div>
+            </Link>
           </div>
 
-          <div className="overlay5" onClick={(e) => console.log("Clicked 5")}>
-            <img className="img5" alt="Card" src={clothes2} />
-            <div id="p_img5">Clothes</div>
+          <div className="overlay5">
+            <img className="img5" alt="Card" src={Collectibles} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img5">Collectibles</div>
+            </Link>
           </div>
 
-          <div className="overlay6" onClick={(e) => console.log("Clicked 6")}>
-            <img className="img6" alt="Card" src={clothes2} />
-            <div id="p_img6">Clothes</div>
+          <div className="overlay6">
+            <img className="img6" alt="Card" src={accos} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img6">Accessories</div>
+            </Link>
           </div>
         </div>
         {/*Daily deals - soon from server*/}
@@ -1059,10 +1153,13 @@ export class Home extends Component {
           <div id="div_carousel-item2" className="card">
             <Carousel
               id="carousel-item"
-              value={this.state.images}
-              numVisible={3}
-              numScroll={3}
+              value={this.Images2}
+              numVisible={1}
+              numScroll={1}
               responsiveOptions={this.responsiveOptions}
+              className="custom-carousel"
+              circular
+              autoplayInterval={5000}
               itemTemplate={this.productTemplate}
               header={""}
             />
@@ -1073,34 +1170,70 @@ export class Home extends Component {
           <h5>Explore Popular Categories</h5>
           <br></br>
           <br></br>
-          <div className="overlay7" onClick={(e) => console.log("Clicked 7")}>
-            <img className="img7" alt="Card" src={Sony} />
-            <div id="p_img7">Sony</div>
+          <div className="overlay7">
+            <img className="img7" alt="Card" src={samsung} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img7">Samsung</div>
+            </Link>
           </div>
 
-          <div className="overlay8" onClick={(e) => console.log("Clicked 8")}>
-            <img className="img8" alt="Card" src={Sony} />
-            <div id="p_img8">Sony</div>
+          <div className="overlay8">
+            <img className="img8" alt="Card" src={apple} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img8">Apple</div>
+            </Link>
           </div>
 
-          <div className="overlay9" onClick={(e) => console.log("Clicked 9")}>
-            <img className="img9" alt="Card" src={Sony} />
-            <div id="p_img9">Sony</div>
+          <div className="overlay9">
+            <img className="img9" alt="Card" src={sony} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img9">Sony</div>
+            </Link>
           </div>
 
-          <div className="overlay10" onClick={(e) => console.log("Clicked 10")}>
-            <img className="img10" alt="Card" src={Sony} />
-            <div id="p_img10">Sony</div>
+          <div className="overlay10">
+            <img className="img10" alt="Card" src={xiaomi} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img10">Xiaomi</div>
+            </Link>
           </div>
 
-          <div className="overlay11" onClick={(e) => console.log("Clicked 11")}>
-            <img className="img11" alt="Card" src={Sony} />
-            <div id="p_img11">Sony</div>
+          <div className="overlay11">
+            <img className="img11" alt="Card" src={nails} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img11">Nails</div>
+            </Link>
           </div>
 
-          <div className="overlay12" onClick={(e) => console.log("Clicked 12")}>
-            <img className="img12" alt="Card" src={Sony} />
-            <div id="p_img12">Sony</div>
+          <div className="overlay12">
+            <img className="img12" alt="Card" src={nike} />
+            <Link
+              onClick={this.handleClickOnSpecificCategory}
+              style={{ color: "black" }}
+              to="/dashboard/productByCategory"
+            >
+              <div id="p_img12">Nike</div>
+            </Link>
           </div>
         </div>
         <div>
@@ -1457,6 +1590,7 @@ export class Home extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
+    saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveAllCategories: (categories) => dispatch(saveAllCategories(categories)),
     saveProductsByCategoryID: (productsById) =>
       dispatch(saveProductsByCategoryID(productsById)),
@@ -1467,6 +1601,7 @@ const mapStateToProps = (state) => {
   return {
     categories: state.categories,
     productsByCategory: state.productsByCategory,
+    authAAP: state.authAAP,
   };
 };
 

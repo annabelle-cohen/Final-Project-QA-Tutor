@@ -15,7 +15,6 @@ export default makeStyles(() => ({
     justifyContent: "flex-end",
   },
   cardContent: {
-    display: "static",
     justifyContent: "space-between",
     height: "200px",
   },
