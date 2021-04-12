@@ -14,6 +14,7 @@ import { Link, useHistory } from "react-router-dom";
 import useStyles from "./styles";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
+import { Info } from "@material-ui/icons";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -46,6 +47,9 @@ const CheckoutStepper = ({
   });
 
   const getOrderId = async () => {
+    var orderInfo = "";
+    var length = 0;
+
     await fetch(
       "http://localhost:8092/acs/orders/getOrderHistroy/" +
         personalInfo.personalInfo.address
@@ -53,10 +57,13 @@ const CheckoutStepper = ({
       .then((response) => {
         if (response.status === 200) {
           response.json().then((d) => {
-            const orderInfo = d;
-            var length = orderInfo.length;
-            //console.log(orderInfo[length - 1].orderID);
-            setOrderId(orderInfo[length - 1].orderID);
+            orderInfo = d;
+            length = orderInfo.length - 1;
+            console.log(orderInfo);
+            //   console.log(orderInfo[length].orderID);
+            if (orderInfo.length !== 0) {
+              setOrderId(orderInfo[length].orderID);
+            }
           });
         } else {
           console.log("Error:", response);
