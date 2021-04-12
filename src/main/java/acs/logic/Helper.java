@@ -81,7 +81,8 @@ public class Helper {
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
-			throw new RuntimeException(e);
+			System.out.println(e.getMessage());
+			 // throw new RuntimeException(e);
 		}
 	}
 
