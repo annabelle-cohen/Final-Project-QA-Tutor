@@ -48,24 +48,23 @@ public class Helper {
 
 	@Async
 	public static void sendMsg(String email, String subject, String content) {
-		final String username = "QATUTOrs@outlook.com";
-		final String password = "home651@qw";
-
-		Properties props = new Properties();
-		props.put("mail.smtp.auth", "true");
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.smtp.host", "smtp-mail.outlook.com");
-		props.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-			@Override
-			protected PasswordAuthentication getPasswordAuthentication() {
-				return new PasswordAuthentication(username, password);
-			}
-		});
-		session.setDebug(true);
-
 		try {
+			final String username = "QATUTOrs@outlook.com";
+			final String password = "home651@qw";
+
+			Properties props = new Properties();
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.host", "smtp-mail.outlook.com");
+			props.put("mail.smtp.port", "587");
+
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(username, password);
+				}
+			});
+			session.setDebug(true);
 
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(username));
@@ -75,14 +74,13 @@ public class Helper {
 
 			message.setContent(content, "text/html");
 
-			
 			Transport.send(message);
 
 			System.out.println("Done");
 
 		} catch (MessagingException e) {
 			System.out.println(e.getMessage());
-			 // throw new RuntimeException(e);
+			// throw new RuntimeException(e);
 		}
 	}
 
