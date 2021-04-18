@@ -16,6 +16,27 @@
     outline: none!important;
 }
 
+#category-0{
+    display: inline-block;
+    border-color: rgb(255, 255, 255);
+    background-color: white;
+    border-width: 0.2;
+    position: absolute;
+    top: 240px;
+    margin-left: 50px;
+   border-style: ridge;
+   z-index: 1;
+   height: 40px;
+   width: 150px;
+   font-size: 12px;
+}
+
+#linkToSavedSearch{
+    color: gray; 
+}
+ #linkToSavedSearch:hover{
+    color: blue;
+}
 
 
 #category-1,#category-2,#category-3{

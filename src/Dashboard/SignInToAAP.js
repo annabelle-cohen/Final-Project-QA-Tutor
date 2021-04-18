@@ -6,7 +6,7 @@ import { Checkbox } from "primereact/checkbox";
 import { saveUserAAP } from "../Actions/authAAPActions";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { StaySignIn } from "./staySignIn";
+import StaySignIn from "./staySignIn";
 import "./signintoaap.css";
 import "./ButtonDemo.css";
 

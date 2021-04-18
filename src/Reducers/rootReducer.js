@@ -10,6 +10,7 @@ import watchlistReducer from "./addToWatchlistReducer";
 import savingCartId from "./cartIDReducer";
 import lastChoiceReducer from "./lastChoiceReducer";
 import messageReducer from "./messageReducer";
+import staySignedReducer from "./signInReducer";
 import { combineReducers } from "redux";
 // in future will be shopCartReducer
 
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   cartId: savingCartId,
   choice: lastChoiceReducer,
   messageUpdate: messageReducer,
+  signInCheck: staySignedReducer,
 });
 
 export default rootReducer;

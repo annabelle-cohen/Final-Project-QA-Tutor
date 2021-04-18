@@ -3,7 +3,7 @@ import { Typography, List, ListItem, Divider } from "@material-ui/core";
 import useStyles from "./styles";
 import OrderList from "./Order/Order";
 
-const HistoryList = ({ token, onItemClick }) => {
+const HistoryList = ({ token, onItemClick, onBuyAgain, handleBuyAgain }) => {
   const classes = useStyles();
 
   return (
@@ -18,7 +18,12 @@ const HistoryList = ({ token, onItemClick }) => {
       <List disablePadding>
         <Divider></Divider>
         {token.map((order) => (
-          <OrderList order={order} onItemClick={onItemClick}></OrderList>
+          <OrderList
+            order={order}
+            onItemClick={onItemClick}
+            onBuyAgain={onBuyAgain}
+            handleBuyAgain={handleBuyAgain}
+          ></OrderList>
         ))}
 
         <ListItem style={{ padding: "10px 0" }}></ListItem>

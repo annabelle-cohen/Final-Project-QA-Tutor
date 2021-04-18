@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { List, ListItem, ListItemText, Divider, Grid } from "@material-ui/core";
+import {
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Grid,
+  Button,
+} from "@material-ui/core";
 import useStyles from "./styles";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ProductList from "./orderProduct/ProductList";
 
-const OrderList = ({ order, onItemClick }) => {
+const OrderList = ({ order, onItemClick, onBuyAgain, handleBuyAgain }) => {
   const classes = useStyles();
   const [date, setDate] = useState("");
   const [isShow, setShow] = useState(true);
@@ -25,6 +32,8 @@ const OrderList = ({ order, onItemClick }) => {
       setShow(false);
     }
   };
+
+  const handleClickOrder = () => handleBuyAgain(order);
 
   return (
     <div>
@@ -56,6 +65,22 @@ const OrderList = ({ order, onItemClick }) => {
                         onItemClick={onItemClick}
                       ></ProductList>
                     ))}
+                  </div>
+                  <div
+                    style={{
+                      display: onBuyAgain === "Buy Again" ? "block" : "none",
+                    }}
+                  >
+                    <Button
+                      size="large"
+                      type="button"
+                      variant="contained"
+                      color="primary"
+                      style={{ marginLeft: 270 + "px", marginTop: 20 + "px" }}
+                      onClick={handleClickOrder}
+                    >
+                      Buy Again
+                    </Button>
                   </div>
                 </div>
               </React.Fragment>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { StaySignIn } from "./staySignIn";
+import StaySignIn from "./staySignIn";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { saveUserAAP } from "../Actions/authAAPActions";

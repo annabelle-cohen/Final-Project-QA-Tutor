@@ -120,6 +120,12 @@ export class NavigationBarAAP extends Component {
     });
   };
 
+  handleBuyAgain = (e) => {
+    this.props.saveLastChoice({
+      choice: "Buy Again",
+    });
+  };
+
   loadPurchHistory = async () => {
     await fetch(
       "http://localhost:8092/acs/orders/getOrderHistroy/" +
@@ -585,9 +591,18 @@ export class NavigationBarAAP extends Component {
             className="p-button-secondary p-button-text"
           />
           <div id="myDropdown" class="dropdown_aap">
-            <a className="dropdown_aap_content" href="url">
+            <Link
+              className="dropdown_aap_content"
+              onClick={this.handleWatchlist}
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/productsList"
+                  : "/dashboard/signInToAAP"
+              }
+              href="url"
+            >
               Summary
-            </a>
+            </Link>
             <Link
               className="dropdown_aap_content"
               onClick={this.handleRecentleyViewed}
@@ -613,6 +628,7 @@ export class NavigationBarAAP extends Component {
             </Link>
             <Link
               className="dropdown_aap_content"
+              onClick={this.handlePurchaseHistory}
               to={
                 this.props.authAAP.isSignIn
                   ? "/dashboard/history"
@@ -621,9 +637,18 @@ export class NavigationBarAAP extends Component {
             >
               Purchase History
             </Link>
-            <a className="dropdown_aap_content" href="url">
+            <Link
+              className="dropdown_aap_content"
+              onClick={this.handleBuyAgain}
+              to={
+                this.props.authAAP.isSignIn
+                  ? "/dashboard/history"
+                  : "/dashboard/signInToAAP"
+              }
+              href="url"
+            >
               Buy again
-            </a>
+            </Link>
 
             <Link
               className="dropdown_aap_content"
@@ -650,7 +675,7 @@ export class NavigationBarAAP extends Component {
             style={{
               height:
                 this.state.historyPurchList.length <= 1
-                  ? 80 + "px"
+                  ? 90 + "px"
                   : 150 + "px",
               overflowY: "scroll",
             }}
@@ -659,6 +684,7 @@ export class NavigationBarAAP extends Component {
               id="notfication-p"
               style={{
                 display: this.props.authAAP.isSignIn ? "none" : "block",
+                marginTop: -15 + "px",
               }}
             >
               Please&nbsp;

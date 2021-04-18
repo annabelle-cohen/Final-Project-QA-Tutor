@@ -37,6 +37,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import { saveLastChoice } from "../Actions/saveLastChoice";
 import HomeSearch from "./homeSearch";
 import { saveUserAAP } from "../Actions/authAAPActions";
 import { saveMessage } from "../Actions/LoadingMessage";
@@ -49,6 +50,7 @@ export class Home extends Component {
       selectedCategories: "All Categories",
       isSuccessed: false,
       isMoveToWatchlist: false,
+      ActiveIndex: 0,
     };
 
     this.categories = [
@@ -84,6 +86,7 @@ export class Home extends Component {
 
     this.Images = [electronic, smartPhone, accossorize, smartWatch];
     this.Images2 = [skinCar, bestOfMarch, balm, AutoLovers];
+    this.index = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
     this.props.saveAllCategories({
       categories: [],
@@ -104,9 +107,14 @@ export class Home extends Component {
       message: "Loading...",
     });
 
+    this.props.saveLastChoice({
+      choice: this.props.choice.choice,
+    });
+
     this.fillCategories = this.fillCategories.bind(this);
     this.productTemplate = this.productTemplate.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handlecLinkSave = this.handlecLinkSave.bind(this);
 
     this.fillCategories();
   }
@@ -225,6 +233,10 @@ export class Home extends Component {
     );
   };
 
+  handleSelect(index) {
+    console.log("Selected tab: " + index);
+  }
+
   handleClick = (e) => {
     const selectedCategory = e.target.innerText;
     const allCategories = this.props.categories;
@@ -287,27 +299,13 @@ export class Home extends Component {
     }
   }
 
-  handlecLickSave = () => {
-    console.log("in funccccccccccccccccccccccccccccccccccccccccccc");
-    this.setState({
-      isMoveToWatchlist: true,
+  handlecLinkSave = (e) => {
+    this.props.saveLastChoice({
+      choice: "watchlist",
     });
   };
 
-  handleSave() {
-    if (this.state.isMoveToWatchlist) {
-      return (
-        <Redirect
-          push
-          to={
-            this.props.authAAP.isSignIn
-              ? "/dashboard/productsList"
-              : "/dashboard/signInToAAP"
-          }
-        />
-      );
-    }
-  }
+  handleSave() {}
   productTemplate(product) {
     return (
       <div className="product-item">
@@ -359,11 +357,35 @@ export class Home extends Component {
         <hr id="border2" align="right" />
         {/*drop down menu for tabView menu*/}
         <TabView id="tab-view-0">
-          <TabPanel header="Home"></TabPanel>
+          <TabPanel header="Home" activeIndex={1}></TabPanel>
 
-          <TabPanel header="&nbsp;Saved" leftIcon="pi pi-heart"></TabPanel>
+          <TabPanel header="&nbsp;Saved" leftIcon="pi pi-heart" activeIndex={2}>
+            <div id="category-0">
+              <Link
+                id="linkToSavedSearch"
+                onClick={this.handlecLinkSave}
+                to={
+                  this.props.authAAP.isSignIn
+                    ? "/dashboard/productsList"
+                    : "/dashboard/signInToAAP"
+                }
+              >
+                {" "}
+                Click To Saved Searches!
+              </Link>
+            </div>
+          </TabPanel>
 
-          <TabPanel id="electronic-class" header="Electronics">
+          <TabPanel
+            id="electronic-class"
+            header="Electronics"
+            activeIndex={this.index[2]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-1">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -502,7 +524,16 @@ export class Home extends Component {
             </div>
           </TabPanel>
 
-          <TabPanel id="fashion-class" header="Fashion">
+          <TabPanel
+            id="fashion-class"
+            header="Fashion"
+            activeIndex={this.index[3]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-2">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -610,7 +641,15 @@ export class Home extends Component {
             </div>
           </TabPanel>
 
-          <TabPanel header="Health & Beauty">
+          <TabPanel
+            header="Health & Beauty"
+            activeIndex={this.index[4]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-3">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -711,7 +750,15 @@ export class Home extends Component {
             </div>
           </TabPanel>
 
-          <TabPanel header="Sports">
+          <TabPanel
+            header="Sports"
+            activeIndex={this.index[5]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-3">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -811,7 +858,15 @@ export class Home extends Component {
             </div>
           </TabPanel>
 
-          <TabPanel header="Home & Garden">
+          <TabPanel
+            header="Home & Garden"
+            activeIndex={this.index[6]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-3">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -911,7 +966,15 @@ export class Home extends Component {
             </div>
           </TabPanel>
 
-          <TabPanel header="Deals">
+          <TabPanel
+            header="Deals"
+            activeIndex={this.index[7]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          >
             <div id="category-3">
               <div className="wrapper-div">
                 <h8 className="top-categories">Top Categories</h8>
@@ -1056,7 +1119,15 @@ export class Home extends Component {
               <div id="wrapper-div8"></div>
             </div>
           </TabPanel>
-          <TabPanel header="Under $10"></TabPanel>
+          <TabPanel
+            header="Under $10"
+            activeIndex={this.index[8]}
+            onTabChange={(e) =>
+              this.setState({
+                ActiveIndex: e.index,
+              })
+            }
+          ></TabPanel>
         </TabView>
         {this.isCategoryPageByTab()}
         {this.handleSave()}
@@ -1600,6 +1671,7 @@ function mapDispatchToProps(dispatch) {
     saveProductsByCategoryID: (productsById) =>
       dispatch(saveProductsByCategoryID(productsById)),
     saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
+    saveLastChoice: (choice) => dispatch(saveLastChoice(choice)),
   };
 }
 
@@ -1609,6 +1681,7 @@ const mapStateToProps = (state) => {
     productsByCategory: state.productsByCategory,
     authAAP: state.authAAP,
     messageUpdate: state.messageUpdate,
+    choice: state.choice,
   };
 };
 
