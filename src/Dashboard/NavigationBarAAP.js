@@ -31,6 +31,7 @@ export class NavigationBarAAP extends Component {
     this.state = {
       index: 0,
       product: "",
+      historyPurchList: [],
     };
 
     this.props.saveUserAAP({
@@ -65,6 +66,7 @@ export class NavigationBarAAP extends Component {
     this.checkIfIsAlreadyExistCart = this.checkIfIsAlreadyExistCart.bind(this);
     console.log(this.props.watchlist.Watchlist);
     this.checkIfIsAlreadyExistCart();
+    this.loadPurchHistory();
   }
 
   checkIfIsAlreadyExistCart = async () => {
@@ -117,6 +119,74 @@ export class NavigationBarAAP extends Component {
       choice: "history",
     });
   };
+
+  loadPurchHistory = async () => {
+    await fetch(
+      "http://localhost:8092/acs/orders/getOrderHistroy/" +
+        this.props.authAAP.userAAP.email
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const orderInfo = d;
+            this.setState({
+              historyPurchList: orderInfo,
+            });
+          });
+        } else {
+          console.log("Error:", response);
+          response.json().then((d) => {
+            console.log("Errordata", d);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error.data);
+      });
+  };
+
+  dropDownNotifactions(purchaseHistory) {
+    return purchaseHistory.map(function (order) {
+      return (
+        <div className="row" style={{ height: "flex" }}>
+          <div
+            className="col-md-2"
+            style={{
+              display: "inline-block",
+              position: "relative",
+              zIndex: 0,
+              height: "15px",
+              top: -25,
+            }}
+          >
+            <div
+              style={{
+                fontSize: "12px",
+                color: "black",
+                marginLeft: "-10px",
+                height: "15px",
+                top: -50,
+                fontWeight: "bold",
+              }}
+            >
+              Order #{order.orderID} confirmation sent to your email
+            </div>
+            <hr
+              style={{
+                borderColor: "rgb(54, 41, 240)",
+                borderWidth: 0.2,
+                borderBottom: "thin",
+                marginLeft: -18 + "px",
+                position: "relative",
+                width: "280px",
+                zIndex: 4,
+              }}
+            ></hr>
+          </div>
+        </div>
+      );
+    });
+  }
 
   dropDownWatchList(productWatchList, savingProductToPass) {
     return productWatchList.map(function (product) {
@@ -464,10 +534,7 @@ export class NavigationBarAAP extends Component {
         <a id="home_helpconatct" href="url" color="black">
           Help&Contact
         </a>
-        <a id="home_ship" href="url" color="black">
-          Ship to
-        </a>
-        <div className="Watchlist-dropDown">
+        <div className="Watchlist-dropDown" style={{ marginLeft: "630px" }}>
           <Button
             id="watchlist"
             label="Watchlist"
@@ -532,9 +599,7 @@ export class NavigationBarAAP extends Component {
             >
               Recently Viewed
             </Link>
-            <a className="dropdown_aap_content" href="url">
-              Bids/offers
-            </a>
+
             <Link
               className="dropdown_aap_content"
               onClick={this.handleWatchlist}
@@ -559,9 +624,7 @@ export class NavigationBarAAP extends Component {
             <a className="dropdown_aap_content" href="url">
               Buy again
             </a>
-            <a className="dropdown_aap_content" href="url">
-              Selling
-            </a>
+
             <Link
               className="dropdown_aap_content"
               to={
@@ -572,12 +635,6 @@ export class NavigationBarAAP extends Component {
             >
               Saved Searches
             </Link>
-            <a className="dropdown_aap_content" href="url">
-              Save sellers
-            </a>
-            <a className="dropdown_aap_content" href="url">
-              Messages
-            </a>
           </div>
         </div>
         {/*notification drop down*/}
@@ -587,8 +644,18 @@ export class NavigationBarAAP extends Component {
             icon="pi pi-bell"
             className="p-button-secondary p-button-text"
           />
-          <div id="msg_notifications" class="dropdown_notofication">
-            <p
+          <div
+            id="msg_notifications"
+            class="dropdown_notofication"
+            style={{
+              height:
+                this.state.historyPurchList.length <= 1
+                  ? 80 + "px"
+                  : 150 + "px",
+              overflowY: "scroll",
+            }}
+          >
+            <div
               id="notfication-p"
               style={{
                 display: this.props.authAAP.isSignIn ? "none" : "block",
@@ -599,15 +666,18 @@ export class NavigationBarAAP extends Component {
                 Sign In
               </a>
               &nbsp;to view<br></br> notification.
-            </p>
-            <p
+            </div>
+            <div
               id="notfication-p2"
               style={{
                 display: this.props.authAAP.isSignIn ? "block" : "none",
+                height: "flex",
               }}
             >
-              You're all caught up!
-            </p>
+              {this.state.historyPurchList.length == 0
+                ? "You're all caught out"
+                : this.dropDownNotifactions(this.state.historyPurchList)}
+            </div>
           </div>
         </div>
         {/*shopping cart*/}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { InputText } from "primereact/inputtext";
 import "./style.css";
 import { Dropdown } from "primereact/dropdown";
+import { saveMessage } from "../Actions/LoadingMessage";
 import "./DropdownDemo.css";
 import { Button } from "primereact/button";
 import { saveUserAAP } from "../Actions/authAAPActions";
@@ -59,6 +60,11 @@ class HomeSearch1 extends Component {
       isLoggedIn: this.props.authAAP.isLoggedIn,
       isSignIn: this.props.authAAP.isSignIn,
     });
+
+    this.props.saveMessage({
+      message: this.props.messageUpdate.message,
+    });
+
     console.log(this.props.authAAP);
     this.onCategoryChange = this.onCategoryChange.bind(this);
   }
@@ -155,6 +161,15 @@ class HomeSearch1 extends Component {
           if (response.status === 200) {
             response.json().then((d) => {
               const productsArray = d;
+              if (productsArray.length == 0) {
+                this.props.saveMessage({
+                  message: "There is no result for your search!",
+                });
+              } else {
+                this.props.saveMessage({
+                  message: "Loading...",
+                });
+              }
               if (this.state.selectedCategories !== "All Categories") {
                 var ArrayByCategory = [];
                 for (var i = 0; i < d.length; i++) {
@@ -169,6 +184,16 @@ class HomeSearch1 extends Component {
                   categoryID: this.state.search,
                   productsById: ArrayByCategory,
                 });
+
+                if (ArrayByCategory.length == 0) {
+                  this.props.saveMessage({
+                    message: "There is no result for your search!",
+                  });
+                } else {
+                  this.props.saveMessage({
+                    message: "Loading...",
+                  });
+                }
               } else {
                 this.props.saveProductsByCategoryID({
                   categoryID: this.state.search,
@@ -264,6 +289,7 @@ function mapDispatchToProps(dispatch) {
     saveProductsByCategoryID: (productsById) =>
       dispatch(saveProductsByCategoryID(productsById)),
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
+    saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
   };
 }
 
@@ -271,6 +297,7 @@ const mapStateToProps = (state) => {
   return {
     productsByCategory: state.productsByCategory,
     authAAP: state.authAAP,
+    messageUpdate: state.messageUpdate,
   };
 };
 

@@ -80,13 +80,16 @@ const CheckoutStepper = ({
   let Confirmation = () =>
     shippingData ? (
       <>
-        <div>
+        <div style={{ display: orderId !== "" ? "block" : "none" }}>
           <Typography variant="h5">
             Thank you for your purchase, {shippingData.firstName}{" "}
             {shippingData.lastName}!
           </Typography>
           <Divider className={classes.divider} />
           <Typography variant="subtitle2">Order No.{orderId}</Typography>
+        </div>
+        <div style={{ display: orderId !== "" ? "none" : "block" }}>
+          Loading order Please wait...
         </div>
         <br />
         <Button

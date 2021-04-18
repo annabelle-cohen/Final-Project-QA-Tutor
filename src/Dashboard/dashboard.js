@@ -39,6 +39,7 @@ import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import HomeSearch from "./homeSearch";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveMessage } from "../Actions/LoadingMessage";
 
 export class Home extends Component {
   constructor(props) {
@@ -97,6 +98,10 @@ export class Home extends Component {
       userAAP: this.props.authAAP.userAAP,
       isLoggedIn: this.props.authAAP.isLoggedIn,
       isSignIn: this.props.authAAP.isSignIn,
+    });
+
+    this.props.saveMessage({
+      message: "Loading...",
     });
 
     this.fillCategories = this.fillCategories.bind(this);
@@ -1594,6 +1599,7 @@ function mapDispatchToProps(dispatch) {
     saveAllCategories: (categories) => dispatch(saveAllCategories(categories)),
     saveProductsByCategoryID: (productsById) =>
       dispatch(saveProductsByCategoryID(productsById)),
+    saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
   };
 }
 
@@ -1602,6 +1608,7 @@ const mapStateToProps = (state) => {
     categories: state.categories,
     productsByCategory: state.productsByCategory,
     authAAP: state.authAAP,
+    messageUpdate: state.messageUpdate,
   };
 };
 

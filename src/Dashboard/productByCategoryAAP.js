@@ -4,6 +4,7 @@ import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveMessage } from "../Actions/LoadingMessage";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import "./productByCategory.css";
@@ -47,6 +48,10 @@ export class productByCategoryAAP extends Component {
       userAAP: this.props.authAAP.userAAP,
       isLoggedIn: this.props.authAAP.isLoggedIn,
       isSignIn: this.props.authAAP.isSignIn,
+    });
+
+    this.props.saveMessage({
+      message: this.props.messageUpdate.message,
     });
 
     const products = [];
@@ -250,7 +255,7 @@ export class productByCategoryAAP extends Component {
             }}
           >
             <h5 style={{ color: "gray", fontWeight: "bold" }}>
-              There is no result for your search!
+              {this.props.messageUpdate.message}
             </h5>
           </div>
         </div>
@@ -270,6 +275,7 @@ function mapDispatchToProps(dispatch) {
     saveCart: (cart) => dispatch(saveCart(cart)),
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
+    saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
   };
 }
 
@@ -281,6 +287,7 @@ const mapStateToProps = (state) => {
     cart: state.cart,
     authAAP: state.authAAP,
     cartId: state.cartId,
+    messageUpdate: state.messageUpdate,
   };
 };
 

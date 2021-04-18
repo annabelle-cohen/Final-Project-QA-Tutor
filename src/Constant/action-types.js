@@ -9,3 +9,4 @@ export const SAVE_SHOPPING_CART = "SAVE_SHOPPING_CART";
 export const ADD_TO_WATCHLIST = "SAVE_WATCHLIST";
 export const SAVE_CART_ID = "SAVE_CART_ID";
 export const SAVE_LAST_CHOICE = "SAVE_LAST_CHOICE";
+export const SAVE_MESSAGE = "SAVE_MESSAGE";
