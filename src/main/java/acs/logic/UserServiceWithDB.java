@@ -110,8 +110,6 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Transactional
 	public UserBoundary createUser(UserBoundary newUser) {
 
-		
-		
 		Optional<UserEntity> userEntity = this.usersDao.findById(newUser.getEmail());
 		if (!userEntity.isPresent()) {
 			if (!isValidEmail(newUser.getEmail())) {
@@ -155,13 +153,13 @@ public class UserServiceWithDB implements EnhanceUserService {
 
 			this.usersDao.save(entity);
 
-			String  content ="<h1> Thank you </h1> <p> you're all set ! , now you can start browsing the site and start the bug hunt. </p> <footer> QA Tutor team . </footer>" ; 
-			String subject  = "Welcome to QA Tutor";
-			Helper.sendMsg(entity.getEmail(),subject, content );
-			
+			String content = "<h1> Thank you </h1> <p> you're all set ! , now you can start browsing the site and start the bug hunt. </p> <footer> QA Tutor team . </footer>";
+			String subject = "Welcome to QA Tutor";
+			Helper.sendMsg(entity.getEmail(), subject, content);
+
 			return this.entityConverter.convertFromEntity(entity);
 		} else {
-			throw new UserNotFoundException("this e-mail adress is already exist in the system!");
+			throw new UserNotFoundException("this e-mail address is already exist in the system!");
 		}
 	}
 

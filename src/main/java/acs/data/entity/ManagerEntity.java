@@ -3,9 +3,9 @@ import javax.persistence.*;
 
 @Entity
 public class ManagerEntity  {
-	@Id	
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long ManagerID;
+	@Id
+	@Column(name = "email")
+	private String email;
 
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -14,12 +14,15 @@ public class ManagerEntity  {
 	public ManagerEntity() {
 		super();
 	}
-	public Long getManagerID() {
-		return ManagerID;
+	
+	public String getEmail() {
+		return email;
 	}
-	public void setManagerID(Long managerID) {
-		ManagerID = managerID;
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
 	public UserEntity getUser() {
 		return user;
 	}
