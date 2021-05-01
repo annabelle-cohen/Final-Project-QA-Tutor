@@ -898,7 +898,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\":\"ali@ali.com\"\n}",
+					"raw": "{\n    \"email\":\"ali@ali.com\",\n    \"managerEmail\": \"ali@ali.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -960,6 +960,99 @@
 						"students",
 						"login",
 						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBug",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bugName\": \"bug1\" , \n    \"description\" : \"descriptionblah blah\",\n    \"managerEmail\" : \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/addBug",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"addBug"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllBugs",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/getAllBugs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"getAllBugs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBugToStudent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/addBugToStudent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"addBugToStudent"
 					]
 				}
 			},

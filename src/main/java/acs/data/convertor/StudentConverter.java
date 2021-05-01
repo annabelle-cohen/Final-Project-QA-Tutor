@@ -1,13 +1,18 @@
 
 package acs.data.convertor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import acs.boundaries.BugBoundary;
 import acs.boundaries.StudentBoundary;
 import acs.boundaries.UserBoundary;
+import acs.data.entity.BugEntity;
 import acs.data.entity.StudentEntity;
 import acs.data.entity.UserEntity;
 
@@ -16,6 +21,9 @@ public class StudentConverter {
 
 	@Autowired
 	UserConverter userConverter;
+
+	@Autowired
+	BugConverter bugConverter;
 
 	@PostConstruct
 	public void setUp() {
@@ -28,7 +36,17 @@ public class StudentConverter {
 		UserBoundary student = this.userConverter.convertFromEntity(studentEntity.getUser());
 		studentBound.setStudent(student);
 		studentBound.setEmail(studentEntity.getEmail());
+		studentBound.setManagerEmail(studentEntity.getManagerEmail());
 
+		List<BugEntity> bugEntt = studentEntity.getBugs();
+		List<BugBoundary> bugs = new ArrayList<BugBoundary>();
+
+		for (BugEntity bug : bugEntt) {
+
+			bugs.add(this.bugConverter.convertFromEntity(bug));
+		}
+
+		studentBound.setBugs(bugs);
 		return studentBound;
 	}
 

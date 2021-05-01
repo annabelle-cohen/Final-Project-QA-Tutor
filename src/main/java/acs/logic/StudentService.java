@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import acs.boundaries.StudentBoundary;
 import acs.boundaries.UserBoundary;
-
+import acs.dal.ManagerDao;
 import acs.dal.StudentDao;
 import acs.dal.UserDao;
 
 import acs.data.convertor.StudentConverter;
-
+import acs.data.entity.ManagerEntity;
 import acs.data.entity.StudentEntity;
 import acs.data.entity.UserEntity;
 
@@ -28,6 +28,9 @@ public class StudentService {
 
 	@Autowired
 	private StudentDao studentDao;
+
+	@Autowired
+	private ManagerDao managerDao;
 
 	@Autowired
 	private UserDao usersDao;
@@ -48,16 +51,29 @@ public class StudentService {
 
 		UserBoundary userBoundary = this.userService.login(newUser.getEmail());
 
-		Optional<StudentEntity> managerEntity = this.studentDao.findById(userBoundary.getEmail());
+		Optional<StudentEntity> userEntityO = this.studentDao.findById(userBoundary.getEmail());
 
-		if (!managerEntity.isPresent()) {
+		Optional<ManagerEntity> ManagerEntityO = this.managerDao.findById(newUser.getManagerEmail());
+
+		if (!ManagerEntityO.isPresent()) {
+			throw new UserNotFoundException("manager:" + newUser.getManagerEmail() + " doesn't exist");
+		}
+
+		if (!userEntityO.isPresent()) {
 
 			StudentEntity student = new StudentEntity();
 			UserEntity userEntity = this.usersDao.findById(newUser.getEmail()).get();
 			student.setEmail(userEntity.getEmail());
 			student.setUser(userEntity);
 
+			ManagerEntity manager = ManagerEntityO.get();
+
+			student.setManagerEmail(manager.getEmail());
+
+			manager.addStudent(student.getEmail());
+
 			this.studentDao.save(student);
+			this.managerDao.save(manager);
 
 			return this.studentConverter.convertFromEntity(student);
 
