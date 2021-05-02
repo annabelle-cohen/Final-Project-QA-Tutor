@@ -8,6 +8,7 @@ import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Navbar from "./Layou/navbar";
 import SignIn from "./Auth/SignIn";
+import ManagerPage from "./Manager/manager";
 import About from "./Auth/About";
 import Home from "./Dashboard/dashboard";
 import SignInToAAP from "./Dashboard/SignInToAAP";
@@ -35,6 +36,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={SignIn} />
           <Route exact path="/dashboard" component={Home}></Route>
+          <Route exact path="/manager" component={ManagerPage}></Route>
           <Route exact path="/signIn" component={SignIn} />
           <Route exact path="/dashboard/signInToAAP" component={SignInToAAP} />
           <Route exact path="navigationBarAAP" component={NavigationBarAAP} />

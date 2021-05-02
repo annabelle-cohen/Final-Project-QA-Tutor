@@ -37,10 +37,20 @@ class SignIn extends Component {
           this.setState({ succeded: true });
           response.json().then((d) => {
             const user = d;
-
+            console.log("in sign in global");
+            console.log(user);
             //this.displayNotifaction(true, "login succeeded!")
             if (user.password === this.state.password) {
-              this.props.saveUser({ user, isLoggedIn: true });
+              this.props.saveUser({
+                isLoggedIn: true,
+                user: {
+                  avatar: this.props.auth.user.avatar,
+                  email: user.email,
+                  roleEnum: user.userType,
+                  username: user.firstName,
+                  password: user.password,
+                },
+              });
               this.setState({ isLoggedIn: true, error: "" });
             }
           });
@@ -62,10 +72,12 @@ class SignIn extends Component {
     const isLoggedIn = this.state.isLoggedIn;
     const userRole = this.props.auth.user.roleEnum;
     const password = this.props.auth.password;
+    console.log(userRole);
     console.log(isLoggedIn);
+    console.log(this.props.auth);
     if (isLoggedIn) {
-      if (userRole === "ADMIN") {
-        return <Redirect to="/admin" />;
+      if (userRole === "MANAGER") {
+        return <Redirect to="/manager" />;
       } else {
         return <Redirect to="/dashboard" />;
       }
