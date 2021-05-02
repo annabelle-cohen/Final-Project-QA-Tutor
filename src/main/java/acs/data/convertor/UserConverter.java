@@ -5,8 +5,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import acs.boundaries.UserBoundary;
+import acs.boundaries.UserType;
 import acs.data.entity.UserEntity;
-
 
 @Component
 public class UserConverter {
@@ -16,12 +16,13 @@ public class UserConverter {
 
 	}
 
-	public UserBoundary convertFromEntity(UserEntity entity) {
+	public UserBoundary convertFromEntity(UserEntity entity, UserType userType) {
 		UserBoundary userBound = new UserBoundary();
 		userBound.setEmail(entity.getEmail());
 		userBound.setPassword(entity.getPassword());
 		userBound.setFirstName(entity.getPersonalInfo().getFirstName());
 		userBound.setLastName(entity.getPersonalInfo().getLastName());
+		userBound.setUserType(userType);
 		return userBound;
 	}
 

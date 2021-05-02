@@ -15,14 +15,19 @@ import org.springframework.transaction.annotation.Transactional;
 import acs.boundaries.PasswordBoundary;
 import acs.boundaries.PersonalInfoBoundary;
 import acs.boundaries.UserBoundary;
+import acs.boundaries.UserType;
 import acs.dal.AdminDao;
+import acs.dal.ManagerDao;
 import acs.dal.PersonalInfoDao;
+import acs.dal.StudentDao;
 import acs.dal.UserDao;
 import acs.data.convertor.PersonalInfoConverter;
 import acs.data.convertor.UserConverter;
 import acs.data.entity.AdminEntity;
 import acs.data.entity.BillingInfoEntity;
+import acs.data.entity.ManagerEntity;
 import acs.data.entity.PersonalInfoEntity;
+import acs.data.entity.StudentEntity;
 import acs.data.entity.UserEntity;
 import net.andreinc.mockneat.MockNeat;
 
@@ -66,12 +71,40 @@ public class UserServiceWithDB implements EnhanceUserService {
 	@Autowired
 	private CartService cartService;
 
+	@Autowired
+	private StudentDao studentDao;
+
+	@Autowired
+	private ManagerDao managerDao;
+
+	
+	@Transactional(readOnly = true)
+	private UserType getUserType(String email ) {
+		UserType userType = UserType.NORMAL;
+
+		Optional<ManagerEntity> managerEntity = this.managerDao.findById(email);
+		if (managerEntity.isPresent()) {
+			userType = UserType.MANAGER;
+
+		} else {
+			Optional<StudentEntity> studentEntity = this.studentDao.findById(email);
+			if (studentEntity.isPresent()) {
+				userType = UserType.STUDENT;
+
+			}
+		}
+		return userType ; 
+	}
+	
 	@Override
 	@Transactional(readOnly = true)
 	public UserBoundary login(String email) {
 		Optional<UserEntity> userEntity = this.usersDao.findById(email);
 		if (userEntity.isPresent()) {
-			return this.entityConverter.convertFromEntity(userEntity.get());
+
+			UserType userType = this.getUserType(email); 
+
+			return this.entityConverter.convertFromEntity(userEntity.get(), userType);
 		} else {
 			throw new UserNotFoundException("Could not find user message for " + email);
 		}
@@ -157,7 +190,7 @@ public class UserServiceWithDB implements EnhanceUserService {
 			String subject = "Welcome to QA Tutor";
 			Helper.sendMsg(entity.getEmail(), subject, content);
 
-			return this.entityConverter.convertFromEntity(entity);
+			return this.entityConverter.convertFromEntity(entity, UserType.NORMAL);
 		} else {
 			throw new UserNotFoundException("this e-mail address is already exist in the system!");
 		}
@@ -238,7 +271,8 @@ public class UserServiceWithDB implements EnhanceUserService {
 			List<UserBoundary> rv = new ArrayList<>();
 			Iterable<UserEntity> allUsers = this.usersDao.findAll();
 			for (UserEntity user : allUsers) {
-				rv.add(this.entityConverter.convertFromEntity(user));
+				UserType userType = this.getUserType(adminEmail) ; 
+				rv.add(this.entityConverter.convertFromEntity(user ,userType));
 			}
 			return rv;
 
@@ -315,8 +349,9 @@ public class UserServiceWithDB implements EnhanceUserService {
 			}
 
 			this.usersDao.save(usr);
-
-			return this.entityConverter.convertFromEntity(usr);
+			UserType userType = this.getUserType(email) ; 
+			
+			return this.entityConverter.convertFromEntity(usr,userType);
 
 		} else {
 			throw new UserNotFoundException("User not found: " + email);

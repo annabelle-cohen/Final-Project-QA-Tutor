@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import acs.boundaries.ManagerBoundary;
 import acs.boundaries.UserBoundary;
+import acs.boundaries.UserType;
 import acs.data.entity.ManagerEntity;
 import acs.data.entity.UserEntity;
 
@@ -25,7 +26,7 @@ public class ManagerConverter {
 	public ManagerBoundary convertFromEntity(ManagerEntity entity) {
 		ManagerBoundary managerBound = new ManagerBoundary();
 
-		UserBoundary manager = this.userConverter.convertFromEntity(entity.getUser());
+		UserBoundary manager = this.userConverter.convertFromEntity(entity.getUser(), UserType.MANAGER);
 		managerBound.setManager(manager);
 		managerBound.setEmail(entity.getEmail());
 

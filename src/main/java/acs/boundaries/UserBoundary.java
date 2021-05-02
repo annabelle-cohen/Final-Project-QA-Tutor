@@ -5,14 +5,8 @@ public class UserBoundary {
 	private String firstName;
 	private String lastName;
 	private String password;
+	private UserType userType ; 
 
-	public UserBoundary(String email, String firstName, String lastName , String password) {
-		super();
-		this.email = email;
-		this.firstName = firstName;
-		this.lastName= lastName;
-		this.password= password;
-	}
 
 
 	public UserBoundary() { 
@@ -56,6 +50,26 @@ public class UserBoundary {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+
+	public UserType getUserType() {
+		return userType;
+	}
+
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
+	}
+
+
+	public UserBoundary(String email, String firstName, String lastName, String password, UserType userType) {
+		super();
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.userType = userType;
 	}
 	 
 	

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import acs.boundaries.BugBoundary;
 import acs.boundaries.StudentBoundary;
 import acs.boundaries.UserBoundary;
+import acs.boundaries.UserType;
 import acs.data.entity.BugEntity;
 import acs.data.entity.StudentEntity;
 import acs.data.entity.UserEntity;
@@ -33,7 +34,7 @@ public class StudentConverter {
 	public StudentBoundary convertFromEntity(StudentEntity studentEntity) {
 		StudentBoundary studentBound = new StudentBoundary();
 
-		UserBoundary student = this.userConverter.convertFromEntity(studentEntity.getUser());
+		UserBoundary student = this.userConverter.convertFromEntity(studentEntity.getUser(), UserType.STUDENT);
 		studentBound.setStudent(student);
 		studentBound.setEmail(studentEntity.getEmail());
 		studentBound.setManagerEmail(studentEntity.getManagerEmail());
