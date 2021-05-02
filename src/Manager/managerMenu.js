@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -6,6 +6,9 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import blue1 from "./img/blue3.jpg";
+import MediaCardInfo from "./managerInfo";
+import AlignItemsList from "./BugsList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +58,10 @@ function LinkTab(props) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    backgroundImage: `url(${blue1})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundAttachment: "fixed",
   },
   AppBar: {
     backgroundColor: "#115293",
@@ -72,16 +78,135 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavTabs() {
+export default function NavTabs({ height, user, bugs }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [Bugs, setBugs] = React.useState(
+    bugs.length == 0
+      ? [
+          {
+            bugName: "ProductPage Bug",
+            description: "Product doesn't add to cart from the product page",
+            isAdd: false,
+          },
+          {
+            bugName: "ProductsPage Bug",
+            description: "Product doesn't add to cart from the category page",
+            isAdd: false,
+          },
+          {
+            bugName: "Quantity Bug",
+            description:
+              "If the students try to increase the quantity, it doesn't work",
+            isAdd: false,
+          },
+          {
+            bugName: "Unwanted product Bug",
+            description: "Product that doesn't even chosen add to cart",
+            isAdd: false,
+          },
+          {
+            bugName: "Credit Bug",
+            description: "The students pay without all fields fills",
+            isAdd: false,
+          },
+          {
+            bugName: "TotalPrice Bug",
+            description: "The total price in the summary doesn't correct",
+            isAdd: false,
+          },
+          {
+            bugName: "CVV Bug",
+            description: "The cvv at the credit card doesnt correct",
+            isAdd: false,
+          },
+          {
+            bugName: "Date Bug",
+            description: "The date at the credit card doesn't correct",
+            isAdd: false,
+          },
+          {
+            bugName: "Purchase Bug",
+            description: "Purchase doesn't work even with correct credit card",
+            isAdd: false,
+          },
+          {
+            bugName: "Stock Bug",
+            description:
+              "It is possible to add a larger quantity than is in stock to the cart",
+            isAdd: false,
+          },
+          {
+            bugName: "History Bug",
+            description:
+              "The system will not display the entire purchase history of that account",
+            isAdd: false,
+          },
+          {
+            bugName: "Category Bug",
+            description:
+              "By pressing on desired category it takes the user to different category",
+            isAdd: false,
+          },
+          {
+            bugName: "Results Bug",
+            description:
+              "No matter what the user looking for at the search input it always show no results",
+            isAdd: false,
+          },
+        ]
+      : bugs
+  );
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    setBugs(Bugs);
+  });
+
+  const handleClick = async (bug) => {
+    const data = {
+      bugName: bug.bugName,
+      description: bug.description,
+      managerEmail: user.email,
+    };
+
+    const main = "http://localhost:8092/";
+    const addBug = main + "/acs/managers/addBug";
+    const dataJson = JSON.stringify(data);
+
+    await fetch(addBug, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const bug = d;
+            console.log(bug);
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+
+    var index = Bugs.findIndex((b) => b.bugName === bug.bugName);
+    Bugs[index].isAdd = true;
+  };
+
   return (
-    <div className={classes.root}>
+    <div className={classes.root} style={{ height: height }}>
       <AppBar position="static" className={classes.AppBar}>
         <Tabs
           variant="fullWidth"
@@ -96,13 +221,23 @@ export default function NavTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Page One
+        <div
+          style={{
+            marginLeft: "35%",
+          }}
+        >
+          <MediaCardInfo user={user}></MediaCardInfo>
+        </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Page Two
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Page Three
+        <AlignItemsList
+          Bugs={Bugs}
+          height={height}
+          onClick={handleClick}
+        ></AlignItemsList>
       </TabPanel>
     </div>
   );
