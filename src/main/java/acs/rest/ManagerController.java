@@ -58,7 +58,7 @@ public class ManagerController {
 
 	}
 
-	@RequestMapping(path = "/acs/managers/getAllBugs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/acs/managers/getAllBugs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public List<BugBoundary> getAllBugs(@RequestBody ManagerBoundary input) {// {throws Exception
 
 		return this.managerService.getAllBugs(input);

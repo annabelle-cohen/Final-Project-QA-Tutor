@@ -70,8 +70,7 @@ public class StudentService {
 
 			student.setManagerEmail(manager.getEmail());
 
-			manager.addStudent(student.getEmail());
-
+			
 			this.studentDao.save(student);
 			this.managerDao.save(manager);
 

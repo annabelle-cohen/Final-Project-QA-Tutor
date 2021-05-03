@@ -1035,7 +1035,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
+					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali2@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -1053,6 +1053,215 @@
 						"acs",
 						"managers",
 						"addBugToStudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create class ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"className\" :\"class 101\" , \n\t\"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllClasses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/getAllClasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"getAllClasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"className\" :\"class 101\" , \n\t\"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/getClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"getClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addStudentToClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t{\n    \"className\": \"class 101\",\n    \"managerEmail\": \"ali@ali.com\",\n    \"studentEmail\": \"ali2@ali.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/addStudentToClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"addStudentToClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeStudentToClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t{\n    \"className\": \"class 101\",\n    \"managerEmail\": \"ali@ali.com\",\n    \"studentEmail\": \"ali2@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/removeStudentToClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"removeStudentToClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create student test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali2@ali.com\",\n    \"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/students/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"students",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ali2@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"password\":\"ali\",\r\n    \"lastName\":\"milhim\",\r\n    \"lastname\":\"milhim\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users"
 					]
 				}
 			},

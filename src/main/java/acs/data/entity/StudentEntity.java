@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class StudentEntity {
@@ -20,6 +21,10 @@ public class StudentEntity {
 
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<BugEntity> bugs = new ArrayList<BugEntity>();
+
+	
+	@ManyToOne
+	private ClassEntity studentClass;
 
 	public StudentEntity() {
 		super();
@@ -60,6 +65,14 @@ public class StudentEntity {
 	public void addBug(BugEntity bug) {
 		if (!this.bugs.contains(bug))
 			this.bugs.add(bug);
+	}
+
+	public ClassEntity getStudentClass() {
+		return studentClass;
+	}
+
+	public void setStudentClass(ClassEntity studentClass) {
+		this.studentClass = studentClass;
 	}
 
 }
