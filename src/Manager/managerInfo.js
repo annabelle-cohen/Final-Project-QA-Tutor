@@ -19,41 +19,45 @@ const useStyles = makeStyles({
 export default function MediaCardInfo({ user, classList, studentsList }) {
   const [bugs, setBugs] = useState([]);
   const classes = useStyles();
+  const [isOne, setOne] = useState(true);
 
   useEffect(() => {
-    var data = {
-      email: user.email,
-    };
-    console.log("in user effect");
-    const dataJson = JSON.stringify(data);
+    if (isOne) {
+      var data = {
+        email: user.email,
+      };
+      console.log("in user effect");
+      const dataJson = JSON.stringify(data);
 
-    fetch("http://localhost:8092/acs/managers/getAllBugs", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            const bugs = d;
-            //  console.log(bugs);
-            setBugs(bugs);
-          });
-        } else {
-          console.log("Error:", response);
-          console.log("failed");
-          response.json().then((d) => {
-            console.log("Errordata", d);
-            console.log("failed");
-          });
-        }
+      fetch("http://localhost:8092/acs/managers/getAllBugs", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
       })
-      .catch((error) => {
-        console.error("Error:", error.data);
-      });
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              const bugs = d;
+              //  console.log(bugs);
+              setBugs(bugs);
+            });
+          } else {
+            // console.log("Error:", response);
+            //console.log("failed");
+            response.json().then((d) => {
+              //  console.log("Errordata", d);
+              //   console.log("failed");
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.data);
+        });
+      setOne(false);
+    }
   });
 
   /*const initNumberOfClasses = async () => {

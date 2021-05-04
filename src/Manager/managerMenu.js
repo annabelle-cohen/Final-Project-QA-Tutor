@@ -10,6 +10,7 @@ import blue1 from "./img/blue3.jpg";
 import MediaCardInfo from "./managerInfo";
 import AlignItemsList from "./BugsList";
 import AutoGrid from "./managerGrid";
+import { indigo } from "@material-ui/core/colors";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,94 +80,92 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavTabs({ height, user, bugs }) {
+export default function NavTabs({ height, user }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [classList, setClassList] = useState([]);
   const [studentsList, setStudentsList] = useState([]);
   const [isExist, setExist] = useState(false);
-  const [Bugs, setBugs] = React.useState(
-    bugs.length == 0
-      ? [
-          {
-            bugName: "ProductPage Bug",
-            description: "Product doesn't add to cart from the product page",
-            isAdd: false,
-          },
-          {
-            bugName: "ProductsPage Bug",
-            description: "Product doesn't add to cart from the category page",
-            isAdd: false,
-          },
-          {
-            bugName: "Quantity Bug",
-            description:
-              "If the students try to increase the quantity, it doesn't work",
-            isAdd: false,
-          },
-          {
-            bugName: "Unwanted product Bug",
-            description: "Product that doesn't even chosen add to cart",
-            isAdd: false,
-          },
-          {
-            bugName: "Credit Bug",
-            description: "The students pay without all fields fills",
-            isAdd: false,
-          },
-          {
-            bugName: "TotalPrice Bug",
-            description: "The total price in the summary doesn't correct",
-            isAdd: false,
-          },
-          {
-            bugName: "CVV Bug",
-            description: "The cvv at the credit card doesnt correct",
-            isAdd: false,
-          },
-          {
-            bugName: "Date Bug",
-            description: "The date at the credit card doesn't correct",
-            isAdd: false,
-          },
-          {
-            bugName: "Purchase Bug",
-            description: "Purchase doesn't work even with correct credit card",
-            isAdd: false,
-          },
-          {
-            bugName: "Stock Bug",
-            description:
-              "It is possible to add a larger quantity than is in stock to the cart",
-            isAdd: false,
-          },
-          {
-            bugName: "History Bug",
-            description:
-              "The system will not display the entire purchase history of that account",
-            isAdd: false,
-          },
-          {
-            bugName: "Category Bug",
-            description:
-              "By pressing on desired category it takes the user to different category",
-            isAdd: false,
-          },
-          {
-            bugName: "Results Bug",
-            description:
-              "No matter what the user looking for at the search input it always show no results",
-            isAdd: false,
-          },
-        ]
-      : bugs
-  );
+  const [updateNeeded, setUpdate] = useState(true);
+  const [Bugs, setBugs] = React.useState([
+    {
+      bugName: "ProductPage Bug",
+      description: "Product doesn't add to cart from the product page",
+      isAdd: false,
+    },
+    {
+      bugName: "ProductsPage Bug",
+      description: "Product doesn't add to cart from the category page",
+      isAdd: false,
+    },
+    {
+      bugName: "Quantity Bug",
+      description:
+        "If the students try to increase the quantity, it doesn't work",
+      isAdd: false,
+    },
+    {
+      bugName: "Unwanted product Bug",
+      description: "Product that doesn't even chosen add to cart",
+      isAdd: false,
+    },
+    {
+      bugName: "Credit Bug",
+      description: "The students pay without all fields fills",
+      isAdd: false,
+    },
+    {
+      bugName: "TotalPrice Bug",
+      description: "The total price in the summary doesn't correct",
+      isAdd: false,
+    },
+    {
+      bugName: "CVV Bug",
+      description: "The cvv at the credit card doesnt correct",
+      isAdd: false,
+    },
+    {
+      bugName: "Date Bug",
+      description: "The date at the credit card doesn't correct",
+      isAdd: false,
+    },
+    {
+      bugName: "Purchase Bug",
+      description: "Purchase doesn't work even with correct credit card",
+      isAdd: false,
+    },
+    {
+      bugName: "Stock Bug",
+      description:
+        "It is possible to add a larger quantity than is in stock to the cart",
+      isAdd: false,
+    },
+    {
+      bugName: "History Bug",
+      description:
+        "The system will not display the entire purchase history of that account",
+      isAdd: false,
+    },
+    {
+      bugName: "Category Bug",
+      description:
+        "By pressing on desired category it takes the user to different category",
+      isAdd: false,
+    },
+    {
+      bugName: "Results Bug",
+      description:
+        "No matter what the user looking for at the search input it always show no results",
+      isAdd: false,
+    },
+  ]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!isExist) {
       initNumberOfClasses();
       setExist(true);
     }
+    setBugs(Bugs);
   });
 
   const initNumberOfClasses = async () => {
@@ -211,10 +210,6 @@ export default function NavTabs({ height, user, bugs }) {
     setValue(newValue);
   };
 
-  useEffect(() => {
-    setBugs(Bugs);
-  });
-
   const handleClick = async (bug) => {
     const data = {
       bugName: bug.bugName,
@@ -249,9 +244,6 @@ export default function NavTabs({ height, user, bugs }) {
         console.log(error);
       }
     );
-
-    var index = Bugs.findIndex((b) => b.bugName === bug.bugName);
-    Bugs[index].isAdd = true;
   };
 
   return (
@@ -293,7 +285,6 @@ export default function NavTabs({ height, user, bugs }) {
         <AlignItemsList
           user={user}
           Bugs={Bugs}
-          height={height}
           onClick={handleClick}
         ></AlignItemsList>
       </TabPanel>

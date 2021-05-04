@@ -9,78 +9,6 @@ export class ManagerPage extends Component {
 
     this.state = {
       height: props.height,
-      Bugs: [
-        {
-          bugName: "ProductPage Bug",
-          description: "Product doesn't add to cart from the product page",
-          isAdd: false,
-        },
-        {
-          bugName: "ProductsPage Bug",
-          description: "Product doesn't add to cart from the category page",
-          isAdd: false,
-        },
-        {
-          bugName: "Quantity Bug",
-          description:
-            "If the students try to increase the quantity, it doesn't work",
-          isAdd: false,
-        },
-        {
-          bugName: "Unwanted product Bug",
-          description: "Product that doesn't even chosen add to cart",
-          isAdd: false,
-        },
-        {
-          bugName: "Credit Bug",
-          description: "The students pay without all fields fills",
-          isAdd: false,
-        },
-        {
-          bugName: "TotalPrice Bug",
-          description: "The total price in the summary doesn't correct",
-          isAdd: false,
-        },
-        {
-          bugName: "cvv Bug",
-          description: "The cvv at the credit card doesnt correct",
-          isAdd: false,
-        },
-        {
-          bugName: "date Bug",
-          description: "The date at the credit card doesn't correct",
-          isAdd: false,
-        },
-        {
-          bugName: "Purchase Bug",
-          description: "Purchase doesn't work even with correct credit card",
-          isAdd: false,
-        },
-        {
-          bugName: "Stock Bug",
-          description:
-            "It is possible to add a larger quantity than is in stock to the cart",
-          isAdd: false,
-        },
-        {
-          bugName: "History Bug",
-          description:
-            "The system will not display the entire purchase history of that account",
-          isAdd: false,
-        },
-        {
-          bugName: "Category Bug",
-          description:
-            "By pressing on desired category it takes the user to different category",
-          isAdd: false,
-        },
-        {
-          bugName: "Results Bug",
-          description:
-            "No matter what the user looking for at the search input it always show no results",
-          isAdd: false,
-        },
-      ],
     };
 
     this.props.saveUser({
@@ -99,7 +27,6 @@ export class ManagerPage extends Component {
         <NavTabs
           height={this.state.height}
           user={this.props.auth.user}
-          bugs={this.state.Bugs}
         ></NavTabs>
       </div>
     );
