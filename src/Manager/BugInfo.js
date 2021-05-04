@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -31,9 +31,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItems({ Bug, onClick }) {
+export default function AlignItems({ user, Bug, onClick }) {
   const classes = useStyles();
+  const [bugList, setBugList] = useState([]);
   const handleClick = () => onClick(Bug);
+
+  useEffect(async () => {
+    console.log(user.email);
+
+    const data = {
+      email: user.email,
+    };
+
+    const main = "http://localhost:8092/";
+    const addBug = main + "/acs/managers/getAllBugs";
+    const dataJson = JSON.stringify(data);
+
+    await fetch(addBug, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            setBugList(d);
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    var isExist = bugList.some((b) => b.bugName === Bug.bugName);
+    Bug.isAdd = isExist;
+  });
+
   return (
     <div>
       <ListItem alignItems="flex-start">

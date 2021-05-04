@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItemsList({ Bugs, height, onClick }) {
+export default function AlignItemsList({ user, Bugs, height, onClick }) {
   const classes = useStyles();
   const [maxHeight, setHeight] = useState(window.innerHeight - 150);
 
@@ -24,7 +24,7 @@ export default function AlignItemsList({ Bugs, height, onClick }) {
     <div style={{ marginLeft: "23%" }}>
       <List className={classes.root} style={{ height: maxHeight + "px" }}>
         {Bugs.map((bug) => (
-          <AlignItems Bug={bug} onClick={onClick}></AlignItems>
+          <AlignItems user={user} Bug={bug} onClick={onClick}></AlignItems>
         ))}
       </List>
     </div>

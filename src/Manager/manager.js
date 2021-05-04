@@ -87,8 +87,6 @@ export class ManagerPage extends Component {
       user: this.props.auth.user,
       isLoggedIn: this.props.auth.isLoggedIn,
     });
-
-    //  console.log(Bugs);
   }
 
   componentWillMount() {

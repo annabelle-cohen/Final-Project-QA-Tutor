@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function MediaCardInfo({ user }) {
+export default function MediaCardInfo({ user, classList, studentsList }) {
   const [bugs, setBugs] = useState([]);
   const classes = useStyles();
 
@@ -26,9 +26,9 @@ export default function MediaCardInfo({ user }) {
     };
     console.log("in user effect");
     const dataJson = JSON.stringify(data);
-    /*
+
     fetch("http://localhost:8092/acs/managers/getAllBugs", {
-      method: "GET",
+      method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export default function MediaCardInfo({ user }) {
         if (response.status === 200) {
           response.json().then((d) => {
             const bugs = d;
-            console.log(bugs);
+            //  console.log(bugs);
             setBugs(bugs);
           });
         } else {
@@ -54,8 +54,45 @@ export default function MediaCardInfo({ user }) {
       .catch((error) => {
         console.error("Error:", error.data);
       });
-      */
   });
+
+  /*const initNumberOfClasses = async () => {
+    const data = {
+      manager: user.email,
+    };
+
+    const main = "http://localhost:8092/";
+    const addBug = main + "/acs/classes/getAllClasses";
+    const dataJson = JSON.stringify(data);
+
+    await fetch(addBug, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            setClassList(d);
+            var tempStudents = [];
+            for (var i = 0; i < d.length; i++) {
+              tempStudents.push(d[i].students);
+            }
+            setStudentsList(tempStudents);
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };*/
 
   return (
     <Card className={classes.root}>
@@ -82,9 +119,9 @@ export default function MediaCardInfo({ user }) {
           >
             Email:{user.email}
             <br></br>
-            Number of Classes:3
+            Number of Classes:{classList.length}
             <br></br>
-            Number Of Students:100
+            Number Of Students:{studentsList.length}
             <br></br>
             Rule:Tutor
             <br></br>

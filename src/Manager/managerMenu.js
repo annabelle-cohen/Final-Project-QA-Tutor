@@ -9,6 +9,7 @@ import Box from "@material-ui/core/Box";
 import blue1 from "./img/blue3.jpg";
 import MediaCardInfo from "./managerInfo";
 import AlignItemsList from "./BugsList";
+import AutoGrid from "./managerGrid";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -81,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
 export default function NavTabs({ height, user, bugs }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [classList, setClassList] = useState([]);
+  const [studentsList, setStudentsList] = useState([]);
+  const [isExist, setExist] = useState(false);
   const [Bugs, setBugs] = React.useState(
     bugs.length == 0
       ? [
@@ -158,6 +162,51 @@ export default function NavTabs({ height, user, bugs }) {
       : bugs
   );
 
+  useEffect(() => {
+    if (!isExist) {
+      initNumberOfClasses();
+      setExist(true);
+    }
+  });
+
+  const initNumberOfClasses = async () => {
+    const data = {
+      manager: user.email,
+    };
+
+    const main = "http://localhost:8092/";
+    const addBug = main + "/acs/classes/getAllClasses";
+    const dataJson = JSON.stringify(data);
+
+    await fetch(addBug, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            setClassList(d);
+            var tempStudents = [];
+            for (var i = 0; i < d.length; i++) {
+              tempStudents.push(d[i].students);
+            }
+            setStudentsList(tempStudents);
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  };
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -226,14 +275,23 @@ export default function NavTabs({ height, user, bugs }) {
             marginLeft: "35%",
           }}
         >
-          <MediaCardInfo user={user}></MediaCardInfo>
+          <MediaCardInfo
+            user={user}
+            classList={classList}
+            studentsList={studentsList}
+          ></MediaCardInfo>
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Page Two
+        <AutoGrid
+          user={user}
+          classList={classList}
+          studentsList={studentsList}
+        ></AutoGrid>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <AlignItemsList
+          user={user}
           Bugs={Bugs}
           height={height}
           onClick={handleClick}
