@@ -23,15 +23,59 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AutoGrid(user, classList, studentsList) {
+export default function AutoGrid(
+  user,
+  classList,
+  studentsList,
+  existBugs,
+  studentChosen
+) {
   const [isClicked, setClicked] = useState(false);
   const [isStudentClicked, setStudentClicked] = useState(false);
-  const [classChosen, setClassChosen] = useState(user.classList[0]);
-  const [studentChosen, setStudentChosen] = useState(classChosen.students[0]);
+  const [classListNow, setClassList] = useState(user.classList);
+  const [classChosen, setClassChosen] = useState(
+    user.classList.length <= 0 ? 0 : user.classList[0]
+  );
+  const [studentName, setStudentName] = useState("");
+  const [studentClicked, setSrudentClicked] = useState(user.studentChosen);
+  const [isFirst, setFirst] = useState(true);
   const classes = useStyles();
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log(user);
+    if (isFirst) {
+      const data = {
+        manager: user.user.email,
+      };
+
+      const main = "http://localhost:8092/";
+      const addBug = main + "/acs/classes/getAllClasses";
+      const dataJson = JSON.stringify(data);
+
+      await fetch(addBug, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              setClassList(d);
+            });
+          } else {
+            response.json().then((x) => {
+              console.log(x);
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      setFirst(false);
+    }
   });
   const handleClickClass = (c) => {
     if (isClicked) {
@@ -44,55 +88,22 @@ export default function AutoGrid(user, classList, studentsList) {
   };
 
   const handleStudentClick = (s) => {
+    console.log(s);
     if (isStudentClicked) {
       setStudentClicked(false);
     } else {
+      console.log(s);
+      setSrudentClicked(s);
+      setStudentName(s.student.firstName + " " + s.student.lastName);
       setStudentClicked(true);
     }
-    console.log(s);
-    setStudentChosen(s);
-  };
-
-  const handleClick = async (bug) => {
-    console.log(bug);
-    const data = {
-      bugName: bug.bugName,
-      studentEmail: studentChosen.student.email,
-      managerEmail: user.user.email,
-    };
-
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/managers/addBugToStudent";
-    const dataJson = JSON.stringify(data);
-
-    await fetch(addBug, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            const bug = d;
-            console.log(bug);
-          });
-        } else {
-          response.json().then((x) => {
-            console.log(x);
-          });
-        }
-      },
-      (error) => {}
-    );
   };
 
   return (
     <div className={classes.root}>
       <div style={{ display: isClicked ? "none" : "block" }}>
         <Grid container spacing={3}>
-          {user.classList.map((c) => (
+          {classListNow.map((c) => (
             <NestedGrid
               c={c}
               userName={user.user.username}
@@ -114,14 +125,20 @@ export default function AutoGrid(user, classList, studentsList) {
               {classChosen.className}
             </div>
             <Grid container spacing={3}>
-              {classChosen.students.map((s) => (
-                <StudentsGrid s={s} onClick={handleStudentClick}></StudentsGrid>
-              ))}
+              {classChosen.students.length <= 0
+                ? ""
+                : classChosen.students.map((s) => (
+                    <StudentsGrid
+                      s={s}
+                      onClick={handleStudentClick}
+                    ></StudentsGrid>
+                  ))}
 
               <div
                 style={{
                   display: classChosen.students.length <= 0 ? "block" : "none",
                   textAlign: "left",
+                  marginLeft: "40%",
                 }}
               >
                 Oops!...there is no students in this class
@@ -134,7 +151,10 @@ export default function AutoGrid(user, classList, studentsList) {
 
         <div
           style={{
-            display: isStudentClicked ? "block" : "none",
+            display:
+              isStudentClicked && user.studentsList.length > 0
+                ? "block"
+                : "none",
           }}
         >
           <Paper
@@ -147,14 +167,18 @@ export default function AutoGrid(user, classList, studentsList) {
               marginLeft: "7%",
             }}
           >
-            You're watching {studentChosen.student.firstName}{" "}
-            {studentChosen.student.lastName}
+            You're watching {studentName}
+            {studentChosen}
             <Divider></Divider>
-            <StudentBugList
-              user={user.user}
-              student={studentChosen}
-              onClick={handleClick}
-            ></StudentBugList>
+            {user.studentsList.length <= 0 ? (
+              ""
+            ) : (
+              <StudentBugList
+                user={user.user}
+                student={studentClicked}
+                existBugs={user.existBugs}
+              ></StudentBugList>
+            )}
           </Paper>
         </div>
       </div>

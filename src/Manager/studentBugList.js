@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
+import AlignItemsStudents from "./BugInfoStudent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -14,56 +15,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function StudentBugList({ user, student, onClick }) {
+export default function StudentBugList({ user, student, existBugs }) {
   const classes = useStyles();
   const [maxHeight, setHeight] = useState(window.innerHeight - 240);
-  const [existedBugs, setBugs] = useState([]);
   const [isOne, setOne] = useState(true);
   const [maxBug, setMaxBugs] = useState(30);
 
   useEffect(async () => {
-    console.log(user);
-    console.log(student);
-
-    if (isOne) {
-      console.log(user.email);
-
-      const data = {
-        email: user.email,
-      };
-
-      const main = "http://localhost:8092/";
-      const addBug = main + "/acs/managers/getAllBugs";
-      const dataJson = JSON.stringify(data);
-
-      await fetch(addBug, {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: dataJson,
-      }).then(
-        (response) => {
-          if (response.status === 200) {
-            response.json().then((d) => {
-              console.log(d);
-              setBugs(d);
-            });
-          } else {
-            response.json().then((x) => {
-              console.log(x);
-              console.log("errorrrrr");
-            });
-          }
-        },
-        (error) => {
-          console.log(error);
-          console.log("errorrrrr");
-        }
-      );
-      console.log(existedBugs);
-      setOne(false);
-    }
+    //    console.log(user);
+    //    console.log(student);
+    //   console.log(existBugs);
   });
 
   return (
@@ -71,10 +32,17 @@ export default function StudentBugList({ user, student, onClick }) {
       <List className={classes.root} style={{ height: maxHeight + "px" }}>
         <div
           style={{
-            display: maxBug > existedBugs.length ? "block" : "none",
+            display: maxBug > existBugs.length ? "block" : "none",
             color: "green",
           }}
         >
+          {existBugs.map((bug) => (
+            <AlignItemsStudents
+              user={user}
+              student={student}
+              Bug={bug}
+            ></AlignItemsStudents>
+          ))}
           **You can always add bugs by clicking on "BUGS" at the global menu**
         </div>
       </List>

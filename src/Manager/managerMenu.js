@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -11,7 +13,7 @@ import MediaCardInfo from "./managerInfo";
 import AlignItemsList from "./BugsList";
 import AutoGrid from "./managerGrid";
 import { indigo } from "@material-ui/core/colors";
-
+/**need check empty classes */
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -80,13 +82,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavTabs({ height, user }) {
+export default function NavTabs({
+  height,
+  user,
+  existBugs,
+  onClick,
+  classList,
+  studentsList,
+  studentChosen,
+}) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  const [classList, setClassList] = useState([]);
-  const [studentsList, setStudentsList] = useState([]);
   const [isExist, setExist] = useState(false);
-  const [updateNeeded, setUpdate] = useState(true);
   const [Bugs, setBugs] = React.useState([
     {
       bugName: "ProductPage Bug",
@@ -161,88 +168,29 @@ export default function NavTabs({ height, user }) {
   ]);
 
   useEffect(async () => {
-    if (!isExist) {
-      initNumberOfClasses();
-      setExist(true);
-    }
-    setBugs(Bugs);
+    console.log(classList);
+    //  console.log(studentsList);
   });
-
-  const initNumberOfClasses = async () => {
-    const data = {
-      manager: user.email,
-    };
-
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/classes/getAllClasses";
-    const dataJson = JSON.stringify(data);
-
-    await fetch(addBug, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            setClassList(d);
-            var tempStudents = [];
-            for (var i = 0; i < d.length; i++) {
-              tempStudents.push(d[i].students);
-            }
-            setStudentsList(tempStudents);
-          });
-        } else {
-          response.json().then((x) => {
-            console.log(x);
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const handleClick = async (bug) => {
-    const data = {
-      bugName: bug.bugName,
-      description: bug.description,
-      managerEmail: user.email,
-    };
-
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/managers/addBug";
-    const dataJson = JSON.stringify(data);
-
-    await fetch(addBug, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            const bug = d;
-            console.log(bug);
-          });
-        } else {
-          response.json().then((x) => {
-            console.log(x);
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
+  let NoClasses = () => {
+    return (
+      <div>
+        <Card className={classes.root}>
+          <CardContent>
+            <Typography
+              gutterBottom
+              variant="body2"
+              component="h2"
+              style={{ textAlign: "center", fontSize: "25px" }}
+            >
+              No Classes yet!
+            </Typography>
+          </CardContent>
+        </Card>
+      </div>
     );
   };
 
@@ -275,17 +223,24 @@ export default function NavTabs({ height, user }) {
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <AutoGrid
-          user={user}
-          classList={classList}
-          studentsList={studentsList}
-        ></AutoGrid>
+        {classList.length <= 0 ? (
+          <NoClasses></NoClasses>
+        ) : (
+          <AutoGrid
+            user={user}
+            classList={classList}
+            studentsList={studentsList}
+            existBugs={existBugs}
+            studentChosen={studentChosen}
+          ></AutoGrid>
+        )}
       </TabPanel>
       <TabPanel value={value} index={2}>
         <AlignItemsList
           user={user}
           Bugs={Bugs}
-          onClick={handleClick}
+          existBugs={existBugs}
+          onClick={onClick}
         ></AlignItemsList>
       </TabPanel>
     </div>

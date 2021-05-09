@@ -31,18 +31,58 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AlignItems({ user, Bug, existBugs, onClick }) {
+export default function AlignItemsStudents({ user, student, Bug }) {
   const classes = useStyles();
   const [isAdd, setAdd] = useState(false);
-  const handleClick = () => onClick(Bug);
+  const [existBugs, setStudentBugs] = useState(student.bugs);
+  const [isSwitch, setSwitch] = useState(false);
+
+  const handleClickStudentsBugs = async () => {
+    const data = {
+      bugName: Bug.bugName,
+      studentEmail: student.email,
+      managerEmail: user.email,
+    };
+
+    const main = "http://localhost:8092/";
+    const addBug = main + "/acs/managers/addBugToStudent";
+    const dataJson = JSON.stringify(data);
+
+    await fetch(addBug, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: dataJson,
+    }).then(
+      (response) => {
+        if (response.status === 200) {
+          response.json().then((d) => {
+            const bugs = d;
+            setStudentBugs(bugs.bugs);
+            setSwitch(true);
+          });
+        } else {
+          response.json().then((x) => {
+            console.log(x);
+          });
+        }
+      },
+      (error) => {}
+    );
+  };
 
   useEffect(() => {
-    //  console.log(existBugs);
-    // console.log(Bug);
+    var isExist;
+    if (student != null) {
+      if (!isSwitch) {
+        isExist = student.bugs.some((b) => b.bugName === Bug.bugName);
+      } else {
+        isExist = existBugs.some((b) => b.bugName === Bug.bugName);
+      }
 
-    var isExist = existBugs.some((b) => b.bugName === Bug.bugName);
-
-    setAdd(isExist);
+      setAdd(isExist);
+    }
   });
 
   return (
@@ -89,7 +129,7 @@ export default function AlignItems({ user, Bug, existBugs, onClick }) {
         <div>
           <Button
             className={classes.BugButton}
-            onClick={handleClick}
+            onClick={handleClickStudentsBugs}
             size="large"
             type="button"
             variant="outlined"

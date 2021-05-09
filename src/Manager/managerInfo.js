@@ -26,7 +26,7 @@ export default function MediaCardInfo({ user, classList, studentsList }) {
       var data = {
         email: user.email,
       };
-      console.log("in user effect");
+      //    console.log("in user effect");
       const dataJson = JSON.stringify(data);
 
       fetch("http://localhost:8092/acs/managers/getAllBugs", {
@@ -59,44 +59,6 @@ export default function MediaCardInfo({ user, classList, studentsList }) {
       setOne(false);
     }
   });
-
-  /*const initNumberOfClasses = async () => {
-    const data = {
-      manager: user.email,
-    };
-
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/classes/getAllClasses";
-    const dataJson = JSON.stringify(data);
-
-    await fetch(addBug, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            setClassList(d);
-            var tempStudents = [];
-            for (var i = 0; i < d.length; i++) {
-              tempStudents.push(d[i].students);
-            }
-            setStudentsList(tempStudents);
-          });
-        } else {
-          response.json().then((x) => {
-            console.log(x);
-          });
-        }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  };*/
 
   return (
     <Card className={classes.root}>
