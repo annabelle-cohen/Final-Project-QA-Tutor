@@ -18,6 +18,7 @@ import NavigationBarAAP from "./NavigationBarAAP";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
+import { saveBugsList } from "../Actions/saveBugsList";
 import logo from "./img/logo_transparent2.png";
 import zIndex from "@material-ui/core/styles/zIndex";
 
@@ -64,6 +65,9 @@ class HomeSearch1 extends Component {
     this.props.saveMessage({
       message: this.props.messageUpdate.message,
     });
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
+    });
 
     console.log(this.props.authAAP);
     this.onCategoryChange = this.onCategoryChange.bind(this);
@@ -78,6 +82,10 @@ class HomeSearch1 extends Component {
     this.setState({
       search: e.target.value,
     });
+
+    const isLogoBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "Logo Button Bug"
+    );
   };
 
   saveSearchKeywordWithServer = async () => {
@@ -141,11 +149,23 @@ class HomeSearch1 extends Component {
 
   handleClick = async (e) => {
     if (this.state.search != null && this.state.search != "") {
-      var data = {
-        keyword: this.state.search,
-        page: 0,
-        size: 100,
-      };
+      var isNoResultsBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Results Bug"
+      );
+      var data;
+      if (isNoResultsBug) {
+        data = {
+          keyword: "no results",
+          page: 0,
+          size: 100,
+        };
+      } else {
+        data = {
+          keyword: this.state.search,
+          page: 0,
+          size: 100,
+        };
+      }
 
       const dataJson = JSON.stringify(data);
       const searchByKeyWordLink =
@@ -237,7 +257,7 @@ class HomeSearch1 extends Component {
             zIndex: 0,
           }}
         >
-          <Link to="/dashboard">
+          <Link to={this.isLogoBug ? "/dashboard/history" : "/dashboard"}>
             <img
               src={logo}
               style={{
@@ -290,6 +310,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(saveProductsByCategoryID(productsById)),
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -298,6 +319,7 @@ const mapStateToProps = (state) => {
     productsByCategory: state.productsByCategory,
     authAAP: state.authAAP,
     messageUpdate: state.messageUpdate,
+    bugsList: state.bugsList,
   };
 };
 

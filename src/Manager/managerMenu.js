@@ -96,73 +96,150 @@ export default function NavTabs({
   const [isExist, setExist] = useState(false);
   const [Bugs, setBugs] = React.useState([
     {
+      //1 done
       bugName: "ProductPage Bug",
       description: "Product doesn't add to cart from the product page",
       isAdd: false,
     },
     {
-      bugName: "ProductsPage Bug",
+      //2 done
+      bugName: "ProductPageAdvanced Bug",
+      description:
+        "Product doesn't add to cart from the category page but still update the total sum and show like is add at the navigation bar",
+      isAdd: false,
+    },
+    {
+      //3 done
+      bugName: "ProductsCategory Bug",
       description: "Product doesn't add to cart from the category page",
       isAdd: false,
     },
     {
+      //4 done
+      bugName: "ProductsCategoryAdvanced Bug",
+      description: "Product doesn't add to cart from the category page",
+      isAdd: false,
+    },
+    {
+      //5 done
       bugName: "Quantity Bug",
       description:
         "If the students try to increase the quantity, it doesn't work",
       isAdd: false,
     },
     {
+      //6 done
+      bugName: "QuantityAdvanced Bug",
+      description:
+        "The quantity is increased but when the student add to cart is always qauntity 1",
+      isAdd: false,
+    },
+    {
+      //7 done
       bugName: "Unwanted product Bug",
       description: "Product that doesn't even chosen add to cart",
       isAdd: false,
     },
     {
+      //8 done
       bugName: "Credit Bug",
       description: "The students pay without all fields fills",
       isAdd: false,
     },
     {
+      //9 ali need to do this
       bugName: "TotalPrice Bug",
       description: "The total price in the summary doesn't correct",
       isAdd: false,
     },
     {
+      //10 done
       bugName: "CVV Bug",
       description: "The cvv at the credit card doesnt correct",
       isAdd: false,
     },
     {
+      //11 done
       bugName: "Date Bug",
       description: "The date at the credit card doesn't correct",
       isAdd: false,
     },
     {
+      //12 done
       bugName: "Purchase Bug",
       description: "Purchase doesn't work even with correct credit card",
       isAdd: false,
     },
     {
+      //13 done
       bugName: "Stock Bug",
       description:
         "It is possible to add a larger quantity than is in stock to the cart",
       isAdd: false,
     },
     {
+      //14 done
       bugName: "History Bug",
       description:
         "The system will not display the entire purchase history of that account",
       isAdd: false,
     },
     {
+      //15 done
       bugName: "Category Bug",
       description:
         "By pressing on desired category it takes the user to different category",
       isAdd: false,
     },
     {
+      //16 done
       bugName: "Results Bug",
       description:
         "No matter what the user looking for at the search input it always show no results",
+      isAdd: false,
+    },
+    {
+      //17 done
+      bugName: "Checkout Bug",
+      description: "when the student go to check out, the cart is empty.",
+      isAdd: false,
+    },
+    {
+      //18 done
+      bugName: "Delete single prodect Bug",
+      description:
+        "when the student try to delete single product it delete more products.\n" +
+        "Work only with more then one product in the cart.",
+      isAdd: false,
+    },
+    {
+      //19 done
+      bugName: "Logout Bug",
+      description:
+        "The student try to logout from aap and the button doesn't work",
+      isAdd: false,
+    },
+    {
+      //20 done
+      bugName: "Buy again Bug",
+      description:
+        "The student try to but again a cart in the history but when he click on buy again button it is buy different cart\n" +
+        "will work only if there is more then one order!",
+      isAdd: false,
+    },
+    {
+      //21 done
+      bugName: "Watchlist Product Page Bug",
+      description:
+        "Watchlist bug will be little bit confusing, first if the student have something in their cart it will add to watch list by press on the button add to watchlist\n" +
+        "second if the cart is empty then the watchlist button doesn't work at all! ",
+      isAdd: false,
+    },
+    {
+      //22 done
+      bugName: "Logo Button Bug",
+      description:
+        "The Logo Button of AAP is always takes the student to Purchase History ",
       isAdd: false,
     },
   ]);

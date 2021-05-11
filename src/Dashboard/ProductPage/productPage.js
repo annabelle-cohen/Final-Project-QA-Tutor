@@ -6,6 +6,7 @@ import { saveWatchlist } from "../../Actions/addToWatchlist";
 import NavigationBarAAP from "../NavigationBarAAP";
 import { saveCartID } from "../../Actions/savingCartId";
 import { saveUserAAP } from "../../Actions/authAAPActions";
+import { saveBugsList } from "../../Actions/saveBugsList";
 import HomeSearch from "../homeSearch";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -60,6 +61,10 @@ class productPage1 extends Component {
       id: this.props.cartId.id,
     });
 
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
+    });
+
     this.responsiveOptions = [
       {
         breakpoint: "1024px",
@@ -77,11 +82,24 @@ class productPage1 extends Component {
     this.updateState = this.updateState.bind(this);
     this.updateState();
     this.saveToRecentlyViewed();
+    this.checkIfBugExist();
   }
 
   updateState() {
     this.setState({ images: this.props.productToPass.productToPass.images });
   }
+
+  checkIfBugExist() {
+    if (this.props.bugsList.bugsList.length > 0) {
+      var isExist = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "ProductPage Bug"
+      );
+      this.setState({
+        isProductPageBug: isExist,
+      });
+    }
+  }
+
   saveToRecentlyViewed = async () => {
     if (this.props.authAAP.isSignIn) {
       await fetch(
@@ -150,86 +168,181 @@ class productPage1 extends Component {
   }
 
   handleQuantity = (e) => {
-    this.setState({ quantity: e.target.value });
-    if (e.target.value > 0 && e.target.value <= this.state.unitInStock) {
-      this.setState({
-        quantityError: "",
-      });
+    var isExistBugQuantity = false;
+    var isUnitStockBug = false;
+
+    if (this.props.bugsList.bugsList.length > 0) {
+      isExistBugQuantity = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Quantity Bug"
+      );
+      isUnitStockBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Stock Bug"
+      );
+    }
+    if (isExistBugQuantity) {
+      this.setState({ quantity: 1 });
     } else {
-      this.setState({
-        quantityError: "Invalid Quantity!",
-      });
+      if (isUnitStockBug) {
+        this.setState({
+          quantityError: "",
+        });
+        this.setState({ quantity: e.target.value });
+      } else {
+        if (e.target.value > 0 && e.target.value <= this.state.unitInStock) {
+          this.setState({
+            quantityError: "",
+          });
+          this.setState({ quantity: e.target.value });
+        } else {
+          this.setState({
+            quantityError: "Invalid Quantity!",
+          });
+        }
+      }
     }
   };
 
   handleAddToCart = async (e) => {
-    if (this.state.quantity <= this.state.unitInStock) {
-      var tempTotalPrice =
-        this.props.cart.totalPrice + this.state.unitPrice * this.state.quantity;
-      var tempTotalNum =
-        parseInt(this.props.cart.totalNumOfProducts) +
-        parseInt(this.state.quantity);
-      var tempCart = this.props.cart.cart;
-      var tempAmountOfproducts = this.props.cart.amountOfproducts;
-      var tempLastPosition = this.props.cart.lastPosition;
-      var isAlreadyExist = tempCart.some(
-        (item) => item.title === this.props.productToPass.productToPass.title
+    var isExistBugAdvenced = false;
+    var isExistBugs = false;
+    var isQuantityAdvancedBug = false;
+
+    if (this.props.bugsList.bugsList.length > 0) {
+      isExistBugs = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "ProductsCategory Bug"
       );
-      console.log(tempTotalNum);
+      isExistBugAdvenced = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "ProductsCategoryAdvanced Bug"
+      );
 
-      if (isAlreadyExist) {
-        var index = tempCart.findIndex(
-          (item) =>
-            item.productID === this.props.productToPass.productToPass.productID
-        );
-        console.log(index);
-        var calc = tempAmountOfproducts[index];
-        tempAmountOfproducts[index] =
-          parseInt(this.state.quantity) + parseInt(calc);
-      } else {
-        tempCart.push(this.props.productToPass.productToPass);
-        tempAmountOfproducts.push(this.state.quantity);
-      }
-      console.log(this.state.quantity);
-
-      this.props.saveCart({
-        cartId: "",
-        lastPosition: tempLastPosition,
-        totalPrice: tempTotalPrice,
-        totalNumOfProducts: tempTotalNum,
-        cart: tempCart,
-        amountOfproducts: tempAmountOfproducts,
-      });
-      var updateUnitInStock = this.state.unitInStock - this.state.quantity;
-      this.setState({
-        unitInStock: updateUnitInStock,
-      });
-    } else {
-      console.log(
-        "the number of quantity is much bigger then what in the stock"
+      isQuantityAdvancedBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "QuantityAdvanced Bug"
       );
     }
+    if (isExistBugs || isExistBugAdvenced) {
+      if (isExistBugs) {
+        this.handleAddToCartBug();
+      }
+      if (isExistBugAdvenced) {
+        this.handleAddToCartAdvnced();
+      }
+    } else {
+      if (this.state.quantity <= this.state.unitInStock) {
+        var tempTotalPrice = 0;
+        var tempTotalNum = 0;
+        if (isQuantityAdvancedBug) {
+          tempTotalPrice =
+            this.props.cart.totalPrice + this.state.unitPrice * 1;
+          tempTotalNum = parseInt(this.props.cart.totalNumOfProducts) + 1;
+        } else {
+          tempTotalPrice =
+            this.props.cart.totalPrice +
+            this.state.unitPrice * this.state.quantity;
+          tempTotalNum =
+            parseInt(this.props.cart.totalNumOfProducts) +
+            parseInt(this.state.quantity);
+        }
 
-    console.log(this.props.cart);
-    if (this.props.authAAP.isSignIn) {
-      const main = "http://localhost:8092//";
+        var tempCart = this.props.cart.cart;
+        var tempAmountOfproducts = this.props.cart.amountOfproducts;
+        var tempLastPosition = this.props.cart.lastPosition;
+        var isAlreadyExist = tempCart.some(
+          (item) => item.title === this.props.productToPass.productToPass.title
+        );
+        console.log(tempTotalNum);
 
-      if (!isAlreadyExist) {
-        const addProductLink = main + "/acs/products/addProductToCart";
+        if (isAlreadyExist) {
+          var index = tempCart.findIndex(
+            (item) =>
+              item.productID ===
+              this.props.productToPass.productToPass.productID
+          );
+          console.log(index);
+          var calc = tempAmountOfproducts[index];
+          if (isQuantityAdvancedBug) {
+            tempAmountOfproducts[index] = 1 + parseInt(calc);
+          } else {
+            tempAmountOfproducts[index] =
+              parseInt(this.state.quantity) + parseInt(calc);
+          }
+        } else {
+          tempCart.push(this.props.productToPass.productToPass);
+          if (isQuantityAdvancedBug) {
+            tempAmountOfproducts.push(1);
+          } else {
+            tempAmountOfproducts.push(this.state.quantity);
+          }
+        }
+        console.log(this.state.quantity);
 
-        const addingProduct = {
-          productID: this.props.productToPass.productToPass.productID,
+        this.props.saveCart({
+          cartId: "",
+          lastPosition: tempLastPosition,
+          totalPrice: tempTotalPrice,
+          totalNumOfProducts: tempTotalNum,
+          cart: tempCart,
+          amountOfproducts: tempAmountOfproducts,
+        });
+        var updateUnitInStock = this.state.unitInStock - this.state.quantity;
+        this.setState({
+          unitInStock: updateUnitInStock,
+        });
+      } else {
+        console.log(
+          "the number of quantity is much bigger then what in the stock"
+        );
+      }
+
+      console.log(this.props.cart);
+      if (this.props.authAAP.isSignIn) {
+        const main = "http://localhost:8092//";
+
+        if (!isAlreadyExist) {
+          const addProductLink = main + "/acs/products/addProductToCart";
+
+          const addingProduct = {
+            productID: this.props.productToPass.productToPass.productID,
+            cartID: this.props.cartId.id,
+          };
+          console.log(addingProduct);
+          const dataJson = JSON.stringify(addingProduct);
+
+          await fetch(addProductLink, {
+            method: "POST", // or 'PUT'
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: dataJson,
+          }).then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("success");
+              } else {
+                console.log("failed to fetch server");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
+
+        const addQuantity = main + "/acs/carts/updateCartQuantity";
+
+        const addingQuantity = {
           cartID: this.props.cartId.id,
+          quantity: this.props.cart.amountOfproducts,
         };
-        console.log(addingProduct);
-        const dataJson = JSON.stringify(addingProduct);
 
-        await fetch(addProductLink, {
-          method: "POST", // or 'PUT'
+        console.log(addingQuantity);
+        const dataJson2 = JSON.stringify(addingQuantity);
+
+        await fetch(addQuantity, {
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: dataJson,
+          body: dataJson2,
         }).then(
           (response) => {
             if (response.status === 200) {
@@ -243,114 +356,187 @@ class productPage1 extends Component {
           }
         );
       }
-
-      const addQuantity = main + "/acs/carts/updateCartQuantity";
-
-      const addingQuantity = {
-        cartID: this.props.cartId.id,
-        quantity: this.props.cart.amountOfproducts,
-      };
-
-      console.log(addingQuantity);
-      const dataJson2 = JSON.stringify(addingQuantity);
-
-      await fetch(addQuantity, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: dataJson2,
-      }).then(
-        (response) => {
-          if (response.status === 200) {
-            console.log("success");
-          } else {
-            console.log("failed to fetch server");
-          }
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
     }
+  };
+
+  handleAddProductBugAdvnced = (e) => {
+    var tempTotalPrice =
+      this.props.cart.totalPrice + this.state.unitPrice * this.state.quantity;
+    var tempTotalNum =
+      parseInt(this.props.cart.totalNumOfProducts) +
+      parseInt(this.state.quantity);
+
+    this.props.saveCart({
+      cartId: this.props.cart.cartID,
+      lastPosition: this.props.cart.lastPosition,
+      totalPrice: tempTotalPrice,
+      totalNumOfProducts: tempTotalNum,
+      cart: this.props.cart.cart,
+      amountOfproducts: this.props.cart.amountOfproducts,
+    });
+    /**need to fetch server */
+  };
+
+  handleAddProductBug = (e) => {
+    console.log("Add to cart succeed!");
   };
 
   handleAddToWatchlist = async (e) => {
     if (this.props.authAAP.isSignIn) {
-      var array = this.props.watchlist.Watchlist;
-      if (array.length != 0) {
-        var isExist = array.some(
-          (item) => item.title === this.props.productToPass.productToPass.title
-        );
-        if (isExist) {
-          console.log("the product already exist");
+      var isWatchlistBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Watchlist Product Page Bug"
+      );
+      if (isWatchlistBug) {
+        if (this.props.cart.cart.length > 0) {
+          var array = this.props.watchlist.Watchlist;
+          if (array.length != 0) {
+            var isExist = array.some(
+              (item) => item.title === this.props.cart.cart[0].title
+            );
+            if (isExist) {
+              console.log("the product already exist");
+            } else {
+              this.props.watchlist.Watchlist.push(this.props.cart.cart[0]);
+              this.props.saveWatchlist({
+                Watchlist: this.props.watchlist.Watchlist,
+              });
+              console.log(this.props.watchlist.Watchlist);
+            }
+          } else {
+            this.props.watchlist.Watchlist.push(this.props.cart.cart[0]);
+            this.props.saveWatchlist({
+              watchlist: this.props.watchlist.Watchlist,
+            });
+            console.log(this.props.watchlist.Watchlist);
+          }
+          if (!isExist) {
+            await fetch(
+              "http://localhost:8092/acs/watchlist/getwatchList/" +
+                this.props.authAAP.userAAP.email
+            )
+              .then((response) => {
+                if (response.status === 200) {
+                  response.json().then((d) => {
+                    const watchlist = d;
+
+                    const main = "http://localhost:8092//";
+                    const addToWatchListLink =
+                      main + "/acs/watchlist/addProductToWatchList";
+
+                    const watchListUpdated = {
+                      productID: this.props.cart.cart[0].productID,
+                      watchListID: watchlist.watchListID,
+                    };
+
+                    const dataJson = JSON.stringify(watchListUpdated);
+                    fetch(addToWatchListLink, {
+                      method: "POST", // or 'PUT'
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      body: dataJson,
+                    }).then(
+                      (response) => {
+                        if (response.status === 200) {
+                          console.log("success adding Watchlist");
+                        } else {
+                          console.log("failed to fetch server watchlist");
+                        }
+                      },
+                      (error) => {
+                        console.log(error);
+                      }
+                    );
+                  });
+                } else {
+                  console.log("Error:", response);
+                  response.json().then((d) => {
+                    console.log("Errordata", d);
+                  });
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error.data);
+              });
+          }
+        }
+      } else {
+        var array = this.props.watchlist.Watchlist;
+        if (array.length != 0) {
+          var isExist = array.some(
+            (item) =>
+              item.title === this.props.productToPass.productToPass.title
+          );
+          if (isExist) {
+            console.log("the product already exist");
+          } else {
+            this.props.watchlist.Watchlist.push(
+              this.props.productToPass.productToPass
+            );
+            this.props.saveWatchlist({
+              Watchlist: this.props.watchlist.Watchlist,
+            });
+            console.log(this.props.watchlist.Watchlist);
+          }
         } else {
           this.props.watchlist.Watchlist.push(
             this.props.productToPass.productToPass
           );
           this.props.saveWatchlist({
-            Watchlist: this.props.watchlist.Watchlist,
+            watchlist: this.props.watchlist.Watchlist,
           });
           console.log(this.props.watchlist.Watchlist);
         }
-      } else {
-        this.props.watchlist.Watchlist.push(
-          this.props.productToPass.productToPass
-        );
-        this.props.saveWatchlist({
-          watchlist: this.props.watchlist.Watchlist,
-        });
-        console.log(this.props.watchlist.Watchlist);
-      }
-      if (!isExist) {
-        await fetch(
-          "http://localhost:8092/acs/watchlist/getwatchList/" +
-            this.props.authAAP.userAAP.email
-        )
-          .then((response) => {
-            if (response.status === 200) {
-              response.json().then((d) => {
-                const watchlist = d;
+        if (!isExist) {
+          await fetch(
+            "http://localhost:8092/acs/watchlist/getwatchList/" +
+              this.props.authAAP.userAAP.email
+          )
+            .then((response) => {
+              if (response.status === 200) {
+                response.json().then((d) => {
+                  const watchlist = d;
 
-                const main = "http://localhost:8092//";
-                const addToWatchListLink =
-                  main + "/acs/watchlist/addProductToWatchList";
+                  const main = "http://localhost:8092//";
+                  const addToWatchListLink =
+                    main + "/acs/watchlist/addProductToWatchList";
 
-                const watchListUpdated = {
-                  productID: this.props.productToPass.productToPass.productID,
-                  watchListID: watchlist.watchListID,
-                };
+                  const watchListUpdated = {
+                    productID: this.props.productToPass.productToPass.productID,
+                    watchListID: watchlist.watchListID,
+                  };
 
-                const dataJson = JSON.stringify(watchListUpdated);
-                fetch(addToWatchListLink, {
-                  method: "POST", // or 'PUT'
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: dataJson,
-                }).then(
-                  (response) => {
-                    if (response.status === 200) {
-                      console.log("success adding Watchlist");
-                    } else {
-                      console.log("failed to fetch server watchlist");
+                  const dataJson = JSON.stringify(watchListUpdated);
+                  fetch(addToWatchListLink, {
+                    method: "POST", // or 'PUT'
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: dataJson,
+                  }).then(
+                    (response) => {
+                      if (response.status === 200) {
+                        console.log("success adding Watchlist");
+                      } else {
+                        console.log("failed to fetch server watchlist");
+                      }
+                    },
+                    (error) => {
+                      console.log(error);
                     }
-                  },
-                  (error) => {
-                    console.log(error);
-                  }
-                );
-              });
-            } else {
-              console.log("Error:", response);
-              response.json().then((d) => {
-                console.log("Errordata", d);
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error:", error.data);
-          });
+                  );
+                });
+              } else {
+                console.log("Error:", response);
+                response.json().then((d) => {
+                  console.log("Errordata", d);
+                });
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error.data);
+            });
+        }
       }
     }
   };
@@ -762,6 +948,7 @@ function mapDispatchToProps(dispatch) {
     saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -772,6 +959,7 @@ const mapStateToProps = (state) => {
     watchlist: state.watchlist,
     authAAP: state.authAAP,
     cartId: state.cartId,
+    bugsList: state.bugsList,
   };
 };
 

@@ -7,6 +7,7 @@ import { saveUserAAP } from "../Actions/authAAPActions";
 import { Redirect } from "react-router-dom";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveCartID } from "../Actions/savingCartId";
+import { saveBugsList } from "../Actions/saveBugsList";
 
 class checkout1 extends Component {
   constructor(props) {
@@ -34,13 +35,106 @@ class checkout1 extends Component {
     this.props.saveCartID({
       id: this.props.cartId.id,
     });
-  }
 
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
+    });
+    this.chechBugs();
+  }
+  chechBugs() {
+    var isCheckOutBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "Checkout Bug"
+    );
+
+    if (isCheckOutBug) {
+      this.onEmptyCart();
+    }
+  }
   isSignOut() {
     if (!this.props.authAAP.isSignIn) {
       return <Redirect to="/dashboard"></Redirect>;
     }
   }
+
+  deleteSingleProduct = async (item) => {
+    var price = this.props.cart.totalPrice;
+    var amount = this.props.cart.amountOfproducts;
+    var totalItems = this.props.cart.totalNumOfProducts;
+    var cartProducts = this.props.cart.cart;
+    const index = cartProducts.findIndex(
+      (product) => item.productID === product.productID
+    );
+    price -=
+      amount[index] * item.unitPrice + amount[index] * item.shippingServiceCost;
+    console.log("price " + price);
+    totalItems -= amount[index];
+    console.log("total items " + totalItems);
+    amount.splice(index, 1);
+    cartProducts.splice(index, 1);
+
+    this.props.saveCart({
+      lastPosition: this.props.cart.lastPosition,
+      totalPrice: price,
+      totalNumOfProducts: totalItems,
+      cart: cartProducts,
+      amountOfproducts: amount,
+    });
+
+    if (this.props.authAAP.isSignIn) {
+      const data = {
+        productID: item.productID,
+        cartID: this.props.cartId.id,
+      };
+      const dataJson = JSON.stringify(data);
+      await fetch("http://localhost:8092/acs/products/removeProductFromCart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("Deleted!");
+          } else {
+            console.log("failed delete");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      const addQuantity = "http://localhost:8092//acs/carts/updateCartQuantity";
+
+      const addingQuantity = {
+        cartID: this.props.cartId.id,
+        quantity: this.props.cart.amountOfproducts,
+      };
+
+      console.log(addingQuantity);
+      const dataJson2 = JSON.stringify(addingQuantity);
+
+      await fetch(addQuantity, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson2,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("success");
+          } else {
+            console.log("failed to fetch server");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  };
 
   render() {
     const onUpdateCartQty = async (item, newQuantity) => {
@@ -106,87 +200,21 @@ class checkout1 extends Component {
     };
 
     const onRemoveFromCart = async (item) => {
-      var price = this.props.cart.totalPrice;
-      var amount = this.props.cart.amountOfproducts;
-      var totalItems = this.props.cart.totalNumOfProducts;
-      var cartProducts = this.props.cart.cart;
-      const index = cartProducts.findIndex(
-        (product) => item.productID === product.productID
+      var isDeleteSingleProductBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Delete single prodect Bug"
       );
-      price -=
-        amount[index] * item.unitPrice +
-        amount[index] * item.shippingServiceCost;
-      console.log("price " + price);
-      totalItems -= amount[index];
-      console.log("total items " + totalItems);
-      amount.splice(index, 1);
-      cartProducts.splice(index, 1);
-
-      this.props.saveCart({
-        lastPosition: this.props.cart.lastPosition,
-        totalPrice: price,
-        totalNumOfProducts: totalItems,
-        cart: cartProducts,
-        amountOfproducts: amount,
-      });
-
-      if (this.props.authAAP.isSignIn) {
-        const data = {
-          productID: item.productID,
-          cartID: this.props.cartId.id,
-        };
-        const dataJson = JSON.stringify(data);
-        await fetch(
-          "http://localhost:8092/acs/products/removeProductFromCart",
-          {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: dataJson,
-          }
-        ).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("Deleted!");
-            } else {
-              console.log("failed delete");
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
+      if (isDeleteSingleProductBug && this.props.cart.cart.length > 1) {
+        var index = this.props.cart.cart.findIndex(
+          (product) => item.productID === product.productID
         );
-
-        const addQuantity =
-          "http://localhost:8092//acs/carts/updateCartQuantity";
-
-        const addingQuantity = {
-          cartID: this.props.cartId.id,
-          quantity: this.props.cart.amountOfproducts,
-        };
-
-        console.log(addingQuantity);
-        const dataJson2 = JSON.stringify(addingQuantity);
-
-        await fetch(addQuantity, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson2,
-        }).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("success");
-            } else {
-              console.log("failed to fetch server");
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
+        this.deleteSingleProduct(item);
+        if (index > 0) {
+          this.deleteSingleProduct(this.cart.cart[index - 1]);
+        } else {
+          this.deleteSingleProduct(this.cart.cart[index + 1]);
+        }
+      } else {
+        this.deleteSingleProduct(item);
       }
     };
 
@@ -288,6 +316,7 @@ function mapDispatchToProps(dispatch) {
     savePassingProduct: (productToPass) =>
       dispatch(savePassingProduct(productToPass)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -297,6 +326,7 @@ const mapStateToProps = (state) => {
     authAAP: state.authAAP,
     productToPass: state.productToPass,
     cartId: state.cartId,
+    bugsList: state.bugsList,
   };
 };
 

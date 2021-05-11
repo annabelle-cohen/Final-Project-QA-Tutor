@@ -8,6 +8,7 @@ import { saveLastChoice } from "../Actions/saveLastChoice";
 import HistoryList from "./PurchaseHistory/PurchaseGeneral";
 import { saveCart } from "../Actions/shoppingCart";
 import { saveCartID } from "../Actions/savingCartId";
+import { saveBugsList } from "../Actions/saveBugsList";
 
 class purchaseHistoryList1 extends Component {
   constructor(props) {
@@ -44,6 +45,10 @@ class purchaseHistoryList1 extends Component {
       cartId: this.props.cartId.id,
     });
 
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
+    });
+
     console.log(this.props.choice.choice);
 
     this.fillHistoryList();
@@ -55,6 +60,9 @@ class purchaseHistoryList1 extends Component {
     }
   }
   fillHistoryList = async () => {
+    var isHistoryListBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "History Bug"
+    );
     await fetch(
       "http://localhost:8092/acs/orders/getOrderHistroy/" +
         this.props.authAAP.userAAP.email
@@ -63,9 +71,21 @@ class purchaseHistoryList1 extends Component {
         if (response.status === 200) {
           response.json().then((d) => {
             const orderInfo = d;
-            this.setState({
-              historyList: orderInfo,
-            });
+            if (isHistoryListBug) {
+              if (orderInfo.length > 1) {
+                this.setState({
+                  historyList: orderInfo[0],
+                });
+              } else {
+                this.setState({
+                  historyList: [],
+                });
+              }
+            } else {
+              this.setState({
+                historyList: orderInfo,
+              });
+            }
           });
         } else {
           console.log("Error:", response);
@@ -86,8 +106,27 @@ class purchaseHistoryList1 extends Component {
       });
     };
     const handleBuyAgain = async (Order) => {
-      var ArrayOfProducts = Order.products;
-      var totalPrice = Order.totalPrice;
+      var isBuyAgainBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Buy again Bug"
+      );
+      var ArrayOfProducts = [];
+      var totalPrice;
+      if (isBuyAgainBug && Order.length > 1) {
+        var index = this.state.historyList.findIndex(
+          (order) => order.orderID === Order.ordertID
+        );
+        if (index > 0) {
+          ArrayOfProducts = this.state.historyList[index - 1].products;
+          totalPrice = this.state.historyList[index - 1].totalPrice;
+        } else {
+          ArrayOfProducts = this.state.historyList[index + 1].products;
+          totalPrice = this.state.historyList[index + 1].totalPrice;
+        }
+      } else {
+        ArrayOfProducts = Order.products;
+        totalPrice = Order.totalPrice;
+      }
+
       const main = "http://localhost:8092//";
 
       if (this.props.cart.cart.length == 0) {
@@ -309,6 +348,7 @@ function mapDispatchToProps(dispatch) {
     saveLastChoice: (choice) => dispatch(saveLastChoice(choice)),
     saveCart: (cart) => dispatch(saveCart(cart)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -319,6 +359,7 @@ const mapStateToProps = (state) => {
     choice: state.choice,
     cart: state.cart,
     cartId: state.cartId,
+    bugsList: state.bugsList,
   };
 };
 

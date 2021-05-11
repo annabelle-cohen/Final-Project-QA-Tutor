@@ -23,6 +23,7 @@ const CheckoutStepper = ({
   billingInfo,
   checkoutToken,
   personalInfo,
+  bugsList,
 }) => {
   console.log(personalInfo);
   const [activeStep, setActiveStep] = useState(0);
@@ -116,6 +117,7 @@ const CheckoutStepper = ({
         billingInfo={billingInfo}
         checkoutToken={checkoutToken}
         personalInfo={personalInfo}
+        bugsList={bugsList}
         backStep={backStep}
         nextStep={nextStep}
       />

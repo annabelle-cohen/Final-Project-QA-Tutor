@@ -4,6 +4,7 @@ import { savePersonalInfo } from "../Actions/authPersonalInfo";
 import { connect } from "react-redux";
 import { saveUserAAP } from "../Actions/authAAPActions";
 import { saveCartID } from "../Actions/savingCartId";
+import { saveBugsList } from "../Actions/saveBugsList";
 import { Redirect } from "react-router-dom";
 import CheckoutStepper from "./checkoutForm/stepper/CheckoutStepper";
 
@@ -42,6 +43,10 @@ class CheckoutForm extends Component {
 
     this.props.saveCartID({
       id: this.props.cartId.id,
+    });
+
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
     });
 
     console.log(this.props.personalInfo);
@@ -149,6 +154,7 @@ class CheckoutForm extends Component {
           billingInfo={handleBillingInfo}
           checkoutToken={this.props.cart}
           personalInfo={this.props.personalInfo}
+          bugsList={this.props.bugsList.bugsList}
         ></CheckoutStepper>
       </div>
     );
@@ -162,6 +168,7 @@ function mapDispatchToProps(dispatch) {
     savePersonalInfo: (personalInfo) =>
       dispatch(savePersonalInfo(personalInfo)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -171,6 +178,7 @@ const mapStateToProps = (state) => {
     authAAP: state.authAAP,
     personalInfo: state.personalInfo,
     cartId: state.cartId,
+    bugsList: state.bugsList,
   };
 };
 

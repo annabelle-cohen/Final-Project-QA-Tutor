@@ -11,6 +11,7 @@ import "./productByCategory.css";
 import Products from "./Products/Products";
 import { saveCart } from "../Actions/shoppingCart";
 import { saveCartID } from "../Actions/savingCartId";
+import { saveBugsList } from "../Actions/saveBugsList";
 
 export class productByCategoryAAP extends Component {
   constructor(props) {
@@ -52,6 +53,10 @@ export class productByCategoryAAP extends Component {
 
     this.props.saveMessage({
       message: this.props.messageUpdate.message,
+    });
+
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
     });
 
     const products = [];
@@ -114,63 +119,122 @@ export class productByCategoryAAP extends Component {
     this.products = this.props.productsByCategory.productsById;
   };
 
+  handleAddProductBug = () => {
+    console.log("Add to cart succeed!");
+  };
+
   render() {
     const handleAddToCart = async (product, quantity) => {
-      /*total number of all products in the cart*/
-      var totalNum = this.props.cart.totalNumOfProducts + quantity;
-      var price =
-        this.props.cart.totalPrice +
-        product.unitPrice +
-        product.shippingServiceCost;
-      var cart = this.props.cart.cart;
-      /**for the array of amount of each product */
-      var amountOfproducts = this.props.cart.amountOfproducts;
-      var lastPosition = window.pageYOffset;
-      var isExist = cart.some((item) => item.title === product.title);
-      console.log(amountOfproducts);
-      console.log(totalNum);
-      console.log(isExist);
-      if (isExist) {
-        var index = cart.findIndex(
-          (item) => item.productID === product.productID
+      var isExistBugAdvenced = false;
+      var isExistBugs = false;
+
+      if (this.props.bugsList.bugsList.length > 0) {
+        isExistBugs = this.props.bugsList.bugsList.some(
+          (b) => b.bugName === "ProductsCategory Bug"
         );
-        console.log(index);
-        amountOfproducts[index] += 1;
-      } else {
-        cart.push(product);
-        var temp = {};
-        temp = quantity;
-        amountOfproducts.push(temp);
+        isExistBugAdvenced = this.props.bugsList.bugsList.some(
+          (b) => b.bugName === "ProductsCategoryAdvanced Bug"
+        );
       }
+      if (isExistBugs) {
+        if (isExistBugs) {
+          this.handleAddProductBug();
+        }
+      } else {
+        /*total number of all products in the cart*/
+        var totalNum = this.props.cart.totalNumOfProducts + quantity;
+        var price = 0;
+        if (isExistBugAdvenced) {
+          price =
+            this.props.cart.totalPrice +
+            product.unitPrice +
+            product.shippingServiceCost +
+            52.34;
+        } else {
+          price =
+            this.props.cart.totalPrice +
+            product.unitPrice +
+            product.shippingServiceCost;
+        }
 
-      this.props.saveCart({
-        lastPosition: lastPosition,
-        totalPrice: price,
-        totalNumOfProducts: totalNum,
-        cart: cart,
-        amountOfproducts: amountOfproducts,
-      });
+        var cart = this.props.cart.cart;
+        /**for the array of amount of each product */
+        var amountOfproducts = this.props.cart.amountOfproducts;
+        var lastPosition = window.pageYOffset;
+        var isExist = cart.some((item) => item.title === product.title);
+        console.log(amountOfproducts);
+        console.log(totalNum);
+        console.log(isExist);
+        if (isExist) {
+          var index = cart.findIndex(
+            (item) => item.productID === product.productID
+          );
+          console.log(index);
+          amountOfproducts[index] += 1;
+        } else {
+          cart.push(product);
+          var temp = {};
+          temp = quantity;
+          amountOfproducts.push(temp);
+        }
 
-      if (this.props.authAAP.isSignIn) {
-        const main = "http://localhost:8092//";
+        this.props.saveCart({
+          lastPosition: lastPosition,
+          totalPrice: price,
+          totalNumOfProducts: totalNum,
+          cart: cart,
+          amountOfproducts: amountOfproducts,
+        });
 
-        if (!isExist) {
-          const addProductLink = main + "/acs/products/addProductToCart";
+        if (this.props.authAAP.isSignIn) {
+          const main = "http://localhost:8092//";
 
-          const addingProduct = {
-            productID: product.productID,
+          if (!isExist) {
+            const addProductLink = main + "/acs/products/addProductToCart";
+
+            const addingProduct = {
+              productID: product.productID,
+              cartID: this.props.cartId.id,
+            };
+
+            console.log(addingProduct);
+            const dataJson = JSON.stringify(addingProduct);
+
+            await fetch(addProductLink, {
+              method: "POST", // or 'PUT'
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: dataJson,
+            }).then(
+              (response) => {
+                if (response.status === 200) {
+                  console.log("success");
+                } else {
+                  console.log("failed to fetch server");
+                }
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
+          }
+          const addQuantity = main + "/acs/carts/updateCartQuantity";
+
+          const addingQuantity = {
             cartID: this.props.cartId.id,
+            quantity: this.props.cart.amountOfproducts,
           };
 
-          console.log(addingProduct);
-          const dataJson = JSON.stringify(addingProduct);
+          console.log(addingQuantity);
+          const dataJson2 = JSON.stringify(addingQuantity);
 
-          await fetch(addProductLink, {
-            method: "POST", // or 'PUT'
+          fetch(addQuantity, {
+            method: "PUT",
             headers: {
               "Content-Type": "application/json",
             },
-            body: dataJson,
+            body: dataJson2,
           }).then(
             (response) => {
               if (response.status === 200) {
@@ -184,38 +248,21 @@ export class productByCategoryAAP extends Component {
             }
           );
         }
-        const addQuantity = main + "/acs/carts/updateCartQuantity";
-
-        const addingQuantity = {
-          cartID: this.props.cartId.id,
-          quantity: this.props.cart.amountOfproducts,
-        };
-
-        console.log(addingQuantity);
-        const dataJson2 = JSON.stringify(addingQuantity);
-
-        fetch(addQuantity, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson2,
-        }).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("success");
-            } else {
-              console.log("failed to fetch server");
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
       }
     };
 
     const handleItemClick = async (product) => {
+      var isExisUnwantedtBug = false;
+
+      if (this.props.bugsList.bugsList.length > 0) {
+        isExisUnwantedtBug = this.props.bugsList.bugsList.some(
+          (b) => b.bugName === "Unwanted product Bug"
+        );
+      }
+      if (isExisUnwantedtBug) {
+        handleAddToCart(product, 1);
+      }
+
       this.props.savePassingProduct({
         productToPass: product,
       });
@@ -276,6 +323,7 @@ function mapDispatchToProps(dispatch) {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
     saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -288,6 +336,7 @@ const mapStateToProps = (state) => {
     authAAP: state.authAAP,
     cartId: state.cartId,
     messageUpdate: state.messageUpdate,
+    bugsList: state.bugsList,
   };
 };
 

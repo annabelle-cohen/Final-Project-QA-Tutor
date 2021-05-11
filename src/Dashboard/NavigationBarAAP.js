@@ -24,6 +24,7 @@ import { savePassingProduct } from "../Actions/passProduct";
 import { Link, Route, NavLink } from "react-router-dom";
 import { avatar } from "../Asset/default_profile_pic";
 import { saveWatchlist } from "../Actions/addToWatchlist";
+import { saveBugsList } from "../Actions/saveBugsList";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
@@ -95,11 +96,16 @@ export class NavigationBarAAP extends Component {
   };
 
   handleSignOut = (e) => {
-    this.props.saveUserAAP({
-      userAAP: {},
-      isLoggedIn: this.props.authAAP.isLoggedIn,
-      isSignIn: false,
-    });
+    var isLogOutBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "Logout Bug"
+    );
+    if (!isLogOutBug) {
+      this.props.saveUserAAP({
+        userAAP: {},
+        isLoggedIn: this.props.authAAP.isLoggedIn,
+        isSignIn: false,
+      });
+    }
   };
 
   handleWatchlist = (e) => {
@@ -127,28 +133,30 @@ export class NavigationBarAAP extends Component {
   };
 
   loadPurchHistory = async () => {
-    await fetch(
-      "http://localhost:8092/acs/orders/getOrderHistroy/" +
-        this.props.authAAP.userAAP.email
-    )
-      .then((response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            const orderInfo = d;
-            this.setState({
-              historyPurchList: orderInfo,
+    if (this.props.authAAP.isSignIn) {
+      await fetch(
+        "http://localhost:8092/acs/orders/getOrderHistroy/" +
+          this.props.authAAP.userAAP.email
+      )
+        .then((response) => {
+          if (response.status === 200) {
+            response.json().then((d) => {
+              const orderInfo = d;
+              this.setState({
+                historyPurchList: orderInfo,
+              });
             });
-          });
-        } else {
-          console.log("Error:", response);
-          response.json().then((d) => {
-            console.log("Errordata", d);
-          });
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error.data);
-      });
+          } else {
+            console.log("Error:", response);
+            response.json().then((d) => {
+              console.log("Errordata", d);
+            });
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error.data);
+        });
+    }
   };
 
   dropDownNotifactions(purchaseHistory) {
@@ -800,6 +808,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(savePassingProduct(productToPass)),
     saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
     saveLastChoice: (choice) => dispatch(saveLastChoice(choice)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -810,6 +819,7 @@ const mapStateToProps = (state) => {
     productToPass: state.productToPass,
     watchlist: state.watchlist,
     choice: state.choice,
+    bugsList: state.bugsList,
   };
 };
 

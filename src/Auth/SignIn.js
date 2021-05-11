@@ -28,10 +28,10 @@ class SignIn extends Component {
     });
   };
 
-  handleSubmit = (e) => {
+  handleSubmit = async (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:8092//acs/users/login/" + this.state.email)
+    await fetch("http://localhost:8092//acs/users/login/" + this.state.email)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ succeded: true });

@@ -11,3 +11,4 @@ export const SAVE_CART_ID = "SAVE_CART_ID";
 export const SAVE_LAST_CHOICE = "SAVE_LAST_CHOICE";
 export const SAVE_MESSAGE = "SAVE_MESSAGE";
 export const STAY_SIGN_IN = "STAY_SIGN_IN";
+export const SAVE_BUGS_LIST = "SAVE_BUGS_LIST";

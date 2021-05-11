@@ -12,7 +12,13 @@ class NavBar extends Component {
       <nav className="nav-wrapper grey darken-3">
         <div className="container">
           <Link
-            to={this.props.auth.isLoggedIn ? "/dashboard" : "/"}
+            to={
+              this.props.auth.isLoggedIn
+                ? this.props.auth.user.roleEnum === "MANAGER"
+                  ? "/manager"
+                  : "/dashboard"
+                : "/"
+            }
             className="brand-logo"
           >
             QA Tutor

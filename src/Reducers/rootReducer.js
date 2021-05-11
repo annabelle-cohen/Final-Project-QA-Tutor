@@ -11,6 +11,7 @@ import savingCartId from "./cartIDReducer";
 import lastChoiceReducer from "./lastChoiceReducer";
 import messageReducer from "./messageReducer";
 import staySignedReducer from "./signInReducer";
+import bugsListReducer from "./bugsListReducer";
 import { combineReducers } from "redux";
 // in future will be shopCartReducer
 
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
   choice: lastChoiceReducer,
   messageUpdate: messageReducer,
   signInCheck: staySignedReducer,
+  bugsList: bugsListReducer,
 });
 
 export default rootReducer;

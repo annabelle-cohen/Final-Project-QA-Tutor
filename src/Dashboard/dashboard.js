@@ -38,8 +38,10 @@ import { Redirect } from "react-router-dom";
 import { saveAllCategories } from "../Actions/allCategoriesAAP";
 import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import { saveLastChoice } from "../Actions/saveLastChoice";
+import { saveBugsList } from "../Actions/saveBugsList";
 import HomeSearch from "./homeSearch";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveUser } from "../Actions/authActions";
 import { saveMessage } from "../Actions/LoadingMessage";
 
 export class Home extends Component {
@@ -111,13 +113,51 @@ export class Home extends Component {
       choice: this.props.choice.choice,
     });
 
+    this.props.saveBugsList({
+      bugsList: [],
+    });
+
+    this.props.saveUser({
+      user: this.props.auth.user,
+      isLoggedIn: this.props.auth.isLoggedIn,
+    });
+
+    console.log("user is:");
+    console.log(this.props.authAAP);
+
     this.fillCategories = this.fillCategories.bind(this);
     this.productTemplate = this.productTemplate.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handlecLinkSave = this.handlecLinkSave.bind(this);
 
     this.fillCategories();
+    this.fillBugsList();
   }
+
+  fillBugsList = async (e) => {
+    await fetch(
+      "http://localhost:8092/acs/students/login/" + this.props.auth.user.email
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({ succeded: true });
+          response.json().then((d) => {
+            const user = d;
+            this.props.saveBugsList({
+              bugsList: user.bugs,
+            });
+          });
+        } else {
+          console.log("Error:", response);
+          response.json().then((d) => {
+            console.log("Errordata", d);
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error.data);
+      });
+  };
 
   fillCategories = async (e) => {
     const data = {
@@ -158,41 +198,61 @@ export class Home extends Component {
 
   handleClickOnSpecificCategory = async (e) => {
     var selectedCategory = e.target.innerText;
-
-    if (selectedCategory === "Smartphones") {
+    var isCtaegoryBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "Category Bug"
+    );
+    if (selectedCategory === "Smartphones" && !isCtaegoryBug) {
       selectedCategory = "smartphone";
-    }
-
-    if (selectedCategory === "Collectibles") {
-      selectedCategory = "Collectible";
-    }
-
-    if (selectedCategory === "Fragrances") {
+    } else {
       selectedCategory = "Fragrance";
     }
 
-    if (selectedCategory === "Portable Audio & Headphones") {
+    if (selectedCategory === "Collectibles" && !isCtaegoryBug) {
+      selectedCategory = "Collectible";
+    } else {
+      selectedCategory = "smartphone";
+    }
+
+    if (selectedCategory === "Fragrances" && !isCtaegoryBug) {
+      selectedCategory = "Fragrance";
+    } else {
+      selectedCategory = "Collectible";
+    }
+
+    if (selectedCategory === "Portable Audio & Headphones" && !isCtaegoryBug) {
       selectedCategory = "Headphones";
-    }
-
-    if (selectedCategory === "Vehicle Electronics & GPS") {
-      selectedCategory = "GPS";
-    }
-
-    if (selectedCategory === "Shaving & Hair Removal") {
+    } else {
       selectedCategory = "shave";
     }
 
-    if (selectedCategory === "Home Décor") {
+    if (selectedCategory === "Vehicle Electronics & GPS" && !isCtaegoryBug) {
+      selectedCategory = "GPS";
+    } else {
+      selectedCategory = "Headphones";
+    }
+
+    if (selectedCategory === "Shaving & Hair Removal" && !isCtaegoryBug) {
+      selectedCategory = "shave";
+    } else {
+      selectedCategory = "GPS";
+    }
+
+    if (selectedCategory === "Home Décor" && !isCtaegoryBug) {
+      selectedCategory = "Home Decor";
+    } else {
+      selectedCategory = "Pets";
+    }
+
+    if (selectedCategory === "Art & Craft Supplies" && !isCtaegoryBug) {
+      selectedCategory = "Art";
+    } else {
       selectedCategory = "Home Decor";
     }
 
-    if (selectedCategory === "Art & Craft Supplies") {
-      selectedCategory = "Art";
-    }
-
-    if (selectedCategory === "Pets Supplies") {
+    if (selectedCategory === "Pets Supplies" && !isCtaegoryBug) {
       selectedCategory = "Pets";
+    } else {
+      selectedCategory = "Art";
     }
 
     var data = {
@@ -1672,6 +1732,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(saveProductsByCategoryID(productsById)),
     saveMessage: (messageUpdate) => dispatch(saveMessage(messageUpdate)),
     saveLastChoice: (choice) => dispatch(saveLastChoice(choice)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
+    saveUser: (user) => dispatch(saveUser(user)),
   };
 }
 
@@ -1682,6 +1744,8 @@ const mapStateToProps = (state) => {
     authAAP: state.authAAP,
     messageUpdate: state.messageUpdate,
     choice: state.choice,
+    bugsList: state.bugsList,
+    auth: state.auth,
   };
 };
 
