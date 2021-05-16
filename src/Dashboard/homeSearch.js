@@ -82,10 +82,6 @@ class HomeSearch1 extends Component {
     this.setState({
       search: e.target.value,
     });
-
-    const isLogoBug = this.props.bugsList.bugsList.some(
-      (b) => b.bugName === "Logo Button Bug"
-    );
   };
 
   saveSearchKeywordWithServer = async () => {
@@ -257,7 +253,15 @@ class HomeSearch1 extends Component {
             zIndex: 0,
           }}
         >
-          <Link to={this.isLogoBug ? "/dashboard/history" : "/dashboard"}>
+          <Link
+            to={
+              this.props.bugsList.bugsList.some(
+                (b) => b.bugName === "Logo Button Bug"
+              )
+                ? "/dashboard/history"
+                : "/dashboard"
+            }
+          >
             <img
               src={logo}
               style={{

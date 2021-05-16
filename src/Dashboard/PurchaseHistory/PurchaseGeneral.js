@@ -5,7 +5,7 @@ import OrderList from "./Order/Order";
 
 const HistoryList = ({ token, onItemClick, onBuyAgain, handleBuyAgain }) => {
   const classes = useStyles();
-
+  console.log(token);
   return (
     <div>
       <Typography

@@ -29,6 +29,9 @@ const PaymentForm = ({
   const [Focus, setFocus] = useState("");
   const [isValid, setValid] = useState("");
   const [isFirst, setFirst] = useState(true);
+  const [isFirst2, setFirst2] = useState(true);
+  const [isAllFieldEmptyBug, setIsAllFieldBug] = useState(false);
+  const [isCvvBug, setCvvBug] = useState(false);
 
   useEffect(() => {
     var res = personalInfo.billingInfos.creditCardEXPDate.split("/");
@@ -37,28 +40,29 @@ const PaymentForm = ({
     var final_month = "";
     var final_year = "";
 
-    var isAllFieldsBug = this.props.bugsList.bugsList.some(
-      (b) => b.bugName === "Credit Bug"
-    );
-
-    var isCVVbug = this.props.bugsList.bugsList.some(
-      (b) => b.bugName === "CVV Bug"
-    );
-
+    var isAllFieldsBug = bugsList.some((b) => b.bugName === "Credit Bug");
+    console.log("is all fields bug" + isAllFieldsBug);
+    setIsAllFieldBug(isAllFieldsBug);
+    if (isFirst2 && isAllFieldsBug) {
+      setIsAllFieldBug(true);
+      setFirst2(false);
+    }
+    var isCVVbug = bugsList.some((b) => b.bugName === "CVV Bug");
+    console.log("is CVV bug" + isCVVbug);
     if (isCVVbug && isFirst) {
       var cvv = Math.floor(Math.random() * 1000) + 100;
       if (cvv !== parseInt(personalInfo.billingInfos.creditCardPIN)) {
         setCvc(cvv);
+        setCvvBug(true);
         setFirst(false);
       }
     }
 
     if (isAllFieldsBug) {
-      setValid(true);
+      setValid(false);
     }
-    var isDateBug = this.props.bugsList.bugsList.some(
-      (b) => b.bugName === "Date Bug"
-    );
+    var isDateBug = bugsList.some((b) => b.bugName === "Date Bug");
+    console.log("is Date bug" + isDateBug);
 
     if (res[0] < 10) {
       str1_month = "0";
@@ -71,37 +75,28 @@ const PaymentForm = ({
 
     var temp = res[1].split("");
     var final_year = temp[2].concat(temp[3]);
+    setExpiryForCheck(final_month.concat(final_year));
 
     if (isDateBug) {
       var temp = final_year;
       final_year = temp - 5;
     }
     setExpiry(final_month.concat(final_year));
-    setExpiryForCheck(final_month.concat(final_year));
   });
 
   const handleSubmit = async (e) => {
-    var isPurchaseBug = this.props.bugsList.bugsList.some(
-      (b) => b.bugName === "Purchase Bug"
-    );
+    var isPurchaseBug = bugsList.some((b) => b.bugName === "Purchase Bug");
+    console.log("in handle submit");
     e.preventDefault();
-    if (isPurchaseBug) {
-      setValid(true);
-      nextStep();
-    } else {
-      var nameToCheck =
-        personalInfo.personalInfo.firstName +
-        " " +
-        personalInfo.personalInfo.lastName;
-
-      var isValid2 = true;
-      if (
-        (number !== "") &
-        (name !== "") &
-        (id !== "") &
-        (expiry !== "") &
-        (cvc !== "")
-      ) {
+    if (
+      number === "" ||
+      name === "" ||
+      id === "" ||
+      expiry === "" ||
+      cvc === ""
+    ) {
+      if (isAllFieldEmptyBug) {
+        setValid(false);
         const billingInfObj = {
           number: number,
           name: name,
@@ -109,35 +104,57 @@ const PaymentForm = ({
           expiry: expiry,
           cvc: cvc,
         };
+        billingInfo(billingInfObj);
+        nextStep();
+      } else {
+        setValid(true);
+      }
+    } else {
+      var nameToCheck =
+        personalInfo.personalInfo.firstName +
+        " " +
+        personalInfo.personalInfo.lastName;
+      setValid(false);
+      const billingInfObj = {
+        number: number,
+        name: name,
+        id: id,
+        expiry: expiry,
+        cvc: cvc,
+      };
 
-        if (number !== personalInfo.billingInfos.creditCardNo) {
-          isValid2 = false;
-        }
+      var isValid2 = true;
 
-        if (name !== nameToCheck) {
-          isValid2 = false;
-        }
+      if (number !== personalInfo.billingInfos.creditCardNo) {
+        isValid2 = false;
+      }
 
-        if (cvc !== personalInfo.billingInfos.creditCardPIN) {
-          isValid2 = false;
-        }
+      if (name !== nameToCheck) {
+        isValid2 = false;
+      }
 
-        if (expiry !== expiryForCheck) {
-          isValid2 = false;
-        }
+      if (cvc !== personalInfo.billingInfos.creditCardPIN && !isCvvBug) {
+        isValid2 = false;
+      }
 
-        if (id.length !== 9) {
-          isValid2 = false;
-        }
+      if (expiry !== expiryForCheck) {
+        isValid2 = false;
+      }
 
-        //need to check id and expiry date
+      if (id.length !== 9) {
+        isValid2 = false;
+      }
+
+      if (isPurchaseBug) {
+        backStep();
+      } else {
         if (isValid2) {
           billingInfo(billingInfObj);
-          setValid(true);
+          setValid(false);
           nextStep();
+        } else {
+          setValid(true);
         }
-      } else {
-        setValid(false);
       }
     }
   };
@@ -220,7 +237,8 @@ const PaymentForm = ({
                   mask="99/99"
                   value={expiry}
                   name="expiry"
-                  placeholder={expiry}
+                  placeholder={"mm/yy"}
+                  disabled={false}
                   onChange={(e) => setExpiry(e.value)}
                   onFocus={(e) => setFocus(e.target.name)}
                 ></InputMask>

@@ -50,6 +50,15 @@ export class NavigationBarAAP extends Component {
       amountOfproducts: this.props.cart.amountOfproducts,
     });
 
+    /*this.props.saveCart({
+      cartId: this.props.cart.cartID,
+      lastPosition: this.props.cart.lastPosition,
+      totalPrice: 0,
+      totalNumOfProducts: 0,
+      cart: [],
+      amountOfproducts: [],
+    });*/
+
     this.props.saveWatchlist({
       Watchlist: this.props.watchlist.Watchlist,
     });

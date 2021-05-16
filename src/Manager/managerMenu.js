@@ -105,7 +105,7 @@ export default function NavTabs({
       //2 done
       bugName: "ProductPageAdvanced Bug",
       description:
-        "Product doesn't add to cart from the category page but still update the total sum and show like is add at the navigation bar",
+        "Product doesn't add to cart from the product page but still update the total sum and show like is add at the navigation bar",
       isAdd: false,
     },
     {
@@ -117,7 +117,7 @@ export default function NavTabs({
     {
       //4 done
       bugName: "ProductsCategoryAdvanced Bug",
-      description: "Product doesn't add to cart from the category page",
+      description: "Product add to cart succefully but with extra 52.34$",
       isAdd: false,
     },
     {

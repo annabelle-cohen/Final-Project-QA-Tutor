@@ -132,6 +132,7 @@ export class Home extends Component {
 
     this.fillCategories();
     this.fillBugsList();
+    console.log(this.props.bugsList.bugsList);
   }
 
   fillBugsList = async (e) => {
@@ -201,58 +202,76 @@ export class Home extends Component {
     var isCtaegoryBug = this.props.bugsList.bugsList.some(
       (b) => b.bugName === "Category Bug"
     );
-    if (selectedCategory === "Smartphones" && !isCtaegoryBug) {
-      selectedCategory = "smartphone";
-    } else {
-      selectedCategory = "Fragrance";
+    if (selectedCategory === "Smartphones") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "smartphone";
+      } else {
+        selectedCategory = "Fragrance";
+      }
     }
 
-    if (selectedCategory === "Collectibles" && !isCtaegoryBug) {
-      selectedCategory = "Collectible";
-    } else {
-      selectedCategory = "smartphone";
+    if (selectedCategory === "Collectibles") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Collectible";
+      } else {
+        selectedCategory = "smartphone";
+      }
     }
 
-    if (selectedCategory === "Fragrances" && !isCtaegoryBug) {
-      selectedCategory = "Fragrance";
-    } else {
-      selectedCategory = "Collectible";
+    if (selectedCategory === "Fragrances") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Fragrance";
+      } else {
+        selectedCategory = "Collectible";
+      }
     }
 
-    if (selectedCategory === "Portable Audio & Headphones" && !isCtaegoryBug) {
-      selectedCategory = "Headphones";
-    } else {
-      selectedCategory = "shave";
+    if (selectedCategory === "Portable Audio & Headphones") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Headphones";
+      } else {
+        selectedCategory = "shave";
+      }
     }
 
-    if (selectedCategory === "Vehicle Electronics & GPS" && !isCtaegoryBug) {
-      selectedCategory = "GPS";
-    } else {
-      selectedCategory = "Headphones";
+    if (selectedCategory === "Vehicle Electronics & GPS") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "GPS";
+      } else {
+        selectedCategory = "Headphones";
+      }
     }
 
-    if (selectedCategory === "Shaving & Hair Removal" && !isCtaegoryBug) {
-      selectedCategory = "shave";
-    } else {
-      selectedCategory = "GPS";
+    if (selectedCategory === "Shaving & Hair Removal") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "shave";
+      } else {
+        selectedCategory = "GPS";
+      }
     }
 
-    if (selectedCategory === "Home Décor" && !isCtaegoryBug) {
-      selectedCategory = "Home Decor";
-    } else {
-      selectedCategory = "Pets";
+    if (selectedCategory === "Home Décor") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Home Decor";
+      } else {
+        selectedCategory = "Pets";
+      }
     }
 
-    if (selectedCategory === "Art & Craft Supplies" && !isCtaegoryBug) {
-      selectedCategory = "Art";
-    } else {
-      selectedCategory = "Home Decor";
+    if (selectedCategory === "Art & Craft Supplies") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Art";
+      } else {
+        selectedCategory = "Home Decor";
+      }
     }
 
-    if (selectedCategory === "Pets Supplies" && !isCtaegoryBug) {
-      selectedCategory = "Pets";
-    } else {
-      selectedCategory = "Art";
+    if (selectedCategory === "Pets Supplies") {
+      if (!isCtaegoryBug) {
+        selectedCategory = "Pets";
+      } else {
+        selectedCategory = "Art";
+      }
     }
 
     var data = {
@@ -481,7 +500,7 @@ export class Home extends Component {
                 <div>
                   <Button
                     id="Computers-Tablets-link"
-                    label="Computers& Tablets & Networking"
+                    label="Computers&Tablets & Networking"
                     onClick={this.handleClick}
                     className="p-button-link"
                   />{" "}

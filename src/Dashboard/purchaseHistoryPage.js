@@ -74,7 +74,7 @@ class purchaseHistoryList1 extends Component {
             if (isHistoryListBug) {
               if (orderInfo.length > 1) {
                 this.setState({
-                  historyList: orderInfo[0],
+                  historyList: [orderInfo[0]],
                 });
               } else {
                 this.setState({
@@ -109,18 +109,22 @@ class purchaseHistoryList1 extends Component {
       var isBuyAgainBug = this.props.bugsList.bugsList.some(
         (b) => b.bugName === "Buy again Bug"
       );
+
       var ArrayOfProducts = [];
       var totalPrice;
-      if (isBuyAgainBug && Order.length > 1) {
+      if (isBuyAgainBug && this.state.historyList.length > 1) {
+        console.log("in if");
         var index = this.state.historyList.findIndex(
-          (order) => order.orderID === Order.ordertID
+          (o) => o.orderID === Order.orderID
         );
+
         if (index > 0) {
+          console.log(this.state.historyList);
           ArrayOfProducts = this.state.historyList[index - 1].products;
-          totalPrice = this.state.historyList[index - 1].totalPrice;
+          totalPrice = parseFloat(this.state.historyList[index - 1].totalPrice);
         } else {
           ArrayOfProducts = this.state.historyList[index + 1].products;
-          totalPrice = this.state.historyList[index + 1].totalPrice;
+          totalPrice = parseFloat(this.state.historyList[index + 1].totalPrice);
         }
       } else {
         ArrayOfProducts = Order.products;

@@ -125,6 +125,7 @@ export class productByCategoryAAP extends Component {
 
   render() {
     const handleAddToCart = async (product, quantity) => {
+      console.log("in add to cart");
       var isExistBugAdvenced = false;
       var isExistBugs = false;
 
@@ -137,104 +138,83 @@ export class productByCategoryAAP extends Component {
         );
       }
       if (isExistBugs) {
-        if (isExistBugs) {
-          this.handleAddProductBug();
-        }
+        this.handleAddProductBug();
       } else {
-        /*total number of all products in the cart*/
-        var totalNum = this.props.cart.totalNumOfProducts + quantity;
-        var price = 0;
-        if (isExistBugAdvenced) {
-          price =
-            this.props.cart.totalPrice +
-            product.unitPrice +
-            product.shippingServiceCost +
-            52.34;
-        } else {
-          price =
-            this.props.cart.totalPrice +
-            product.unitPrice +
-            product.shippingServiceCost;
-        }
+        console.log("in else");
+        handleAddToCartAdvanced(product, quantity, isExistBugAdvenced);
+      }
+    };
 
-        var cart = this.props.cart.cart;
-        /**for the array of amount of each product */
-        var amountOfproducts = this.props.cart.amountOfproducts;
-        var lastPosition = window.pageYOffset;
-        var isExist = cart.some((item) => item.title === product.title);
-        console.log(amountOfproducts);
-        console.log(totalNum);
-        console.log(isExist);
-        if (isExist) {
-          var index = cart.findIndex(
-            (item) => item.productID === product.productID
-          );
-          console.log(index);
-          amountOfproducts[index] += 1;
-        } else {
-          cart.push(product);
-          var temp = {};
-          temp = quantity;
-          amountOfproducts.push(temp);
-        }
+    const handleAddToCartAdvanced = async (
+      product,
+      quantity,
+      isBugAdvanced
+    ) => {
+      console.log("in handleAddToCartAdvanced");
+      /*total number of all products in the cart*/
+      var totalNum = parseInt(this.props.cart.totalNumOfProducts) + quantity;
+      var price = 0;
+      if (isBugAdvanced) {
+        price =
+          parseFloat(this.props.cart.totalPrice) +
+          product.unitPrice +
+          product.shippingServiceCost +
+          52.34;
+      } else {
+        price =
+          parseFloat(this.props.cart.totalPrice) +
+          product.unitPrice +
+          product.shippingServiceCost;
+      }
 
-        this.props.saveCart({
-          lastPosition: lastPosition,
-          totalPrice: price,
-          totalNumOfProducts: totalNum,
-          cart: cart,
-          amountOfproducts: amountOfproducts,
-        });
+      var cart = this.props.cart.cart;
+      /**for the array of amount of each product */
+      var amountOfproducts = this.props.cart.amountOfproducts;
+      var lastPosition = window.pageYOffset;
+      var isExist = cart.some((item) => item.title === product.title);
 
-        if (this.props.authAAP.isSignIn) {
-          const main = "http://localhost:8092//";
+      if (isExist) {
+        var index = cart.findIndex(
+          (item) => item.productID === product.productID
+        );
+        console.log(index);
+        amountOfproducts[index] += 1;
+      } else {
+        cart.push(product);
+        var temp = {};
+        temp = quantity;
+        amountOfproducts.push(temp);
+      }
 
-          if (!isExist) {
-            const addProductLink = main + "/acs/products/addProductToCart";
+      this.props.saveCart({
+        lastPosition: lastPosition,
+        totalPrice: price,
+        totalNumOfProducts: totalNum,
+        cart: cart,
+        amountOfproducts: amountOfproducts,
+      });
 
-            const addingProduct = {
-              productID: product.productID,
-              cartID: this.props.cartId.id,
-            };
+      if (this.props.authAAP.isSignIn) {
+        console.log("in if add product advanced");
+        const main = "http://localhost:8092//";
 
-            console.log(addingProduct);
-            const dataJson = JSON.stringify(addingProduct);
+        if (!isExist) {
+          const addProductLink = main + "/acs/products/addProductToCart";
 
-            await fetch(addProductLink, {
-              method: "POST", // or 'PUT'
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: dataJson,
-            }).then(
-              (response) => {
-                if (response.status === 200) {
-                  console.log("success");
-                } else {
-                  console.log("failed to fetch server");
-                }
-              },
-              (error) => {
-                console.log(error);
-              }
-            );
-          }
-          const addQuantity = main + "/acs/carts/updateCartQuantity";
-
-          const addingQuantity = {
+          const addingProduct = {
+            productID: product.productID,
             cartID: this.props.cartId.id,
-            quantity: this.props.cart.amountOfproducts,
           };
 
-          console.log(addingQuantity);
-          const dataJson2 = JSON.stringify(addingQuantity);
+          console.log(addingProduct);
+          const dataJson = JSON.stringify(addingProduct);
 
-          fetch(addQuantity, {
-            method: "PUT",
+          await fetch(addProductLink, {
+            method: "POST", // or 'PUT'
             headers: {
               "Content-Type": "application/json",
             },
-            body: dataJson2,
+            body: dataJson,
           }).then(
             (response) => {
               if (response.status === 200) {
@@ -248,9 +228,36 @@ export class productByCategoryAAP extends Component {
             }
           );
         }
+        const addQuantity = main + "/acs/carts/updateCartQuantity";
+
+        const addingQuantity = {
+          cartID: this.props.cartId.id,
+          quantity: this.props.cart.amountOfproducts,
+        };
+
+        console.log(addingQuantity);
+        const dataJson2 = JSON.stringify(addingQuantity);
+
+        fetch(addQuantity, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: dataJson2,
+        }).then(
+          (response) => {
+            if (response.status === 200) {
+              console.log("success");
+            } else {
+              console.log("failed to fetch server");
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
       }
     };
-
     const handleItemClick = async (product) => {
       var isExisUnwantedtBug = false;
 
@@ -260,14 +267,12 @@ export class productByCategoryAAP extends Component {
         );
       }
       if (isExisUnwantedtBug) {
-        handleAddToCart(product, 1);
+        handleAddToCartAdvanced(product, 1, false);
       }
 
       this.props.savePassingProduct({
         productToPass: product,
       });
-
-      console.log(this.props.productToPass);
     };
 
     return (

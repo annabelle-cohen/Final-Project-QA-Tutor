@@ -79,6 +79,8 @@ class productPage1 extends Component {
         numVisible: 1,
       },
     ];
+    console.log(this.props.bugsList.bugsList);
+    console.log(this.props.productToPass.productToPass);
     this.updateState = this.updateState.bind(this);
     this.updateState();
     this.saveToRecentlyViewed();
@@ -98,6 +100,7 @@ class productPage1 extends Component {
         isProductPageBug: isExist,
       });
     }
+    // this.saveToRecentlyViewed();
   }
 
   saveToRecentlyViewed = async () => {
@@ -126,36 +129,38 @@ class productPage1 extends Component {
   };
 
   addProductToRecentlyViewed = async (product) => {
-    console.log(product);
+    var isOk = false;
+    while (!isOk) {
+      const main = "http://localhost:8092/";
+      const recentlyViewdLink = main + "/acs/viewedlist/addProductToViewedList";
+      const viewedList = {
+        productID: this.props.productToPass.productToPass.productID,
+        viewedListID: product.viewedListID,
+      };
 
-    const main = "http://localhost:8092//";
-    const recentlyViewdLink = main + "/acs/viewedlist/addProductToViewedList";
+      const dataJson = JSON.stringify(viewedList);
 
-    const viewedList = {
-      productID: this.props.productToPass.productToPass.productID,
-      viewedListID: product.viewedListID,
-    };
-
-    const dataJson = JSON.stringify(viewedList);
-
-    await fetch(recentlyViewdLink, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          console.log("success");
-        } else {
-          console.log("failed to fetch server");
+      await fetch(recentlyViewdLink, {
+        method: "POST", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("success add to recentley viewed");
+            isOk = true;
+          } else {
+            console.log("failed to fetch server");
+          }
+        },
+        (error) => {
+          console.log(error);
+          isOk = false;
         }
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+      );
+    }
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -206,28 +211,34 @@ class productPage1 extends Component {
     var isExistBugAdvenced = false;
     var isExistBugs = false;
     var isQuantityAdvancedBug = false;
+    var isUnitStockBug = false;
 
     if (this.props.bugsList.bugsList.length > 0) {
       isExistBugs = this.props.bugsList.bugsList.some(
-        (b) => b.bugName === "ProductsCategory Bug"
+        (b) => b.bugName === "ProductPage Bug"
       );
+      console.log("Product page bug:" + isExistBugs);
       isExistBugAdvenced = this.props.bugsList.bugsList.some(
-        (b) => b.bugName === "ProductsCategoryAdvanced Bug"
+        (b) => b.bugName === "ProductPageAdvanced Bug"
       );
-
+      isUnitStockBug = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "Stock Bug"
+      );
+      console.log("Product page bug advanced:" + isExistBugAdvenced);
       isQuantityAdvancedBug = this.props.bugsList.bugsList.some(
         (b) => b.bugName === "QuantityAdvanced Bug"
       );
+      console.log("Qantity bug advanced:" + isQuantityAdvancedBug);
     }
     if (isExistBugs || isExistBugAdvenced) {
       if (isExistBugs) {
-        this.handleAddToCartBug();
+        this.handleAddProductBug();
       }
       if (isExistBugAdvenced) {
-        this.handleAddToCartAdvnced();
+        this.handleAddProductBugAdvnced();
       }
     } else {
-      if (this.state.quantity <= this.state.unitInStock) {
+      if (this.state.quantity <= this.state.unitInStock || isUnitStockBug) {
         var tempTotalPrice = 0;
         var tempTotalNum = 0;
         if (isQuantityAdvancedBug) {
@@ -316,7 +327,7 @@ class productPage1 extends Component {
           }).then(
             (response) => {
               if (response.status === 200) {
-                console.log("success");
+                console.log("success add product to cart");
               } else {
                 console.log("failed to fetch server");
               }
@@ -346,7 +357,7 @@ class productPage1 extends Component {
         }).then(
           (response) => {
             if (response.status === 200) {
-              console.log("success");
+              console.log("success update quantity");
             } else {
               console.log("failed to fetch server");
             }

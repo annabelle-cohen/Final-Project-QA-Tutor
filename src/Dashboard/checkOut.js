@@ -47,7 +47,7 @@ class checkout1 extends Component {
     );
 
     if (isCheckOutBug) {
-      this.onEmptyCart();
+      this.emptyCart();
     }
   }
   isSignOut() {
@@ -136,6 +136,41 @@ class checkout1 extends Component {
     }
   };
 
+  emptyCart = async () => {
+    this.props.saveCart({
+      lastPosition: 0,
+      totalPrice: 0,
+      totalNumOfProducts: 0,
+      cart: [],
+      amountOfproducts: [],
+    });
+
+    if (this.props.authAAP.isSignIn) {
+      const data = {
+        cartID: this.props.cartId.id,
+      };
+      const dataJson = JSON.stringify(data);
+      await fetch("http://localhost:8092/acs/carts/clearCart", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("Deleted!");
+          } else {
+            console.log("failed delete");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    }
+  };
+
   render() {
     const onUpdateCartQty = async (item, newQuantity) => {
       const index = this.props.cart.cart.findIndex(
@@ -207,19 +242,24 @@ class checkout1 extends Component {
         var index = this.props.cart.cart.findIndex(
           (product) => item.productID === product.productID
         );
-        this.deleteSingleProduct(item);
+        var product = item;
         if (index > 0) {
-          this.deleteSingleProduct(this.cart.cart[index - 1]);
+          product = this.props.cart.cart[index - 1];
         } else {
-          this.deleteSingleProduct(this.cart.cart[index + 1]);
+          product = this.props.cart.cart[index + 1];
         }
+        this.deleteSingleProduct(item);
+        setTimeout(() => {
+          this.deleteSingleProduct(product);
+        }, 200);
       } else {
         this.deleteSingleProduct(item);
       }
     };
 
     const onEmptyCart = async () => {
-      this.props.saveCart({
+      this.emptyCart();
+      /*   this.props.saveCart({
         lastPosition: 0,
         totalPrice: 0,
         totalNumOfProducts: 0,
@@ -250,7 +290,7 @@ class checkout1 extends Component {
             console.log(error);
           }
         );
-      }
+      }*/
     };
 
     const passingItem = (item) => {
