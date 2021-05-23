@@ -7,6 +7,7 @@ import { saveUserAAP } from "../Actions/authAAPActions";
 import { saveCartID } from "../Actions/savingCartId";
 import { saveCart } from "../Actions/shoppingCart";
 import { saveWatchlist } from "../Actions/addToWatchlist";
+import { saveBugsList } from "../Actions/saveBugsList";
 import { Redirect } from "react-router-dom";
 import "./signintoaapwithpass.css";
 import { Link } from "react-router-dom";
@@ -42,6 +43,10 @@ export class SignInToAAPWithPassword extends Component {
 
     this.props.saveWatchlist({
       Watchlist: this.props.watchlist.Watchlist,
+    });
+
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
     });
 
     console.log(this.props.cartId.id);
@@ -201,7 +206,14 @@ export class SignInToAAPWithPassword extends Component {
   };
 
   signInContinue = (e) => {
-    if (this.props.authAAP.userAAP.password === this.state.password) {
+    var isBugSignInExist = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "SignInToAAP Bug"
+    );
+
+    if (
+      this.props.authAAP.userAAP.password === this.state.password &&
+      !isBugSignInExist
+    ) {
       this.setState({ succededLog: false });
       this.checkCartAccordingServer();
       this.checkWatchListAccoridingServer();
@@ -306,6 +318,7 @@ function mapDispatchToProps(dispatch) {
     saveCart: (cart) => dispatch(saveCart(cart)),
     saveCartID: (cartId) => dispatch(saveCartID(cartId)),
     saveWatchlist: (watchlist) => dispatch(saveWatchlist(watchlist)),
+    saveBugsList: (bugsList) => dispatch(saveBugsList(bugsList)),
   };
 }
 
@@ -315,6 +328,7 @@ const mapStateToProps = (state) => {
     cart: state.cart,
     cartId: state.cartId,
     watchlist: state.watchlist,
+    bugsList: state.bugsList,
   };
 };
 

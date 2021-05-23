@@ -105,7 +105,8 @@ export default function NavTabs({
       //2 done
       bugName: "ProductPageAdvanced Bug",
       description:
-        "Product doesn't add to cart from the product page but still update the total sum and show like is add at the navigation bar",
+        "Product doesn't add to cart from the product page\n" +
+        "but still update the total sum and show like is add at the navigation bar",
       isAdd: false,
     },
     {
@@ -131,81 +132,95 @@ export default function NavTabs({
       //6 done
       bugName: "QuantityAdvanced Bug",
       description:
-        "The quantity is increased but when the student add to cart is always qauntity 1",
+        "The quantity is increased in product page, but when the student add to cart is always qauntity 1",
       isAdd: false,
     },
     {
       //7 done
+      bugName: "QuantityCheckOut Bug",
+      description:
+        "The Student try to increase the quantity in the check out page, but it doesn't do anything.",
+      isAdd: false,
+    },
+    {
+      //8 done
+      bugName: "QuantityCheckOutAdvanced Bug",
+      description:
+        "The Quantity is increased even at the payment form, but at the summary of the order in the student email nothing change",
+      isAdd: false,
+    },
+    {
+      //9 done
       bugName: "Unwanted product Bug",
       description: "Product that doesn't even chosen add to cart",
       isAdd: false,
     },
     {
-      //8 done
+      //10 done
       bugName: "Credit Bug",
       description: "The students pay without all fields fills",
       isAdd: false,
     },
     {
-      //9 ali need to do this
+      //11 ali need to do this
       bugName: "TotalPrice Bug",
       description: "The total price in the summary doesn't correct",
       isAdd: false,
     },
     {
-      //10 done
+      //12 done
       bugName: "CVV Bug",
       description: "The cvv at the credit card doesnt correct",
       isAdd: false,
     },
     {
-      //11 done
+      //13 done
       bugName: "Date Bug",
       description: "The date at the credit card doesn't correct",
       isAdd: false,
     },
     {
-      //12 done
+      //14 done
       bugName: "Purchase Bug",
       description: "Purchase doesn't work even with correct credit card",
       isAdd: false,
     },
     {
-      //13 done
+      //15 done
       bugName: "Stock Bug",
       description:
         "It is possible to add a larger quantity than is in stock to the cart",
       isAdd: false,
     },
     {
-      //14 done
+      //16 done
       bugName: "History Bug",
       description:
         "The system will not display the entire purchase history of that account",
       isAdd: false,
     },
     {
-      //15 done
+      //17 done
       bugName: "Category Bug",
       description:
         "By pressing on desired category it takes the user to different category",
       isAdd: false,
     },
     {
-      //16 done
+      //18 done
       bugName: "Results Bug",
       description:
         "No matter what the user looking for at the search input it always show no results",
       isAdd: false,
     },
     {
-      //17 done
+      //19 done
       bugName: "Checkout Bug",
       description: "when the student go to check out, the cart is empty.",
       isAdd: false,
     },
     {
-      //18 done
+      //20 done
       bugName: "Delete single prodect Bug",
       description:
         "when the student try to delete single product it delete more products.\n" +
@@ -213,14 +228,14 @@ export default function NavTabs({
       isAdd: false,
     },
     {
-      //19 done
+      //21 done
       bugName: "Logout Bug",
       description:
         "The student try to logout from aap and the button doesn't work",
       isAdd: false,
     },
     {
-      //20 done
+      //22 done
       bugName: "Buy again Bug",
       description:
         "The student try to but again a cart in the history but when he click on buy again button it is buy different cart\n" +
@@ -228,7 +243,7 @@ export default function NavTabs({
       isAdd: false,
     },
     {
-      //21 done
+      //23 done
       bugName: "Watchlist Product Page Bug",
       description:
         "Watchlist bug will be little bit confusing, first if the student have something in their cart it will add to watch list by press on the button add to watchlist\n" +
@@ -236,10 +251,52 @@ export default function NavTabs({
       isAdd: false,
     },
     {
-      //22 done
+      //24 done
       bugName: "Logo Button Bug",
       description:
         "The Logo Button of AAP is always takes the student to Purchase History ",
+      isAdd: false,
+    },
+    {
+      //25 done
+      bugName: "ProductMenuLink Bug",
+      description:
+        "The link of the product in the menu drop down at the navigation bar always takes the user to home page",
+      isAdd: false,
+    },
+    {
+      //26 done
+      bugName: "ProductWatchlistLink Bug",
+      description:
+        "The link of the product in the watchlist drop down at the navigation bar always takes the user to sign in to AAP page",
+      isAdd: false,
+    },
+    {
+      //27 done
+      bugName: "ProductLinkProductsPage Bug",
+      description:
+        "The link of the product in the products page takes to another product",
+      isAdd: false,
+    },
+    {
+      //28 done
+      bugName: "SignInToAAP Bug",
+      description:
+        "The user try to sign in to aap and it always say incorrect details even the details are correct.",
+      isAdd: false,
+    },
+    {
+      //29 done
+      bugName: "PopularCategories Bug",
+      description:
+        "The Links of the popular categories at the top of the page always link to the dashboard and do nothing",
+      isAdd: false,
+    },
+    {
+      //30 done
+      bugName: "PopularCategoriesAdvanced Bug",
+      description:
+        "The Links of the popular categories at the bottom of the page takes to the popular categories at the top of the page",
       isAdd: false,
     },
   ]);

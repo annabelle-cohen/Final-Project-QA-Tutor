@@ -173,64 +173,75 @@ class checkout1 extends Component {
 
   render() {
     const onUpdateCartQty = async (item, newQuantity) => {
-      const index = this.props.cart.cart.findIndex(
-        (product) => item.productID === product.productID
+      var isQuantityBugExist = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "QuantityCheckOut Bug"
       );
-      var price = this.props.cart.totalPrice;
-      var amount = this.props.cart.amountOfproducts;
-      var totalItems = this.props.cart.totalNumOfProducts;
 
-      if (this.props.cart.amountOfproducts[index] < newQuantity) {
-        amount[index] = newQuantity;
-        price += item.unitPrice + item.shippingServiceCost;
-        totalItems += 1;
-      } else {
-        if (newQuantity >= 0) {
-          amount[index] = newQuantity;
-          price -= item.unitPrice + item.shippingServiceCost;
-          totalItems -= 1;
-        }
-      }
-
-      this.props.saveCart({
-        lastPosition: this.props.cart.lastPosition,
-        totalPrice: price,
-        totalNumOfProducts: totalItems,
-        cart: this.props.cart.cart,
-        amountOfproducts: amount,
-      });
-
-      if (this.props.authAAP.isSignIn) {
-        const addQuantity =
-          "http://localhost:8092//acs/carts/updateCartQuantity";
-
-        const addingQuantity = {
-          cartID: this.props.cartId.id,
-          quantity: this.props.cart.amountOfproducts,
-        };
-
-        console.log(addingQuantity);
-        const dataJson2 = JSON.stringify(addingQuantity);
-
-        await fetch(addQuantity, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson2,
-        }).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("success");
-            } else {
-              console.log("failed to fetch server");
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
+      var isQuantityBugAdvancedExist = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "QuantityCheckOutAdvanced Bug"
+      );
+      if (!isQuantityBugExist) {
+        const index = this.props.cart.cart.findIndex(
+          (product) => item.productID === product.productID
         );
+        var price = this.props.cart.totalPrice;
+        var amount = this.props.cart.amountOfproducts;
+        var totalItems = this.props.cart.totalNumOfProducts;
+
+        if (this.props.cart.amountOfproducts[index] < newQuantity) {
+          amount[index] = newQuantity;
+          price += item.unitPrice + item.shippingServiceCost;
+          totalItems += 1;
+        } else {
+          if (newQuantity >= 0) {
+            amount[index] = newQuantity;
+            price -= item.unitPrice + item.shippingServiceCost;
+            totalItems -= 1;
+          }
+        }
+
+        this.props.saveCart({
+          lastPosition: this.props.cart.lastPosition,
+          totalPrice: price,
+          totalNumOfProducts: totalItems,
+          cart: this.props.cart.cart,
+          amountOfproducts: amount,
+        });
+
+        if (this.props.authAAP.isSignIn && !isQuantityBugAdvancedExist) {
+          const addQuantity =
+            "http://localhost:8092//acs/carts/updateCartQuantity";
+
+          const addingQuantity = {
+            cartID: this.props.cartId.id,
+            quantity: this.props.cart.amountOfproducts,
+          };
+
+          console.log(addingQuantity);
+          const dataJson2 = JSON.stringify(addingQuantity);
+
+          await fetch(addQuantity, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: dataJson2,
+          }).then(
+            (response) => {
+              if (response.status === 200) {
+                console.log("success");
+              } else {
+                console.log("failed to fetch server");
+              }
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+        }
         //maybe put for total price in the server
+      } else {
+        console.log("Quantity bug");
       }
     };
 

@@ -202,6 +202,11 @@ export class Home extends Component {
     var isCtaegoryBug = this.props.bugsList.bugsList.some(
       (b) => b.bugName === "Category Bug"
     );
+
+    var isPopularCategoryBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "PopularCategoriesAdvanced Bug"
+    );
+
     if (selectedCategory === "Smartphones") {
       if (!isCtaegoryBug) {
         selectedCategory = "smartphone";
@@ -271,6 +276,42 @@ export class Home extends Component {
         selectedCategory = "Pets";
       } else {
         selectedCategory = "Art";
+      }
+    }
+
+    if (selectedCategory === "Samsung") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Sneakers";
+      }
+    }
+
+    if (selectedCategory === "Apple") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Beauty";
+      }
+    }
+
+    if (selectedCategory === "Sony") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Fishing";
+      }
+    }
+
+    if (selectedCategory === "Xiaomi") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Smartphones";
+      }
+    }
+
+    if (selectedCategory === "Nails") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Collectibles";
+      }
+    }
+
+    if (selectedCategory === "Nike") {
+      if (isPopularCategoryBug) {
+        selectedCategory = "Accessories";
       }
     }
 
@@ -1235,7 +1276,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img1">Sneakers</div>
             </Link>
@@ -1246,7 +1293,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img2">Beauty</div>
             </Link>
@@ -1257,7 +1310,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img3">Fishing</div>
             </Link>
@@ -1268,7 +1327,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img4">Smartphones</div>
             </Link>
@@ -1279,7 +1344,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img5">Collectibles</div>
             </Link>
@@ -1290,7 +1361,13 @@ export class Home extends Component {
             <Link
               onClick={this.handleClickOnSpecificCategory}
               style={{ color: "black" }}
-              to="/dashboard/productByCategory"
+              to={
+                this.props.bugsList.bugsList.some(
+                  (b) => b.bugName === "PopularCategories Bug"
+                )
+                  ? "/dashboard"
+                  : "/dashboard/productByCategory"
+              }
             >
               <div id="p_img6">Accessories</div>
             </Link>

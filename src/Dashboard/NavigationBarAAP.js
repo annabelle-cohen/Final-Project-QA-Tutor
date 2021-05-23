@@ -70,6 +70,11 @@ export class NavigationBarAAP extends Component {
     this.props.saveLastChoice({
       choice: this.props.choice.choice,
     });
+
+    this.props.saveBugsList({
+      bugsList: this.props.bugsList.bugsList,
+    });
+
     console.log(this.props.choice.choice);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.productsDropDown = this.productsDropDown.bind(this);
@@ -211,7 +216,7 @@ export class NavigationBarAAP extends Component {
     });
   }
 
-  dropDownWatchList(productWatchList, savingProductToPass) {
+  dropDownWatchList(productWatchList, savingProductToPass, bugsList) {
     return productWatchList.map(function (product) {
       return (
         <div className="row" style={{ height: 153 + "px" }}>
@@ -255,7 +260,15 @@ export class NavigationBarAAP extends Component {
                     productToPass: product,
                   });
                 }}
-                to="/dashboard/productPage"
+                to={
+                  bugsList.length <= 0
+                    ? "/dashboard/productPage"
+                    : bugsList.bugsList.some(
+                        (b) => b.bugName === "ProductWatchlistLink Bug"
+                      )
+                    ? "/dashboard/signInToAAP"
+                    : "/dashboard/productPage"
+                }
               >
                 {product.title}
               </Link>
@@ -318,7 +331,7 @@ export class NavigationBarAAP extends Component {
     });
   }
 
-  productsDropDown(products, amount, savingProductToPass) {
+  productsDropDown(products, amount, savingProductToPass, bugsList) {
     return products.map(function (product) {
       var index = products.findIndex(
         (item) => item.productID === product.productID
@@ -365,7 +378,15 @@ export class NavigationBarAAP extends Component {
                     productToPass: product,
                   });
                 }}
-                to="/dashboard/productPage"
+                to={
+                  bugsList.length <= 0
+                    ? "/dashboard/productPage"
+                    : bugsList.bugsList.some(
+                        (b) => b.bugName === "ProductMenuLink Bug"
+                      )
+                    ? "/dashboard"
+                    : "/dashboard/productPage"
+                }
               >
                 {product.title}
               </Link>
@@ -591,7 +612,8 @@ export class NavigationBarAAP extends Component {
               {this.props.watchlist.Watchlist.length > 0
                 ? this.dropDownWatchList(
                     this.props.watchlist.Watchlist,
-                    this.props.savePassingProduct
+                    this.props.savePassingProduct,
+                    this.props.bugsList
                   )
                 : "you have nothing in your watchlist"}
             </div>
@@ -773,7 +795,8 @@ export class NavigationBarAAP extends Component {
                 : this.productsDropDown(
                     this.props.cart.cart,
                     this.props.cart.amountOfproducts,
-                    this.props.savePassingProduct
+                    this.props.savePassingProduct,
+                    this.props.bugsList
                   )}
             </div>
             <div

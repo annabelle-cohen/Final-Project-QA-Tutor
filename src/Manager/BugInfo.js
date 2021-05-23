@@ -78,9 +78,20 @@ export default function AlignItems({ user, Bug, existBugs, onClick }) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {"Description: "}
+                  <div style={{ display: "inline-block" }}>
+                    {"Description: "}
+                  </div>
                 </Typography>
-                {Bug.description}
+                <div
+                  style={{
+                    width: "400px",
+                    height: "50px",
+                    marginLeft: "55px",
+                    marginTop: "-20px",
+                  }}
+                >
+                  {Bug.description}
+                </div>
               </div>
             </React.Fragment>
           }

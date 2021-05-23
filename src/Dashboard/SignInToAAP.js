@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
 import { saveUserAAP } from "../Actions/authAAPActions";
+import { saveUser } from "../Actions/authActions";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import StaySignIn from "./staySignIn";
@@ -42,36 +43,46 @@ export class SignInToAAP extends Component {
     e.preventDefault();
 
     //example for another file that will include all fetch to server.
-
-    const main = "http://localhost:8092//";
-    const login = main + "//acs/users/login/";
-    await fetch(login + this.state.userName)
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({ succeded: true });
-          response.json().then((d) => {
-            const userAAP = d;
-
-            //this.displayNotifaction(true, "login succeeded!")
-            this.props.saveUserAAP({ userAAP, isLoggedIn: true });
-
-            this.setState({ isLoggedIn: true });
-          });
-        } else {
-          console.log("Error:", response);
-          response.json().then((d) => {
-            //  this.displayNotifaction(false, d.message);
-            this.setState({ succededLog: true });
-            console.log(this.state.succededLog);
-            console.log("Errordata", d);
-          });
-        }
-        this.setState({ continue: true });
-      })
-      .catch((error) => {
-        // console.error('Error:', error.data);
-        console.log(error.data);
+    if (this.state.userName !== this.props.auth.user.email) {
+      this.setState({
+        succededLog: true,
+        logError: "You try to login to aap with user that isn't yours!",
       });
+    } else {
+      const main = "http://localhost:8092//";
+      const login = main + "//acs/users/login/";
+      await fetch(login + this.state.userName)
+        .then((response) => {
+          if (response.status === 200) {
+            this.setState({ succeded: true });
+            response.json().then((d) => {
+              const userAAP = d;
+
+              //this.displayNotifaction(true, "login succeeded!")
+              this.props.saveUserAAP({ userAAP, isLoggedIn: true });
+
+              this.setState({ isLoggedIn: true });
+            });
+          } else {
+            console.log("Error:", response);
+            response.json().then((d) => {
+              //  this.displayNotifaction(false, d.message);
+              this.setState({ succededLog: true });
+              this.setState({
+                succededLog: true,
+                logError: "User doesn't exist!",
+              });
+              console.log(this.state.succededLog);
+              console.log("Errordata", d);
+            });
+          }
+          this.setState({ continue: true });
+        })
+        .catch((error) => {
+          // console.error('Error:', error.data);
+          console.log(error.data);
+        });
+    }
   };
 
   loggedIn() {
@@ -153,11 +164,12 @@ export class SignInToAAP extends Component {
 function mapDispatchToProps(dispatch) {
   return {
     saveUserAAP: (userAAP) => dispatch(saveUserAAP(userAAP)),
+    saveUser: (user) => dispatch(saveUser(user)),
   };
 }
 
 const mapStateToProps = (state) => {
-  return { authAAP: state.authAAP };
+  return { authAAP: state.authAAP, auth: state.auth };
 };
 
 const LoginToAAP = connect(mapStateToProps, mapDispatchToProps)(SignInToAAP);

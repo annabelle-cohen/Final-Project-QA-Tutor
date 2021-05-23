@@ -260,6 +260,9 @@ export class productByCategoryAAP extends Component {
     };
     const handleItemClick = async (product) => {
       var isExisUnwantedtBug = false;
+      var isProductLinkBugExist = this.props.bugsList.bugsList.some(
+        (b) => b.bugName === "ProductLinkProductsPage Bug"
+      );
 
       if (this.props.bugsList.bugsList.length > 0) {
         isExisUnwantedtBug = this.props.bugsList.bugsList.some(
@@ -269,10 +272,27 @@ export class productByCategoryAAP extends Component {
       if (isExisUnwantedtBug) {
         handleAddToCartAdvanced(product, 1, false);
       }
+      if (!isProductLinkBugExist) {
+        this.props.savePassingProduct({
+          productToPass: product,
+        });
+      } else {
+        var index = this.products.findIndex(
+          (item) => item.productID === product.productID
+        );
 
-      this.props.savePassingProduct({
-        productToPass: product,
-      });
+        if (index > 0) {
+          var indexBug = index - 1;
+          this.props.savePassingProduct({
+            productToPass: this.products[indexBug],
+          });
+        } else {
+          var indexBug = index + 1;
+          this.props.savePassingProduct({
+            productToPass: this.products[indexBug],
+          });
+        }
+      }
     };
 
     return (
