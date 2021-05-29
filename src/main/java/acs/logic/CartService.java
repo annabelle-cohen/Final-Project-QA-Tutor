@@ -129,6 +129,22 @@ public class CartService {
 		this.cartDao.save(cart);
 
 	}
+	
+	@Transactional
+	public void setTotalPrice(Long CartID, Double s) {
+
+		Optional<CartEntity> cartResult = this.cartDao.findById(CartID);
+
+		if (!cartResult.isPresent()) {
+			throw new RuntimeException("cart doesn't exist :" + CartID);
+		}
+
+		CartEntity cart = cartResult.get();
+
+		cart.setTotalPrice(s);
+		this.cartDao.save(cart);
+
+	}
 
 	@Transactional
 	public OrderBoundary checkout(Long CartID) {

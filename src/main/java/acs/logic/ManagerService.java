@@ -123,6 +123,43 @@ public class ManagerService {
 		}
 
 	}
+	
+	@Transactional
+	public StudentBoundary removeBugFromStudent(AddBugToStudentBoundary newBug) {
+
+		UserBoundary userBoundary = this.userService.login(newBug.getManagerEmail());
+
+		Optional<ManagerEntity> managerEntity = this.managerDao.findById(userBoundary.getEmail());
+
+		if (managerEntity.isPresent()) {
+
+			Optional<BugEntity> bug = this.bugDao.findById(newBug.getBugName());
+
+			if (!bug.isPresent()) {
+				throw new UserNotFoundException("Bug doesn't exist!");
+			}
+
+			Optional<StudentEntity> student = this.studentDao.findById(newBug.getStudentEmail());
+			if (!student.isPresent()) {
+				throw new UserNotFoundException("Student doesn't exist!");
+			}
+
+			StudentEntity studentEntity = student.get();
+			BugEntity bugEntity = bug.get();
+
+			studentEntity.removeBug(bugEntity);
+			bugEntity.removeStudent(studentEntity);
+
+			this.studentDao.save(studentEntity);
+			this.bugDao.save(bugEntity);
+
+			return this.studentConverter.convertFromEntity(studentEntity);
+
+		} else {
+			throw new UserNotFoundException("this user is not a maanger!");
+		}
+
+	}
 
 	@Transactional
 	public BugBoundary addBug(AddBugBoundary newBug) {

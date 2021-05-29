@@ -54,5 +54,10 @@ public class BugEntity {
 		if (!this.students.contains(student))
 			this.students.add(student);
 	}
+	
+	public void removeStudent(StudentEntity student) {
+		if (this.students.contains(student))
+			this.students.remove(student);
+	}
 
 }

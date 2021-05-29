@@ -48,7 +48,12 @@ public class ManagerController {
 	public StudentBoundary addBugToStudent(@RequestBody AddBugToStudentBoundary input) {// {throws Exception
 
 		return this.managerService.addBugToStudent(input);
+	}
 
+	@RequestMapping(path = "/acs/managers/removeBugFromStudent", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public StudentBoundary removeBugFromStudent(@RequestBody AddBugToStudentBoundary input) {// {throws Exception
+
+		return this.managerService.removeBugFromStudent(input);
 	}
 
 	@RequestMapping(path = "/acs/managers/addBug", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

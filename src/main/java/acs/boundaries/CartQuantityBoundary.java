@@ -6,8 +6,10 @@ public class CartQuantityBoundary {
 
 	Long CartID;
 	ArrayList<Long> quantity;
-	
-	CartQuantityBoundary(){}
+	Double totalPrice;
+
+	CartQuantityBoundary() {
+	}
 
 	public Long getCartID() {
 		return CartID;
@@ -30,6 +32,14 @@ public class CartQuantityBoundary {
 		CartID = cartID;
 		this.quantity = quantity;
 	}
-	
+
+	public Double getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(Double totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
 	
 }

@@ -164,7 +164,7 @@ public class UserServiceWithDB implements EnhanceUserService {
 			UserEntity entity = this.entityConverter.convertToEntity(newUser);
 
 			PersonalInfoEntity info = new PersonalInfoEntity();
-			info.setLastName(newUser.getFirstName());
+			info.setLastName(newUser.getLastName());
 			info.setFirstName(newUser.getFirstName());
 			info.setUser(entity);
 

@@ -22,7 +22,6 @@ public class StudentEntity {
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private List<BugEntity> bugs = new ArrayList<BugEntity>();
 
-	
 	@ManyToOne
 	private ClassEntity studentClass;
 
@@ -65,6 +64,11 @@ public class StudentEntity {
 	public void addBug(BugEntity bug) {
 		if (!this.bugs.contains(bug))
 			this.bugs.add(bug);
+	}
+
+	public void removeBug(BugEntity bug) {
+		if (this.bugs.contains(bug))
+			this.bugs.remove(bug);
 	}
 
 	public ClassEntity getStudentClass() {

@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"ali@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"password\":\"ali\",\r\n    \"lastName\":\"milhim\",\r\n    \"lastname\":\"milhim\"\r\n    \r\n}",
+					"raw": "{\r\n    \"email\":\"ali@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"password\":\"ali\",\r\n    \"lastName\":\"milhim\"\r\n    \r\n    \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -469,6 +469,36 @@
 						"acs",
 						"carts",
 						"updateCartQuantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setCartTotalPrice",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"cartID\": 15229,\n    \"totalPrice\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/setTotalPrice",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"setTotalPrice"
 					]
 				}
 			},
@@ -997,11 +1027,8 @@
 		},
 		{
 			"name": "getAllBugs",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1053,6 +1080,36 @@
 						"acs",
 						"managers",
 						"addBugToStudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeBugFromStudent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali2@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/removeBugFromStudent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"removeBugFromStudent"
 					]
 				}
 			},

@@ -48,6 +48,12 @@ public class CartController {
 		this.cartService.updateQuantity(input.getCartID(), input.getQuantity());
 	}
 
+	@RequestMapping(path = "/acs/carts/setTotalPrice", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public void setTotalPrice(@RequestBody CartQuantityBoundary input) {
+
+		this.cartService.setTotalPrice(input.getCartID(), input.getTotalPrice());
+	}
+
 	@RequestMapping(path = "/acs/carts/checkout", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public OrderBoundary submit(@RequestBody CartQuantityBoundary input) {
 
