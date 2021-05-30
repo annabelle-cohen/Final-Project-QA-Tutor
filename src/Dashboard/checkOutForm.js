@@ -51,7 +51,56 @@ class CheckoutForm extends Component {
 
     console.log(this.props.personalInfo);
     this.fillPersonalInfo();
+    this.checkBugs();
   }
+
+  checkBugs = async () => {
+    var isTotalPriceBug = this.props.bugsList.bugsList.some(
+      (b) => b.bugName === "TotalPrice Bug"
+    );
+
+    if (isTotalPriceBug) {
+      const main = "http://localhost:8092";
+      const checkoutLink = main + "/acs/carts/setTotalPrice";
+      const wrongPrice = this.props.cart.totalPrice + 100;
+
+      const cartInfo = {
+        cartID: this.props.cartId.id,
+        totalPrice: wrongPrice,
+      };
+
+      const dataJson = JSON.stringify(cartInfo);
+
+      await fetch(checkoutLink, {
+        method: "PUT", // or 'PUT'
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: dataJson,
+      }).then(
+        (response) => {
+          if (response.status === 200) {
+            console.log("success");
+          } else {
+            response.json().then((x) => {
+              console.log(x);
+            });
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+
+      this.props.saveCart({
+        lastPosition: this.props.cart.lastPosition,
+        totalPrice: wrongPrice,
+        totalNumOfProducts: this.props.cart.totalNumOfProducts,
+        cart: this.props.cart.cart,
+        amountOfproducts: this.props.cart.amountOfproducts,
+      });
+    }
+  };
 
   fillPersonalInfo = async () => {
     await fetch(
@@ -75,8 +124,8 @@ class CheckoutForm extends Component {
                 lastName: this.props.authAAP.userAAP.lastName,
               },
               billingInfos: {
-                billingAdress: this.props.personalInfo.billingInfos
-                  .billingAdress,
+                billingAdress:
+                  this.props.personalInfo.billingInfos.billingAdress,
                 creditCardID: this.props.personalInfo.billingInfos.creditCardID,
                 billDate: this.props.personalInfo.billingInfos.billDate,
                 creditCardEXPDate:

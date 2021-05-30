@@ -82,7 +82,25 @@ export class NavigationBarAAP extends Component {
     console.log(this.props.watchlist.Watchlist);
     this.checkIfIsAlreadyExistCart();
     this.loadPurchHistory();
+    this.checkTotalpriceBug();
   }
+
+  checkTotalpriceBug = () => {
+    if (this.props.cart.cart.length > 0) {
+      var fixedPrice = 0;
+      for (var i = 0; i < this.props.cart.cart.length; i++) {
+        fixedPrice += this.props.cart.cart[i].unitPrice;
+      }
+
+      this.props.saveCart({
+        lastPosition: this.props.cart.lastPosition,
+        totalPrice: fixedPrice,
+        totalNumOfProducts: this.props.cart.totalNumOfProducts,
+        cart: this.props.cart.cart,
+        amountOfproducts: this.props.cart.amountOfproducts,
+      });
+    }
+  };
 
   checkIfIsAlreadyExistCart = async () => {
     //example for another file that will include all fetch to server.

@@ -6,6 +6,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { Divider, Button } from "@material-ui/core";
+import StudentBugList from "./studentBugList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,62 +29,85 @@ const useStyles = makeStyles((theme) => ({
   },
   BugButton: {
     marginTop: "80px",
+    marginRight: "50px",
   },
 }));
 
-export default function AlignItemsStudents({ user, student, Bug }) {
+export default function AlignItemsStudents({
+  user,
+  student,
+  studentBugs,
+  Bug,
+  onClickDelete,
+  onClickAdd,
+}) {
   const classes = useStyles();
   const [isAdd, setAdd] = useState(false);
-  const [existBugs, setStudentBugs] = useState(student.bugs);
+  const [existBugs, setStudentBugs] = useState(studentBugs);
   const [isSwitch, setSwitch] = useState(false);
-
-  const handleClickStudentsBugs = async () => {
-    const data = {
-      bugName: Bug.bugName,
-      studentEmail: student.email,
-      managerEmail: user.email,
-    };
-
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/managers/addBugToStudent";
-    const dataJson = JSON.stringify(data);
-
-    await fetch(addBug, {
-      method: "POST", // or 'PUT'
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: dataJson,
-    }).then(
-      (response) => {
-        if (response.status === 200) {
-          response.json().then((d) => {
-            const bugs = d;
-            setStudentBugs(bugs.bugs);
-            setSwitch(true);
-          });
-        } else {
-          response.json().then((x) => {
-            console.log(x);
-          });
-        }
-      },
-      (error) => {}
-    );
-  };
+  const [isDisabled, setDisabled] = useState(false);
 
   useEffect(() => {
     var isExist;
-    if (student != null) {
-      if (!isSwitch) {
-        isExist = student.bugs.some((b) => b.bugName === Bug.bugName);
-      } else {
-        isExist = existBugs.some((b) => b.bugName === Bug.bugName);
-      }
+    var isAdvanacedProduct = false;
+    console.log(studentBugs);
+    isExist = studentBugs.some((b) => b.bugName === Bug.bugName);
+    console.log(isExist);
+    setAdd(isExist);
 
-      setAdd(isExist);
+    if (Bug.bugName === "ProductPage Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "ProductPageAdvanced Bug"
+      );
     }
+
+    if (Bug.bugName === "ProductPageAdvanced Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "ProductPage Bug"
+      );
+    }
+
+    if (Bug.bugName === "ProductsCategory Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "ProductsCategoryAdvanced Bug"
+      );
+    }
+
+    if (Bug.bugName === "ProductsCategoryAdvanced Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "ProductsCategory Bug"
+      );
+    }
+
+    if (Bug.bugName === "Quantity Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "QuantityAdvanced Bug"
+      );
+    }
+
+    if (Bug.bugName === "QuantityAdvanced Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "Quantity Bug"
+      );
+    }
+
+    if (Bug.bugName === "QuantityCheckOut Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "QuantityCheckOutAdvanced Bug"
+      );
+    }
+
+    if (Bug.bugName === "QuantityCheckOutAdvanced Bug") {
+      isAdvanacedProduct = studentBugs.some(
+        (b) => b.bugName === "QuantityCheckOut Bug"
+      );
+    }
+
+    setDisabled(isAdvanacedProduct);
   });
+
+  const handleDeleteStudentBug = () => onClickDelete(Bug);
+  const handleClickStudentsBugs = () => onClickAdd(Bug);
 
   return (
     <div>
@@ -118,9 +142,20 @@ export default function AlignItemsStudents({ user, student, Bug }) {
                   className={classes.inline}
                   color="textPrimary"
                 >
-                  {"Description: "}
+                  <div style={{ display: "inline-block" }}>
+                    {"Description: "}
+                  </div>
                 </Typography>
-                {Bug.description}
+                <div
+                  style={{
+                    width: "400px",
+                    height: "50px",
+                    marginLeft: "55px",
+                    marginTop: "-20px",
+                  }}
+                >
+                  {Bug.description}
+                </div>
               </div>
             </React.Fragment>
           }
@@ -134,6 +169,7 @@ export default function AlignItemsStudents({ user, student, Bug }) {
             type="button"
             variant="outlined"
             color="primary"
+            disabled={isDisabled}
             style={{ display: isAdd ? "none" : "block" }}
           >
             Add Bug!
@@ -146,10 +182,42 @@ export default function AlignItemsStudents({ user, student, Bug }) {
             color: "green",
             fontSize: "22px",
             marginTop: "80px",
-            marginRight: "80px",
+            marginRight: "30px",
           }}
         >
-          Exist
+          <div
+            style={{
+              display: "inline-block",
+              color: "green",
+              fontSize: "22px",
+              marginTop: "-50px",
+              marginRight: "-30px",
+              position: "relative",
+              zIndex: "1",
+            }}
+          >
+            Exist
+            <div
+              style={{
+                display: "inline-block",
+                position: "relative",
+                zIndex: "1",
+                marginLeft: "10px",
+                top: "-45px",
+              }}
+            >
+              <Button
+                className={classes.BugButton}
+                onClick={handleDeleteStudentBug}
+                size="large"
+                type="button"
+                variant="outlined"
+                color="primary"
+              >
+                Remove Bug!
+              </Button>
+            </div>
+          </div>
         </div>
       </ListItem>
 

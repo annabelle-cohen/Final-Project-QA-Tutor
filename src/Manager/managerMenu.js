@@ -162,9 +162,10 @@ export default function NavTabs({
       isAdd: false,
     },
     {
-      //11 ali need to do this
+      //11 done
       bugName: "TotalPrice Bug",
-      description: "The total price in the summary doesn't correct",
+      description:
+        "The total price in the summary doesn't correct, always with addition of 100$",
       isAdd: false,
     },
     {
