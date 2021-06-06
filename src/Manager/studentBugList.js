@@ -18,17 +18,18 @@ const useStyles = makeStyles((theme) => ({
 export default function StudentBugList({ user, student, existBugs }) {
   const classes = useStyles();
   const [maxHeight, setHeight] = useState(window.innerHeight - 240);
-  const [StudentBugs, setStudentsBugs] = useState(student.bugs);
+  const [StudentBugs, setStudentsBugs] = useState([]);
   const [existBugsState, setExistBugsState] = useState(existBugs);
   const [isFirst, setFirst] = useState(true);
   const [isOne, setOne] = useState(true);
-  const [maxBug, setMaxBugs] = useState(30);
+  const [maxBug, setMaxBugs] = useState(31);
 
   useEffect(async () => {
     //    console.log(user);
-    //    console.log(student);
+    console.log(student.bugs);
     //   console.log(existBugs);
     if (isFirst) {
+      console.log("in if");
       setStudentsBugs(student.bugs);
       setFirst(false);
     }
@@ -67,7 +68,7 @@ export default function StudentBugList({ user, student, existBugs }) {
           });
         }
       },
-      (error) => {}
+      (error) => { }
     );
   };
 
@@ -101,7 +102,7 @@ export default function StudentBugList({ user, student, existBugs }) {
           });
         }
       },
-      (error) => {}
+      (error) => { }
     );
   };
 

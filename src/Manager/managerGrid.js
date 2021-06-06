@@ -28,7 +28,7 @@ export default function AutoGrid(
   classList,
   studentsList,
   existBugs,
-  studentChosen
+  studentChosen,
 ) {
   const [isClicked, setClicked] = useState(false);
   const [isStudentClicked, setStudentClicked] = useState(false);
@@ -37,12 +37,25 @@ export default function AutoGrid(
     user.classList.length <= 0 ? 0 : user.classList[0]
   );
   const [studentName, setStudentName] = useState("");
-  const [studentClicked, setSrudentClicked] = useState(user.studentChosen);
+  const [studentTemp, setTemp] = useState({ bugs: [], email: "defulat", managerEmail: user.email })
+  const [studentClicked, setStudentClick] = useState(user.classList.length <= 0 ? user.studentChosen : user.classList[0].students[0]);
   const [isFirst, setFirst] = useState(true);
+  const [isReady, setReady] = useState(false);
   const classes = useStyles();
 
   useEffect(async () => {
     console.log(user);
+    if (studentTemp.email === studentClicked.email) {
+      setReady(true);
+      console.log(studentTemp.email)
+      console.log(studentClicked.email)
+      console.log("in if of use effect temp")
+    } else {
+      console.log(studentTemp.email)
+      console.log(studentClicked.email)
+      setReady(false)
+      console.log("not in if of use effect temp")
+    }
     if (isFirst) {
       const data = {
         manager: user.user.email,
@@ -87,17 +100,22 @@ export default function AutoGrid(
     setClassChosen(c);
   };
 
-  const handleStudentClick = (s) => {
+  const handleStudentClick = async (s) => {
     console.log(s);
+    setReady(false);
     if (isStudentClicked) {
       setStudentClicked(false);
     } else {
-      console.log(s);
-      setSrudentClicked(s);
+
+      setStudentClick(s);
+      setTemp(s);
       setStudentName(s.student.firstName + " " + s.student.lastName);
       setStudentClicked(true);
+
+
     }
   };
+
 
   return (
     <div className={classes.root}>
@@ -128,11 +146,11 @@ export default function AutoGrid(
               {classChosen.students.length <= 0
                 ? ""
                 : classChosen.students.map((s) => (
-                    <StudentsGrid
-                      s={s}
-                      onClick={handleStudentClick}
-                    ></StudentsGrid>
-                  ))}
+                  <StudentsGrid
+                    s={s}
+                    onClick={handleStudentClick}
+                  ></StudentsGrid>
+                ))}
 
               <div
                 style={{
@@ -173,11 +191,12 @@ export default function AutoGrid(
             {user.studentsList.length <= 0 ? (
               ""
             ) : (
-              <StudentBugList
+              isReady ? <StudentBugList
                 user={user.user}
                 student={studentClicked}
                 existBugs={user.existBugs}
-              ></StudentBugList>
+              ></StudentBugList> : ""
+
             )}
           </Paper>
         </div>

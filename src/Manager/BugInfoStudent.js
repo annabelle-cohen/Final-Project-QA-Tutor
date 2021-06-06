@@ -50,9 +50,9 @@ export default function AlignItemsStudents({
   useEffect(() => {
     var isExist;
     var isAdvanacedProduct = false;
-    console.log(studentBugs);
+    // console.log(studentBugs);
     isExist = studentBugs.some((b) => b.bugName === Bug.bugName);
-    console.log(isExist);
+    //console.log(isExist);
     setAdd(isExist);
 
     if (Bug.bugName === "ProductPage Bug") {
