@@ -6,6 +6,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Tutor from "./img/pinguinTeach.png";
+import { domainUrl } from "../requests";
 
 const useStyles = makeStyles({
   root: {
@@ -29,7 +30,7 @@ export default function MediaCardInfo({ user, classList, studentsList }) {
       //    console.log("in user effect");
       const dataJson = JSON.stringify(data);
 
-      fetch("http://localhost:8092/acs/managers/getAllBugs", {
+      fetch(domainUrl+"/acs/managers/getAllBugs", {
         method: "POST",
         headers: {
           Accept: "application/json",

@@ -7,6 +7,7 @@ import { saveCartID } from "../Actions/savingCartId";
 import { saveBugsList } from "../Actions/saveBugsList";
 import { Redirect } from "react-router-dom";
 import CheckoutStepper from "./checkoutForm/stepper/CheckoutStepper";
+import { domainUrl } from "../requests";
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -60,8 +61,7 @@ class CheckoutForm extends Component {
     );
 
     if (isTotalPriceBug) {
-      const main = "http://localhost:8092";
-      const checkoutLink = main + "/acs/carts/setTotalPrice";
+      const checkoutLink = domainUrl + "/acs/carts/setTotalPrice";
       const wrongPrice = this.props.cart.totalPrice + 100;
 
       const cartInfo = {
@@ -104,7 +104,7 @@ class CheckoutForm extends Component {
 
   fillPersonalInfo = async () => {
     await fetch(
-      "http://localhost:8092/acs/users/detail/" +
+      domainUrl+"/acs/users/detail/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {
@@ -158,8 +158,7 @@ class CheckoutForm extends Component {
 
       //send to server
 
-      const main = "http://localhost:8092";
-      const checkoutLink = main + "/acs/carts/checkout";
+      const checkoutLink = domainUrl + "/acs/carts/checkout";
 
       const cartInfo = {
         cartID: this.props.cartId.id,

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import NavTabs from "./managerMenu";
 import { saveUser } from "../Actions/authActions";
 import { connect } from "react-redux";
+import { domainUrl } from "../requests";
 
 export class ManagerPage extends Component {
   constructor(props) {
@@ -34,8 +35,7 @@ export class ManagerPage extends Component {
       manager: this.props.auth.user.email,
     };
 
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/classes/getAllClasses";
+    const addBug = domainUrl + "/acs/classes/getAllClasses";
     const dataJson = JSON.stringify(data);
 
     await fetch(addBug, {
@@ -86,8 +86,7 @@ export class ManagerPage extends Component {
       email: this.props.auth.user.email,
     };
 
-    const main = "http://localhost:8092/";
-    const getAllBugs = main + "/acs/managers/getAllBugs";
+    const getAllBugs = domainUrl+ "/acs/managers/getAllBugs";
     const dataJson = JSON.stringify(data);
 
     await fetch(getAllBugs, {
@@ -123,8 +122,7 @@ export class ManagerPage extends Component {
         managerEmail: this.props.auth.user.email,
       };
 
-      const main = "http://localhost:8092/";
-      const addBug = main + "/acs/managers/addBug";
+      const addBug = domainUrl+ "/acs/managers/addBug";
       const dataJson = JSON.stringify(data);
 
       await fetch(addBug, {

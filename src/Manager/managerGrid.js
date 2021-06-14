@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import NestedGrid from "./managerClassInfo";
 import StudentsGrid from "./studentsInformation";
 import StudentBugList from "./studentBugList";
+import { domainUrl } from "../requests";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,8 +62,7 @@ export default function AutoGrid(
         manager: user.user.email,
       };
 
-      const main = "http://localhost:8092/";
-      const addBug = main + "/acs/classes/getAllClasses";
+      const addBug = domainUrl + "/acs/classes/getAllClasses";
       const dataJson = JSON.stringify(data);
 
       await fetch(addBug, {

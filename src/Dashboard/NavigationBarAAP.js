@@ -25,6 +25,7 @@ import { Link, Route, NavLink } from "react-router-dom";
 import { avatar } from "../Asset/default_profile_pic";
 import { saveWatchlist } from "../Actions/addToWatchlist";
 import { saveBugsList } from "../Actions/saveBugsList";
+import { domainUrl } from "../requests";
 
 export class NavigationBarAAP extends Component {
   constructor(props) {
@@ -105,8 +106,8 @@ export class NavigationBarAAP extends Component {
   checkIfIsAlreadyExistCart = async () => {
     //example for another file that will include all fetch to server.
     if (this.props.authAAP.isSignIn) {
-      const main = "http://localhost:8092//";
-      const fetchCart = main + "acs/carts/getCart/";
+     
+      const fetchCart = domainUrl+ "/acs/carts/getCart/";
       await fetch(fetchCart + this.props.authAAP.userAAP.email)
         .then((response) => {
           if (response.status === 200) {
@@ -167,7 +168,7 @@ export class NavigationBarAAP extends Component {
   loadPurchHistory = async () => {
     if (this.props.authAAP.isSignIn) {
       await fetch(
-        "http://localhost:8092/acs/orders/getOrderHistroy/" +
+          domainUrl+ "/acs/orders/getOrderHistroy/" +
           this.props.authAAP.userAAP.email
       )
         .then((response) => {

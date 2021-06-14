@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import "./registertoaap.css";
 import "./ButtonDemo.css";
+import { domainUrl } from "../requests";
 
 export class RegisterToAAP extends Component {
   constructor(props) {
@@ -109,8 +110,7 @@ export class RegisterToAAP extends Component {
     }
 
     if (check.isFine) {
-      const main = "http://localhost:8092//";
-      const register = main + "/acs/users";
+      const register = domainUrl+ "/acs/users";
 
       const user = {
         email: this.state.email,

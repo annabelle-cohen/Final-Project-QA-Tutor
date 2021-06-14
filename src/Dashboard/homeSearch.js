@@ -21,6 +21,7 @@ import { saveProductsByCategoryID } from "../Actions/productByCategoryIDAAP";
 import { saveBugsList } from "../Actions/saveBugsList";
 import logo from "./img/logo_transparent2.png";
 import zIndex from "@material-ui/core/styles/zIndex";
+import { domainUrl } from "../requests";
 
 class HomeSearch1 extends Component {
   constructor(props) {
@@ -87,7 +88,7 @@ class HomeSearch1 extends Component {
   saveSearchKeywordWithServer = async () => {
     if (this.props.authAAP.isSignIn) {
       await fetch(
-        "http://localhost:8092/acs/searchList/getSearchList/" +
+          domainUrl+ "/acs/searchList/getSearchList/" +
           this.props.authAAP.userAAP.email
       )
         .then((response) => {
@@ -102,7 +103,7 @@ class HomeSearch1 extends Component {
               const dataJson = JSON.stringify(data);
 
               fetch(
-                "http://localhost:8092/acs/searchList/addSearchToSearchList",
+                domainUrl+ "/acs/searchList/addSearchToSearchList",
                 {
                   method: "POST", // or 'PUT'
                   headers: {
@@ -165,7 +166,7 @@ class HomeSearch1 extends Component {
 
       const dataJson = JSON.stringify(data);
       const searchByKeyWordLink =
-        "http://localhost:8092/acs/products/getByKeyword";
+       domainUrl+ "/acs/products/getByKeyword";
       await fetch(searchByKeyWordLink, {
         method: "POST", // or 'PUT'
         headers: {

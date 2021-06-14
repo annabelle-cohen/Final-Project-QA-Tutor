@@ -7,6 +7,7 @@ import { saveWatchlist } from "../Actions/addToWatchlist";
 import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import Listing from "./pageList/productsList";
+import { domainUrl } from "../requests";
 
 class genericList1 extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class genericList1 extends Component {
     console.log("im here in load product by choice");
     if (this.props.choice.choice === "watchlist") {
       await fetch(
-        "http://localhost:8092/acs/watchlist/getwatchList/" +
+          domainUrl+ "/acs/watchlist/getwatchList/" +
           this.props.authAAP.userAAP.email
       )
         .then((response) => {
@@ -80,7 +81,7 @@ class genericList1 extends Component {
 
     if (this.props.choice.choice === "viewed") {
       await fetch(
-        "http://localhost:8092/acs/viewedlist/getViewedList/" +
+          domainUrl+"/acs/viewedlist/getViewedList/" +
           this.props.authAAP.userAAP.email
       )
         .then((response) => {
@@ -123,7 +124,7 @@ class genericList1 extends Component {
         };
         const dataJson = JSON.stringify(data);
         await fetch(
-          "http://localhost:8092/acs/watchlist/removeProductFromWatchList",
+          domainUrl+"/acs/watchlist/removeProductFromWatchList",
           {
             method: "DELETE",
             headers: {
@@ -152,7 +153,7 @@ class genericList1 extends Component {
         };
         const dataJson = JSON.stringify(data);
         await fetch(
-          "http://localhost:8092/acs/viewedlist/removeProductFromViewedList",
+          domainUrl+"/acs/viewedlist/removeProductFromViewedList",
           {
             method: "DELETE",
             headers: {
@@ -183,7 +184,7 @@ class genericList1 extends Component {
           watchListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        await fetch("http://localhost:8092/acs/watchlist/clearwatchList", {
+        await fetch(domainUrl+"/acs/watchlist/clearwatchList", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -208,7 +209,7 @@ class genericList1 extends Component {
           viewedListID: this.state.id,
         };
         const dataJson = JSON.stringify(data);
-        await fetch("http://localhost:8092/acs/viewedlist/clearViewedList", {
+        await fetch(domainUrl+"/acs/viewedlist/clearViewedList", {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",

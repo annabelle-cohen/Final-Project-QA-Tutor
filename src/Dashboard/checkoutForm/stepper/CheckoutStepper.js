@@ -15,6 +15,7 @@ import useStyles from "./styles";
 import AddressForm from "../AddressForm";
 import PaymentForm from "../PaymentForm";
 import { Info } from "@material-ui/icons";
+import { domainUrl } from "../../../requests";
 
 const steps = ["Shipping address", "Payment details"];
 
@@ -52,7 +53,7 @@ const CheckoutStepper = ({
     var length = 0;
 
     await fetch(
-      "http://localhost:8092/acs/orders/getOrderHistroy/" +
+        domainUrl+"/acs/orders/getOrderHistroy/" +
         personalInfo.personalInfo.address
     )
       .then((response) => {

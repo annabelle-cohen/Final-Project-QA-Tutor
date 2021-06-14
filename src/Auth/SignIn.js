@@ -5,6 +5,8 @@ import { saveUser } from "../Actions/authActions";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
+import {domainUrl, loginUrl} from '../requests';
+
 class SignIn extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +33,8 @@ class SignIn extends Component {
   handleSubmit = async (e) => {
     e.preventDefault();
 
-    await fetch("http://localhost:8092//acs/users/login/" + this.state.email)
+    const loginUrl = domainUrl + "//acs/users/login/"
+    await fetch(loginUrl + this.state.email)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ succeded: true });

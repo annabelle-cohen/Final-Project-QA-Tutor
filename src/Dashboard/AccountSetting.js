@@ -10,7 +10,7 @@ import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
 import { Redirect } from "react-router-dom";
 import "./accountsetting.css";
-
+import {domainUrl} from '../requests'
 class AccountSetting extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +74,7 @@ class AccountSetting extends Component {
 
   billingInfoFromServer = async () => {
     await fetch(
-      "http://localhost:8092/acs/users/detail/" +
+      domainUrl+ "/acs/users/detail/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {
@@ -202,8 +202,7 @@ class AccountSetting extends Component {
 
     const dataJson = JSON.stringify(updateForUserAccount);
 
-    const main = "http://localhost:8092//";
-    const PersonalInfo = main + "/acs/users/detail/";
+    const PersonalInfo = domainUrl + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
     await fetch(PersonalInfo + user.email, {
@@ -295,8 +294,8 @@ class AccountSetting extends Component {
 
     const dataJson = JSON.stringify(billingInfoUpdate);
     console.log(dataJson);
-    const main = "http://localhost:8092/";
-    const PersonalInfo = main + "/acs/users/detail/";
+ 
+    const PersonalInfo = domainUrl + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
     await fetch(PersonalInfo + user.email, {
@@ -324,8 +323,7 @@ class AccountSetting extends Component {
   };
 
   checkIfIsPersonalInfo = async (e) => {
-    const main = "http://localhost:8092//";
-    const PersonalInfo = main + "/acs/users/detail/";
+    const PersonalInfo = domainUrl + "/acs/users/detail/";
     const user = this.props.authAAP.userAAP;
 
     await fetch(PersonalInfo + user.email)

@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 import StaySignIn from "./staySignIn";
 import "./signintoaap.css";
 import "./ButtonDemo.css";
+import { domainUrl } from "../requests";
 
 export class SignInToAAP extends Component {
   constructor(props) {
@@ -49,8 +50,7 @@ export class SignInToAAP extends Component {
         logError: "You try to login to aap with user that isn't yours!",
       });
     } else {
-      const main = "http://localhost:8092//";
-      const login = main + "//acs/users/login/";
+      const login = domainUrl + "//acs/users/login/";
       await fetch(login + this.state.userName)
         .then((response) => {
           if (response.status === 200) {

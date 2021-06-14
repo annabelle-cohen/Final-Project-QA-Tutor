@@ -14,6 +14,7 @@ import { InputText } from "primereact/inputtext";
 import Recaptcha from "react-recaptcha";
 import { Button } from "primereact/button";
 import "./ButtonDemo.css";
+import { domainUrl } from "../requests";
 
 export class businessRegister extends Component {
   constructor(props) {
@@ -165,8 +166,7 @@ export class businessRegister extends Component {
     }
 
     if (isOk && this.state.isVerified) {
-      const main = "http://localhost:8092//";
-      const registerBussines = main + "/acs/business";
+      const registerBussines = domainUrl + "/acs/business";
 
       const userBussines = {
         email: this.state.bussinessEmail,

@@ -9,6 +9,7 @@ import HistoryList from "./PurchaseHistory/PurchaseGeneral";
 import { saveCart } from "../Actions/shoppingCart";
 import { saveCartID } from "../Actions/savingCartId";
 import { saveBugsList } from "../Actions/saveBugsList";
+import { domainUrl } from "../requests";
 
 class purchaseHistoryList1 extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class purchaseHistoryList1 extends Component {
       (b) => b.bugName === "History Bug"
     );
     await fetch(
-      "http://localhost:8092/acs/orders/getOrderHistroy/" +
+      domainUrl+"/acs/orders/getOrderHistroy/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {
@@ -131,7 +132,6 @@ class purchaseHistoryList1 extends Component {
         totalPrice = Order.totalPrice;
       }
 
-      const main = "http://localhost:8092//";
 
       if (this.props.cart.cart.length == 0) {
         this.props.saveCart({
@@ -145,7 +145,7 @@ class purchaseHistoryList1 extends Component {
         for (var i = 0; i < ArrayOfProducts.length; i++) {
           var productId = ArrayOfProducts[i].productID;
 
-          const addProductLink = main + "/acs/products/addProductToCart";
+          const addProductLink = domainUrl + "/acs/products/addProductToCart";
 
           const addingProduct = {
             productID: productId,
@@ -175,7 +175,7 @@ class purchaseHistoryList1 extends Component {
           );
         }
 
-        const addQuantity = main + "/acs/carts/updateCartQuantity";
+        const addQuantity = domainUrl + "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
           cartID: this.props.cartId.id,
@@ -229,7 +229,7 @@ class purchaseHistoryList1 extends Component {
 
             var productId = ArrayOfProducts[i].productID;
 
-            const addProductLink = main + "/acs/products/addProductToCart";
+            const addProductLink = domainUrl+ "/acs/products/addProductToCart";
 
             const addingProduct = {
               productID: productId,
@@ -268,7 +268,7 @@ class purchaseHistoryList1 extends Component {
           amountOfproducts: amountOfProducts,
         });
 
-        const addQuantity = main + "/acs/carts/updateCartQuantity";
+        const addQuantity = domainUrl+ "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
           cartID: this.props.cartId.id,

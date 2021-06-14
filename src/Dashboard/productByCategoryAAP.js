@@ -12,6 +12,7 @@ import Products from "./Products/Products";
 import { saveCart } from "../Actions/shoppingCart";
 import { saveCartID } from "../Actions/savingCartId";
 import { saveBugsList } from "../Actions/saveBugsList";
+import { domainUrl } from "../requests";
 
 export class productByCategoryAAP extends Component {
   constructor(props) {
@@ -86,8 +87,8 @@ export class productByCategoryAAP extends Component {
       categoryID: this.props.productsByCategory.categoryID,
     };
 
-    const main = "http://localhost:8092//";
-    const getCategoryById = main + "/acs/category";
+
+    const getCategoryById = domainUrl + "/acs/category";
     const dataJson = JSON.stringify(data);
 
     await fetch(getCategoryById, {
@@ -196,10 +197,10 @@ export class productByCategoryAAP extends Component {
 
       if (this.props.authAAP.isSignIn) {
         console.log("in if add product advanced");
-        const main = "http://localhost:8092//";
+        
 
         if (!isExist) {
-          const addProductLink = main + "/acs/products/addProductToCart";
+          const addProductLink = domainUrl + "/acs/products/addProductToCart";
 
           const addingProduct = {
             productID: product.productID,
@@ -228,7 +229,7 @@ export class productByCategoryAAP extends Component {
             }
           );
         }
-        const addQuantity = main + "/acs/carts/updateCartQuantity";
+        const addQuantity = domainUrl + "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
           cartID: this.props.cartId.id,

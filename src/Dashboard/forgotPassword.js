@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom";
 import "./ButtonDemo.css";
 import { saveUser } from "../Actions/authActions";
 import { Button } from "primereact/button";
+import { domainUrl } from "../requests";
 
 export class ForgotPassword extends Component {
   constructor(props) {
@@ -78,9 +79,8 @@ export class ForgotPassword extends Component {
     }
 
     if (check.isFine) {
-      const main = "http://localhost:8092//";
-      const resetPassword = main + "/acs/users/updatePassword/";
-      const verifyEmail = main + "/acs/users/verify/";
+      const resetPassword = domainUrl+ "/acs/users/updatePassword/";
+      const verifyEmail = domainUrl + "/acs/users/verify/";
 
       const userAAPNew = {
         email: this.props.authAAP.userAAP.email,

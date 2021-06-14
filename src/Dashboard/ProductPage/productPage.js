@@ -13,6 +13,7 @@ import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import GalleryPage from "./gallery";
 import "./productPage.css";
+import { domainUrl } from "../../requests";
 
 class productPage1 extends Component {
   constructor(props) {
@@ -106,7 +107,7 @@ class productPage1 extends Component {
   saveToRecentlyViewed = async () => {
     if (this.props.authAAP.isSignIn) {
       await fetch(
-        "http://localhost:8092/acs/viewedlist/getViewedList/" +
+       domainUrl+"/acs/viewedlist/getViewedList/" +
           this.props.authAAP.userAAP.email
       )
         .then((response) => {
@@ -131,8 +132,7 @@ class productPage1 extends Component {
   addProductToRecentlyViewed = async (product) => {
     var isOk = false;
     while (!isOk) {
-      const main = "http://localhost:8092/";
-      const recentlyViewdLink = main + "/acs/viewedlist/addProductToViewedList";
+      const recentlyViewdLink = domainUrl+ "/acs/viewedlist/addProductToViewedList";
       const viewedList = {
         productID: this.props.productToPass.productToPass.productID,
         viewedListID: product.viewedListID,
@@ -306,10 +306,9 @@ class productPage1 extends Component {
 
       console.log(this.props.cart);
       if (this.props.authAAP.isSignIn) {
-        const main = "http://localhost:8092//";
 
         if (!isAlreadyExist) {
-          const addProductLink = main + "/acs/products/addProductToCart";
+          const addProductLink = domainUrl + "/acs/products/addProductToCart";
 
           const addingProduct = {
             productID: this.props.productToPass.productToPass.productID,
@@ -338,7 +337,7 @@ class productPage1 extends Component {
           );
         }
 
-        const addQuantity = main + "/acs/carts/updateCartQuantity";
+        const addQuantity = domainUrl + "/acs/carts/updateCartQuantity";
 
         const addingQuantity = {
           cartID: this.props.cartId.id,
@@ -422,7 +421,7 @@ class productPage1 extends Component {
           }
           if (!isExist) {
             await fetch(
-              "http://localhost:8092/acs/watchlist/getwatchList/" +
+                domainUrl+"/acs/watchlist/getwatchList/" +
                 this.props.authAAP.userAAP.email
             )
               .then((response) => {
@@ -430,9 +429,8 @@ class productPage1 extends Component {
                   response.json().then((d) => {
                     const watchlist = d;
 
-                    const main = "http://localhost:8092//";
                     const addToWatchListLink =
-                      main + "/acs/watchlist/addProductToWatchList";
+                      domainUrl + "/acs/watchlist/addProductToWatchList";
 
                     const watchListUpdated = {
                       productID: this.props.cart.cart[0].productID,
@@ -500,7 +498,7 @@ class productPage1 extends Component {
         }
         if (!isExist) {
           await fetch(
-            "http://localhost:8092/acs/watchlist/getwatchList/" +
+              domainUrl+"/acs/watchlist/getwatchList/" +
               this.props.authAAP.userAAP.email
           )
             .then((response) => {
@@ -508,9 +506,8 @@ class productPage1 extends Component {
                 response.json().then((d) => {
                   const watchlist = d;
 
-                  const main = "http://localhost:8092//";
                   const addToWatchListLink =
-                    main + "/acs/watchlist/addProductToWatchList";
+                    domainUrl + "/acs/watchlist/addProductToWatchList";
 
                   const watchListUpdated = {
                     productID: this.props.productToPass.productToPass.productID,

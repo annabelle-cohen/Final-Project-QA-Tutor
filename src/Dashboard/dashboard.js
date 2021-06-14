@@ -43,6 +43,7 @@ import HomeSearch from "./homeSearch";
 import { saveUserAAP } from "../Actions/authAAPActions";
 import { saveUser } from "../Actions/authActions";
 import { saveMessage } from "../Actions/LoadingMessage";
+import { domainUrl } from "../requests";
 
 export class Home extends Component {
   constructor(props) {
@@ -137,7 +138,7 @@ export class Home extends Component {
 
   fillBugsList = async (e) => {
     await fetch(
-      "http://localhost:8092/acs/students/login/" + this.props.auth.user.email
+     domainUrl+ "/acs/students/login/" + this.props.auth.user.email
     )
       .then((response) => {
         if (response.status === 200) {
@@ -166,8 +167,7 @@ export class Home extends Component {
       size: 30,
     };
 
-    const main = "http://localhost:8092//";
-    const getAllCategories = main + "/acs/category/all";
+    const getAllCategories = domainUrl+ "/acs/category/all";
     const dataJson = JSON.stringify(data);
 
     await fetch(getAllCategories, {
@@ -323,7 +323,7 @@ export class Home extends Component {
 
     const dataJson = JSON.stringify(data);
     const searchByKeyWordLink =
-      "http://localhost:8092/acs/products/getByKeyword";
+    domainUrl+"/acs/products/getByKeyword";
     await fetch(searchByKeyWordLink, {
       method: "POST", // or 'PUT'
       headers: {
@@ -377,8 +377,7 @@ export class Home extends Component {
         size: 100,
       };
 
-      const main = "http://localhost:8092/";
-      const getproductsByCategoryId = main + "/acs/products/getByCategory";
+      const getproductsByCategoryId = domainUrl + "/acs/products/getByCategory";
       const dataJson = JSON.stringify(data);
 
       await fetch(getproductsByCategoryId, {

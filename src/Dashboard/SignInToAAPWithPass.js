@@ -12,6 +12,7 @@ import { Redirect } from "react-router-dom";
 import "./signintoaapwithpass.css";
 import { Link } from "react-router-dom";
 import "./ButtonDemo.css";
+import { domainUrl } from "../requests";
 
 export class SignInToAAPWithPassword extends Component {
   constructor(props) {
@@ -55,7 +56,7 @@ export class SignInToAAPWithPassword extends Component {
 
   checkCartAccordingServer = async () => {
     await fetch(
-      "http://localhost:8092/acs/carts/getCart/" +
+        domainUrl+"/acs/carts/getCart/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {
@@ -98,7 +99,7 @@ export class SignInToAAPWithPassword extends Component {
       cartID: id,
     };
     const dataJson = JSON.stringify(data);
-    await fetch("http://localhost:8092/acs/carts/clearCart", {
+    await fetch(domainUrl+"/acs/carts/clearCart", {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -118,8 +119,7 @@ export class SignInToAAPWithPassword extends Component {
     );
 
     this.props.cart.cart.map(async function (product) {
-      const main = "http://localhost:8092//";
-      const addProductLink = main + "/acs/products/addProductToCart";
+      const addProductLink = domainUrl+ "/acs/products/addProductToCart";
 
       const addingProduct = {
         productID: product.productID,
@@ -148,7 +148,7 @@ export class SignInToAAPWithPassword extends Component {
       );
     });
 
-    const addQuantity = "http://localhost:8092//acs/carts/updateCartQuantity";
+    const addQuantity = domainUrl+ "//acs/carts/updateCartQuantity";
 
     const addingQuantity = {
       cartID: this.props.cartId.id,
@@ -180,7 +180,7 @@ export class SignInToAAPWithPassword extends Component {
 
   checkWatchListAccoridingServer = async () => {
     await fetch(
-      "http://localhost:8092/acs/watchlist/getwatchList/" +
+      domainUrl+ "/acs/watchlist/getwatchList/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {

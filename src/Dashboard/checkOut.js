@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 import { savePassingProduct } from "../Actions/passProduct";
 import { saveCartID } from "../Actions/savingCartId";
 import { saveBugsList } from "../Actions/saveBugsList";
+import { domainUrl } from "../requests";
 
 class checkout1 extends Component {
   constructor(props) {
@@ -86,7 +87,7 @@ class checkout1 extends Component {
         cartID: this.props.cartId.id,
       };
       const dataJson = JSON.stringify(data);
-      await fetch("http://localhost:8092/acs/products/removeProductFromCart", {
+      await fetch( domainUrl+"/acs/products/removeProductFromCart", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -105,7 +106,7 @@ class checkout1 extends Component {
         }
       );
 
-      const addQuantity = "http://localhost:8092//acs/carts/updateCartQuantity";
+      const addQuantity = domainUrl+"//acs/carts/updateCartQuantity";
 
       const addingQuantity = {
         cartID: this.props.cartId.id,
@@ -150,7 +151,7 @@ class checkout1 extends Component {
         cartID: this.props.cartId.id,
       };
       const dataJson = JSON.stringify(data);
-      await fetch("http://localhost:8092/acs/carts/clearCart", {
+      await fetch(domainUrl+ "/acs/carts/clearCart", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -210,7 +211,7 @@ class checkout1 extends Component {
 
         if (this.props.authAAP.isSignIn && !isQuantityBugAdvancedExist) {
           const addQuantity =
-            "http://localhost:8092//acs/carts/updateCartQuantity";
+          domainUrl+"/acs/carts/updateCartQuantity";
 
           const addingQuantity = {
             cartID: this.props.cartId.id,
@@ -270,38 +271,7 @@ class checkout1 extends Component {
 
     const onEmptyCart = async () => {
       this.emptyCart();
-      /*   this.props.saveCart({
-        lastPosition: 0,
-        totalPrice: 0,
-        totalNumOfProducts: 0,
-        cart: [],
-        amountOfproducts: [],
-      });
-
-      if (this.props.authAAP.isSignIn) {
-        const data = {
-          cartID: this.props.cartId.id,
-        };
-        const dataJson = JSON.stringify(data);
-        await fetch("http://localhost:8092/acs/carts/clearCart", {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: dataJson,
-        }).then(
-          (response) => {
-            if (response.status === 200) {
-              console.log("Deleted!");
-            } else {
-              console.log("failed delete");
-            }
-          },
-          (error) => {
-            console.log(error);
-          }
-        );
-      }*/
+     
     };
 
     const passingItem = (item) => {

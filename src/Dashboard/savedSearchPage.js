@@ -6,6 +6,7 @@ import NavigationBarAAP from "./NavigationBarAAP";
 import HomeSearch from "./homeSearch";
 import SearchesList from "./SearchesList/searchesList";
 import { Redirect } from "react-router-dom";
+import { domainUrl } from "../requests";
 
 class savedSearchList1 extends Component {
   constructor(props) {
@@ -33,7 +34,7 @@ class savedSearchList1 extends Component {
 
   fillSearchesArray = async () => {
     await fetch(
-      "http://localhost:8092/acs/searchList/getSearchList/" +
+        domainUrl+"/acs/searchList/getSearchList/" +
         this.props.authAAP.userAAP.email
     )
       .then((response) => {
@@ -72,7 +73,7 @@ class savedSearchList1 extends Component {
         searchListID: this.state.id,
       };
       const dataJson = JSON.stringify(data);
-      await fetch("http://localhost:8092/acs/searchList/clearSearchList", {
+      await fetch(domainUrl+ "/acs/searchList/clearSearchList", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -101,7 +102,7 @@ class savedSearchList1 extends Component {
       };
       const dataJson = JSON.stringify(data);
       await fetch(
-        "http://localhost:8092/acs/searchList/removeSearchFromSearchList",
+        domainUrl+"/acs/searchList/removeSearchFromSearchList",
         {
           method: "DELETE",
           headers: {
@@ -135,7 +136,7 @@ class savedSearchList1 extends Component {
 
       const dataJson = JSON.stringify(data);
       const searchByKeyWordLink =
-        "http://localhost:8092/acs/products/getByKeyword";
+       domainUrl+"/acs/products/getByKeyword";
       await fetch(searchByKeyWordLink, {
         method: "POST", // or 'PUT'
         headers: {

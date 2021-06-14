@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import AlignItemsStudents from "./BugInfoStudent";
+import { domainUrl } from "../requests";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,8 +45,7 @@ export default function StudentBugList({ user, student, existBugs }) {
       managerEmail: user.email,
     };
 
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/managers/removeBugFromStudent";
+    const addBug = domainUrl + "/acs/managers/removeBugFromStudent";
     const dataJson = JSON.stringify(data);
 
     await fetch(addBug, {
@@ -79,8 +79,7 @@ export default function StudentBugList({ user, student, existBugs }) {
       managerEmail: user.email,
     };
 
-    const main = "http://localhost:8092/";
-    const addBug = main + "/acs/managers/addBugToStudent";
+    const addBug = domainUrl + "/acs/managers/addBugToStudent";
     const dataJson = JSON.stringify(data);
 
     await fetch(addBug, {
