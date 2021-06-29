@@ -86,13 +86,13 @@ export default function MediaCardInfo({ user, classList, studentsList }) {
           >
             Email:{user.email}
             <br></br>
-            Number of Classes:{classList.length}
+            Number of classes:{classList.length}
             <br></br>
-            Number Of Students:{studentsList.length}
+            Number of students:{studentsList.length}
             <br></br>
             Rule:Tutor
             <br></br>
-            Number of Bugs exits:{bugs.length}
+            Number of existing Bugs :{bugs.length}
           </Typography>
         </CardContent>
       </CardActionArea>
