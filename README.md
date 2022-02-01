@@ -20,7 +20,7 @@ Java , Spring Boot , Hibernate, MySql , API integration(Ebay API).
 ## Link to video for the exhibition - Outstanding Project Score 100:
 https://www.youtube.com/watch?v=c8ycVGqO5sU
 
-##IMPORTANT:
+## IMPORTANT:
 for frontend go to the branch - > frontend,
 for backend go yo the branch -> backend.
 
