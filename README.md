@@ -1,20 +1,28 @@
-## git cmds
+## QA-Tutor
 
-git status 
+My final project in the software engineering degree (chosen to participate in exhibition of outstanding projects for 2020). 
+Development of learning management system (LMS) to help junior QA to practice and 
+run tests on e-commerce website. The system aims to provide the admin and the 
+student control over the learning progress. 
+System contains Admin interface that enables allocation of bugs to each student and 
+tracking bug fixed flow. The user interface simulates a real e-commerce website with 
+embedded bugs and errors for the student to find and report. 
+The system has an advanced feather to practice different levels of bugs such as 
+functional, DB, regression, etc. 
+System developed on AWS using the following software and tools:
 
-git add . , git add <file.fmt>
+## Frontend:
+React.js , React Hooks, React Redux, HTML, CSS, Prime React , Material UI, Materialize CSS.
 
-git commit -m "msg" , git commit -a
+## Backend:
+Java , Spring Boot , Hibernate, MySql , API integration(Ebay API).
 
-git push 
+## Link to video for the exhibition - Outstanding Project Score 100:
+https://www.youtube.com/watch?v=c8ycVGqO5sU
 
-git branch 
+##IMPORTANT:
+for frontend go to the branch - > frontend,
+for backend go yo the branch -> backend.
 
-git branch name_of_branch 
 
-git checkout name_of_branch
-
-git stash 
-
-git stash pop
 
