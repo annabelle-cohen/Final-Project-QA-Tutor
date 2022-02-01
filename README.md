@@ -21,8 +21,8 @@ Java , Spring Boot , Hibernate, MySql , API integration(Ebay API).
 https://www.youtube.com/watch?v=c8ycVGqO5sU
 
 ## IMPORTANT:
-for frontend go to the branch - > frontend,
-for backend go yo the branch -> backend.
+for frontend go to the branch - > frontend,                                                                                                                                       
+for backend go to the branch -> backend.
 
 
 
