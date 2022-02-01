@@ -19,7 +19,7 @@ Java , Spring Boot , Hibernate, MySql , API integration(Ebay API).
 
 ## Link to video for the exhibition - Outstanding Project Score 100:
 <p align="center">
-<video src='https://www.youtube.com/watch?v=c8ycVGqO5sU' width=180/>
+<video src='https://www.youtube.com/watch?v=c8ycVGqO5sU' width='180' height='200'/>
 </p>
 
 ## IMPORTANT:
