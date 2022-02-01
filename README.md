@@ -18,7 +18,7 @@ React.js , React Hooks, React Redux, HTML, CSS, Prime React , Material UI, Mater
 Java , Spring Boot , Hibernate, MySql , API integration(Ebay API).
 
 ## Link to video for the exhibition - Outstanding Project Score 100:
-https://www.youtube.com/watch?v=c8ycVGqO5sU
+iframe width="560" height="315" src="https://www.youtube.com/embed/c8ycVGqO5sU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## IMPORTANT:
 for frontend go to the branch - > frontend,                                                                                                                                       
