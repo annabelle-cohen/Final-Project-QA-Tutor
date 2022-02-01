@@ -1,0 +1,1328 @@
+{
+	"info": {
+		"_postman_id": "42364118-2cb8-417e-93b7-c20078a690bb",
+		"name": "backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ali@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"password\":\"ali\",\r\n    \"lastName\":\"milhim\"\r\n    \r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/users/login/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"login",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user details",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/users/detail/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"detail",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create business",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ali@b.com\",\r\n    \"businessName\":\"test name\",\r\n    \"password\":\"ali\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/business",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"business"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get business",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/business/login/ali@b.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"business",
+						"login",
+						"ali@b.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "verify user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/users/verify/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"verify",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePassword",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"ali123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users/updatePassword/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"updatePassword",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updatePersonalInfo",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"address\": null,\n    \"country\": null,\n    \"city\": null,\n    \"phone\": 5345324,\n    \"avatar\": null,\n    \"firstName\": \"al2i\",\n    \"lastName\": \"ali\",\n    \"billingInfos\": [{\n        \"billingAdress\" : \"billingAdress\" ,\n\t    \"creditCardID\" : \"131234\",\n\t    \"creditCardPIN\": \"312edsv\",\n        \"creditCardNo\": \"211242\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users/detail/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users",
+						"detail",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProducstByCategroyID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"categoryID\":15032  , \r\n \"page\":0 ,\r\n \"size\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/getByCategory",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"getByCategory"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductsByKeyword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"keyword\":\"samsung\", \r\n \"page\":0 ,\r\n \"size\":5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/getByKeyword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"getByKeyword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCategory",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"categoryID\": 15032\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/category",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"category"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllCategories",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\r\n\"page\" : 0 ,\r\n\"size\" : 5\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/category/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"category",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductToCart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3612\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/addProductToCart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"addProductToCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromCart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"productID\" : \"303239230130\" ,\n    \"cartID\": \"3611\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/products/removeProductFromCart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"products",
+						"removeProductFromCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCart",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/getCart/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"getCart",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearCart",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cartID\" : 3611\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/clearCart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"clearCart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateCartQuantity",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"cartID\": 3612,\n    \"quantity\": [2]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/updateCartQuantity",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"updateCartQuantity"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "setCartTotalPrice",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"cartID\": 15229,\n    \"totalPrice\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/setTotalPrice",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"setTotalPrice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getwatchList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/getwatchList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"getwatchList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearwatchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"watchListID\" : 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/clearwatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"clearwatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductToWatchList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"watchListID\": 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/addProductToWatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"addProductToWatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromWatchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"303239230130\" ,\n    \"watchListID\": 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/watchlist/removeProductFromWatchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"watchlist",
+						"removeProductFromWatchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getViewedList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/getViewedList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"getViewedList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearViewedList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"viewedListID\" : 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/clearViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"clearViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addProductToViewedList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"viewedListID\": 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/addProductToViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"addProductToViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeProductFromViewedList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"productID\" : \"113761779459\" ,\n    \"viewedListID\": 3613\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/viewedlist/removeProductFromViewedList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"viewedlist",
+						"removeProductFromViewedList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSearchList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/getSearchList/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"getSearchList",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "clearSearchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/clearSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"clearSearchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addSearchToSearchList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614 ,\n    \"text\": \"iphone\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/addSearchToSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"addSearchToSearchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeSearchFromSearchList",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"searchListID\" : 3614 ,\n    \"text\": \"iphone\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/searchList/removeSearchFromSearchList",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"searchList",
+						"removeSearchFromSearchList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderHistroy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/orders/getOrderHistroy/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"orders",
+						"getOrderHistroy",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkout cart ",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"cartID\": 3612\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/carts/checkout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"carts",
+						"checkout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create manager",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create student ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali@ali.com\",\n    \"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/students/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"students",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get manager",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/login/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"login",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get students",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8092/acs/students/login/ali@ali.com",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"students",
+						"login",
+						"ali@ali.com"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBug",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"bugName\": \"bug1\" , \n    \"description\" : \"descriptionblah blah\",\n    \"managerEmail\" : \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/addBug",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"addBug"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllBugs",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/getAllBugs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"getAllBugs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addBugToStudent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali2@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/addBugToStudent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"addBugToStudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeBugFromStudent",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n     \"bugName\" : \"bug1\",\n\t \"studentEmail\" : \"ali2@ali.com\",\n\t\"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/managers/removeBugFromStudent",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"managers",
+						"removeBugFromStudent"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create class ",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"className\" :\"class 101\" , \n\t\"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllClasses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/getAllClasses",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"getAllClasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"className\" :\"class 101\" , \n\t\"manager\": \"ali@ali.com\" \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/getClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"getClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addStudentToClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t{\n    \"className\": \"class 101\",\n    \"managerEmail\": \"ali@ali.com\",\n    \"studentEmail\": \"ali2@ali.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/addStudentToClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"addStudentToClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "removeStudentToClass",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n\t{\n    \"className\": \"class 101\",\n    \"managerEmail\": \"ali@ali.com\",\n    \"studentEmail\": \"ali2@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/classes/removeStudentToClass",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"classes",
+						"removeStudentToClass"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create student test",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\":\"ali2@ali.com\",\n    \"managerEmail\": \"ali@ali.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/students/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"students",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create user 2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"ali2@ali.com\",\r\n    \"firstName\":\"ali\",\r\n    \"password\":\"ali\",\r\n    \"lastName\":\"milhim\",\r\n    \"lastname\":\"milhim\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8092/acs/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8092",
+					"path": [
+						"acs",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
